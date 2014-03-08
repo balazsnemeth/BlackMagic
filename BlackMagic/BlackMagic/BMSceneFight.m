@@ -57,31 +57,10 @@
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         
-//        for (NSValue* value in playerCardPositions) {
-//
-//            SKSpriteNode* card00 = [SKSpriteNode spriteNodeWithImageNamed:@"images"];
-//            card00.size = CGSizeMake(100, 100);
-//            card00.anchorPoint = CGPointZero;
-//            card00.position = value.CGPointValue;
-//            
-//            [self addChild:card00];
-//        }
-        
         [self addSpritesWithName:@"playerCard" FromArray:playerCardPositions withSize:CGSizeMake(100, 100)];
-        
         [self addSpritesWithName:@"opponenetCard"FromArray:opponenetCardPositions withSize:CGSizeMake(100, 100)];
-        
         [self addSpritesWithName:@"playerAvailableCard" FromArray:playerAvailableCardPositions withSize:CGSizeMake(50, 50)];
         
-//        for (NSValue* value in playerAvailableCardPositions) {
-//            
-//            SKSpriteNode* card00 = [SKSpriteNode spriteNodeWithImageNamed:@"images"];
-//            card00.size = CGSizeMake(50, 50);
-//            card00.anchorPoint = CGPointZero;
-//            card00.position = value.CGPointValue;
-//            
-//            [self addChild:card00];
-//        }
         
         SKSpriteNode* healthBar = [SKSpriteNode spriteNodeWithImageNamed:@"Healthbar"];
         healthBar.size = CGSizeMake(100, 100);
@@ -117,6 +96,7 @@
         card00.size = size;
         card00.anchorPoint = CGPointZero;
         card00.position = value.CGPointValue;
+        //card00.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:card00.size];
         [self addChild:card00];
         num++;
     }
@@ -166,13 +146,13 @@
             currentPoint.x = 420;
             currentPoint.y = 330;
             
-            //_hat.position = currentPoint;
+            movedCard.position = currentPoint;
             
             //SKAction *popSound = [SKAction playSoundFileNamed:@"thompsonman_pop.wav" waitForCompletion:NO];
             //[_hat runAction:popSound];
         }
         else
-            //_hat.physicsBody.affectedByGravity = YES;
+            movedCard.physicsBody.affectedByGravity = YES;
         
         _touchingCard = NO;
     }
