@@ -8,6 +8,7 @@
 
 #import "BMViewController.h"
 #import "BMStartScene.h"
+#import "BMSceneFight.h"
 
 @implementation BMViewController
 
@@ -21,7 +22,7 @@
     skView.showsNodeCount = YES;
     
     // Create and configure the scene.
-    SKScene * scene = [StartScene sceneWithSize:skView.bounds.size];
+    SKScene * scene = [BMSceneFight sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.
