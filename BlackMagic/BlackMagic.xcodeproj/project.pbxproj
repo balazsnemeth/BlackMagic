@@ -59,6 +59,8 @@
 		805E53E618CB5D84004E7A1B /* BMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53E518CB5D84004E7A1B /* BMPlayer.m */; };
 		8E98D7DA18CB40B500B42F26 /* BMCardEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7D918CB40B500B42F26 /* BMCardEffect.m */; };
 		8E98D7E018CB4B6600B42F26 /* BMCardAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */; };
+		8E98D7EA18CB8B0E00B42F26 /* CardDeckView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D7E918CB8B0E00B42F26 /* CardDeckView.xib */; };
+		8E98D7EF18CB91CF00B42F26 /* CardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D7EE18CB91CF00B42F26 /* CardView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +167,8 @@
 		8E98D7D918CB40B500B42F26 /* BMCardEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCardEffect.m; sourceTree = "<group>"; };
 		8E98D7DE18CB4B6600B42F26 /* BMCardAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCardAttribute.h; sourceTree = "<group>"; };
 		8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCardAttribute.m; sourceTree = "<group>"; };
+		8E98D7E918CB8B0E00B42F26 /* CardDeckView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardDeckView.xib; sourceTree = "<group>"; };
+		8E98D7EE18CB91CF00B42F26 /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +251,8 @@
 				805E53D118CB4407004E7A1B /* Art */,
 				1E36250F18CB280A00E08E4A /* Images.xcassets */,
 				1E3624F918CB280A00E08E4A /* Supporting Files */,
+				8E98D7E918CB8B0E00B42F26 /* CardDeckView.xib */,
+				8E98D7EE18CB91CF00B42F26 /* CardView.xib */,
 			);
 			path = BlackMagic;
 			sourceTree = "<group>";
@@ -472,7 +478,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E98D7EA18CB8B0E00B42F26 /* CardDeckView.xib in Resources */,
 				1E3624FD18CB280A00E08E4A /* InfoPlist.strings in Resources */,
+				8E98D7EF18CB91CF00B42F26 /* CardView.xib in Resources */,
 				805E53D318CB441E004E7A1B /* Healthbar.png in Resources */,
 				805E53D018CB3E3C004E7A1B /* images.png in Resources */,
 				1E36251018CB280A00E08E4A /* Images.xcassets in Resources */,
