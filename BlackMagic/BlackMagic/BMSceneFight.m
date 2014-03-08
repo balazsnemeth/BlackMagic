@@ -264,7 +264,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 [player updatePlayerFromDictionary:gameState.players[1]];
                 [enemy updatePlayerFromDictionary:gameState.players[0]];
             }
-            
+            NSLog(@"számolok");
             BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
 
             NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
@@ -280,6 +280,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                         [player updatePlayerFromDictionary:gameState.players[1]];
                         [enemy updatePlayerFromDictionary:gameState.players[0]];
                     }
+                isMyTurn = YES;
             } failure:^(NSError *error) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
                                                                 message:error.domain
