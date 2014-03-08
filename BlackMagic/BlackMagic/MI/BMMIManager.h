@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "BMCard.h"
 #import "BMPlayer.h"
+#import "BMMIResult.h"
 
 @interface BMMIManager : NSObject
 
 + (BMMIManager*) sharedManager;
 
-- (BMCard*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy;
+- (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy;
 
 @end

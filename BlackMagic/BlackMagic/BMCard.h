@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "BMCardAttribute.h"
 
+#define CREATURE_TYPE @"creature"
+#define SPELL_TYPE @"spell"
+
 @interface BMCard : NSObject
 
 @property (nonatomic,copy) BMCardAttribute* attribute;

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BMMIResult.h"
 
 @interface BMNetworkManager : NSObject
 
@@ -20,7 +21,7 @@
                                failure:(void (^)(NSError *error))failure;
 
 
-- (void) proceedPlayer:(NSString*)playerName withInput:(NSDictionary*)step  onCompletion:(void (^)(NSDictionary *result))success
+- (void) proceedPlayer:(NSString*)playerName withInput:(BMMIResult*)step  onCompletion:(void (^)(NSDictionary *result))success
                       failure:(void (^)(NSError *error))failure;
 
 

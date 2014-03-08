@@ -9,6 +9,7 @@
 #import "BMNetworkManager.h"
 #import "SettingsHandler.h"
 #import "AFNetworking.h"
+#import "BMCard.h"
 
 @interface BMNetworkManager()
 
@@ -104,10 +105,20 @@ static BMNetworkManager *sharedNetworkManager = nil;
 }
 
 
-- (void) proceedPlayer:(NSString*)playerName withInput:(NSDictionary*)step  onCompletion:(void (^)(NSDictionary *result))success
+- (void) proceedPlayer:(NSString*)playerName withInput:(BMMIResult*)step  onCompletion:(void (^)(NSDictionary *result))success
                failure:(void (^)(NSError *error))failure{
+    
+    
+    
     NSMutableDictionary *myNewDictionary = [@{@"name": playerName} mutableCopy];
-    [myNewDictionary addEntriesFromDictionary:step];
+    if (step.skipTurn) {
+        [myNewDictionary setObject:@"action" forKey:@"skipTurn"];
+    }
+    else{
+        [myNewDictionary setObject:@"playCard" forKey:@"action"];
+        [myNewDictionary setObject:step.card.type forKey:@"resourceType"];
+        [myNewDictionary setObject:@(step.slotIndex) forKey:@"slotIndex"];
+    }
     if (!myNewDictionary[@"slotIndex"]) {
         [myNewDictionary setObject:@(0) forKey:@"slotIndex"];
     }

@@ -10,6 +10,7 @@
 #import "SKTUtils.h"
 #import "BMNetworkManager.h"
 #import "BMPlayer.h"
+#import "BMMIManager.h"
 
 @implementation BMSceneFight{
     SKSpriteNode *playerHealth;
@@ -220,16 +221,36 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
             NSLog(@"res: %@", result);
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
+/*            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
                                                             message:@"Dee dee doo doo."
                                                            delegate:self
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
-            [alert show];
+            [alert show];*/
 
+            BMMIResult* step = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy];
+            [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:BMMIResult onCompletion:^(NSDictionary *result) {
+                //update-lni kell a dolgokat, és várni a következő körre!
+                
+                
+            } failure:^(NSError *error) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                                message:error.domain
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                NSLog(@"error %@", error);
+            }];
             
         } failure:^(NSError *error) {
             NSLog(@"error %@", error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                            message:error.domain
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
         }];
     }
     //receive status
