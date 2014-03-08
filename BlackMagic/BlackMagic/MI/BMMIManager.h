@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BMCard.h"
+#import "BMPlayer.h"
 
 @interface BMMIManager : NSObject
 
 + (BMMIManager*) sharedManager;
+
+- (BMCard*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy;
 
 @end

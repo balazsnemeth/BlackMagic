@@ -32,6 +32,30 @@ static BMMIManager *sharedMIManager = nil;
     return self;
 }
 
+/**Primo taktika:
+ 1. Ha nincs még elég szörnyem, akkor a legerőssebb szörnyeket kipakolom!
+ 2. Ha megteltek a szörnyek, akkor a mana-m szerinti legerőssebb kártyát kijátszom!
+ 3. Ha nincs még elég manam, akkor skippelek! - return nil!
+ 4.
+ */
 
+- (NSArray*) bayableCardsOfPlayer:(BMPlayer*)player{
+    NSMutableArray* buyableCard = [NSMutableArray new];
+    for (BMCard* card in player.fireCards) {
+        if (card.cost[@"amount"] < player.fireMana) {
+            [buyableCard addObject:card];
+        }
+    }
+    
+}
+
+- (BMCard*) strongestCreature:(BMPlayer*)player{
+    
+    
+}
+
+- (BMCard*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy{
+    
+}
 
 @end
