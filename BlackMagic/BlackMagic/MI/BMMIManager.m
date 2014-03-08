@@ -40,22 +40,58 @@ static BMMIManager *sharedMIManager = nil;
  */
 
 - (NSArray*) bayableCardsOfPlayer:(BMPlayer*)player{
-    NSMutableArray* buyableCard = [NSMutableArray new];
+    NSMutableArray* buyableCards = [NSMutableArray new];
     for (BMCard* card in player.fireCards) {
-        if (card.cost[@"amount"] < player.fireMana) {
-            [buyableCard addObject:card];
+        NSNumber* n = card.cost[@"amount"];
+        if (n.integerValue < player.fireMana) {
+            [buyableCards addObject:card];
         }
     }
-    
+    for (BMCard* card in player.waterCards) {
+        NSNumber* n = card.cost[@"amount"];
+        if (n.integerValue < player.waterMana) {
+            [buyableCards addObject:card];
+        }
+    }
+    for (BMCard* card in player.airCards) {
+        NSNumber* n = card.cost[@"amount"];
+        if (n.integerValue < player.airMana) {
+            [buyableCards addObject:card];
+        }
+    }
+    for (BMCard* card in player.illusionCards) {
+        NSNumber* n = card.cost[@"amount"];
+        if (n.integerValue < player.illusionMana) {
+            [buyableCards addObject:card];
+        }
+    }
+    for (BMCard* card in player.earthCards) {
+        NSNumber* n = card.cost[@"amount"];
+        if (n.integerValue < player.earthMana) {
+            [buyableCards addObject:card];
+        }
+    }
+    return buyableCards;
 }
 
-- (BMCard*) strongestCreature:(BMPlayer*)player{
-    
-    
+- (BMCard*) strongestOfCards:(NSArray*)cards{
+    BMCard* strongestCard = nil;
+    NSInteger strongestValue = -1;
+    for (BMCard* card in cards) {
+        NSNumber* n = card.cost[@"amount"];
+        NSInteger cost = n.integerValue;
+        if (cost > strongestValue) {
+            strongestValue = cost;
+            strongestCard = card;
+        }
+    }
+    return strongestCard;
 }
 
 - (BMCard*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy{
-    
+    NSArray* buyableCards = [self bayableCardsOfPlayer:player];
+    BMCard* strongestCard = [self strongestOfCards:buyableCards];
+    return strongestCard;
 }
 
 @end

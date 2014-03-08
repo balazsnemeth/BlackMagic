@@ -44,6 +44,7 @@
 		1EDB394718CB6583008E8565 /* BMMIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB394618CB6583008E8565 /* BMMIManager.m */; };
 		1EDB394A18CB658F008E8565 /* BMNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB394818CB658F008E8565 /* BMNetworkManager.m */; };
 		1EDB394E18CB65D9008E8565 /* SettingsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB394D18CB65D9008E8565 /* SettingsHandler.m */; };
+		1EDB395418CB6C1B008E8565 /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB395318CB6C1B008E8565 /* BMCard.m */; };
 		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
 		805E53D018CB3E3C004E7A1B /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53CF18CB3E3C004E7A1B /* images.png */; };
 		805E53D318CB441E004E7A1B /* Healthbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53D218CB441E004E7A1B /* Healthbar.png */; };
@@ -53,7 +54,6 @@
 		805E53E218CB4CCE004E7A1B /* SKTAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DC18CB4CCE004E7A1B /* SKTAudio.m */; };
 		805E53E318CB4CCE004E7A1B /* SKTUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DE18CB4CCE004E7A1B /* SKTUtils.mm */; };
 		805E53E618CB5D84004E7A1B /* BMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53E518CB5D84004E7A1B /* BMPlayer.m */; };
-		805E53E718CB67B5004E7A1B /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53C718CB34CD004E7A1B /* BMCard.m */; };
 		8E98D7DA18CB40B500B42F26 /* BMCardEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7D918CB40B500B42F26 /* BMCardEffect.m */; };
 		8E98D7E018CB4B6600B42F26 /* BMCardAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */; };
 /* End PBXBuildFile section */
@@ -134,8 +134,8 @@
 		1EDB394918CB658F008E8565 /* BMNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMNetworkManager.h; sourceTree = "<group>"; };
 		1EDB394C18CB65D9008E8565 /* SettingsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsHandler.h; sourceTree = "<group>"; };
 		1EDB394D18CB65D9008E8565 /* SettingsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsHandler.m; sourceTree = "<group>"; };
-		805E53C618CB34CD004E7A1B /* BMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMCard.h; path = /Users/ibalogh/Documents/Projects/BlackMagic/BlackMagic/BlackMagic/BMCard.h; sourceTree = "<absolute>"; };
-		805E53C718CB34CD004E7A1B /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMCard.m; path = /Users/ibalogh/Documents/Projects/BlackMagic/BlackMagic/BlackMagic/BMCard.m; sourceTree = "<absolute>"; };
+		1EDB395218CB6C1B008E8565 /* BMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCard.h; sourceTree = "<group>"; };
+		1EDB395318CB6C1B008E8565 /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCard.m; sourceTree = "<group>"; };
 		805E53C918CB3789004E7A1B /* BMSceneFight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSceneFight.h; sourceTree = "<group>"; };
 		805E53CA18CB3789004E7A1B /* BMSceneFight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMSceneFight.m; sourceTree = "<group>"; };
 		805E53CF18CB3E3C004E7A1B /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = images.png; sourceTree = "<group>"; };
@@ -368,8 +368,8 @@
 		8EA3CD1718CB3DC600EB79A3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				805E53C618CB34CD004E7A1B /* BMCard.h */,
-				805E53C718CB34CD004E7A1B /* BMCard.m */,
+				1EDB395218CB6C1B008E8565 /* BMCard.h */,
+				1EDB395318CB6C1B008E8565 /* BMCard.m */,
 				8E98D7D818CB40B500B42F26 /* BMCardEffect.h */,
 				8E98D7D918CB40B500B42F26 /* BMCardEffect.m */,
 				8E98D7DE18CB4B6600B42F26 /* BMCardAttribute.h */,
@@ -481,7 +481,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				805E53E718CB67B5004E7A1B /* BMCard.m in Sources */,
 				1E3625A718CB3E1C00E08E4A /* AFURLConnectionOperation.m in Sources */,
 				1E3625A218CB3E1C00E08E4A /* AFHTTPRequestOperation.m in Sources */,
 				805E53E018CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.m in Sources */,
@@ -510,6 +509,7 @@
 				1E3625AD18CB3E1C00E08E4A /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				1E3624FF18CB280A00E08E4A /* main.m in Sources */,
 				805E53DF18CB4CCE004E7A1B /* SKAction+SKTExtras.m in Sources */,
+				1EDB395418CB6C1B008E8565 /* BMCard.m in Sources */,
 				1E3625B218CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m in Sources */,
 				1EDB394E18CB65D9008E8565 /* SettingsHandler.m in Sources */,
 				1E36250318CB280A00E08E4A /* BMAppDelegate.m in Sources */,
