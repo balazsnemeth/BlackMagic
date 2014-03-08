@@ -13,9 +13,10 @@
 #import "BMGameState.h"
 
 @implementation BMSceneFight{
-    SKSpriteNode *playerHealth;
-    SKSpriteNode *opponentHealth;
+    SKLabelNode *playerHealth;
+    SKLabelNode *opponentHealth;
     SKSpriteNode *playerMana;
+    
     
     
     NSArray* playerMinions;
@@ -128,6 +129,21 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         myLabel.position = CGPointMake(CGRectGetMinX(self.frame),
                                        CGRectGetMidY(self.frame));
         [self addChild:myLabel];
+        
+        playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        playerHealth.text = [NSString stringWithFormat:@"%i", 60];
+        playerHealth.fontSize = 30;
+        playerHealth.position = CGPointMake(290, CGRectGetMidY(self.frame) - 30);
+        playerHealth.zRotation = -M_PI/2;
+        [self addChild:playerHealth];
+        
+        opponentHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        opponentHealth.text = [NSString stringWithFormat:@"%i", 60];
+        opponentHealth.fontSize = 30;
+        opponentHealth.position = CGPointMake(450, CGRectGetMidY(self.frame) - 30);
+        opponentHealth.zRotation = -M_PI/2;
+        [self addChild:opponentHealth];
+        
         [self setupViews];
     }
     return self;
@@ -246,7 +262,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         isMyTurn = NO;
         
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
-            NSLog(@"res: %@", result);
+            //NSLog(@"res: %@", result);
             
             
     
@@ -262,6 +278,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 [player updatePlayerFromDictionary:gameState.players[1]];
                 [enemy updatePlayerFromDictionary:gameState.players[0]];
             }
+            
+            playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
+            opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
             
             
             //choose card
