@@ -42,6 +42,7 @@
 		1E3625B218CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36259F18CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m */; };
 		1E3625B318CB3E1C00E08E4A /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */; };
 		1EBE82D818CB808A00E8A9AF /* BMMIResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EBE82D718CB808A00E8A9AF /* BMMIResult.m */; };
+		1EBE82DA18CBBFA800E8A9AF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1EBE82D918CBBFA800E8A9AF /* Settings.bundle */; };
 		1EDB394718CB6583008E8565 /* BMMIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB394618CB6583008E8565 /* BMMIManager.m */; };
 		1EDB394A18CB658F008E8565 /* BMNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB394818CB658F008E8565 /* BMNetworkManager.m */; };
 		1EDB394E18CB65D9008E8565 /* SettingsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB394D18CB65D9008E8565 /* SettingsHandler.m */; };
@@ -135,6 +136,7 @@
 		1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		1EBE82D618CB808A00E8A9AF /* BMMIResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMMIResult.h; sourceTree = "<group>"; };
 		1EBE82D718CB808A00E8A9AF /* BMMIResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMMIResult.m; sourceTree = "<group>"; };
+		1EBE82D918CBBFA800E8A9AF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1EDB394518CB6583008E8565 /* BMMIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMMIManager.h; sourceTree = "<group>"; };
 		1EDB394618CB6583008E8565 /* BMMIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMMIManager.m; sourceTree = "<group>"; };
 		1EDB394818CB658F008E8565 /* BMNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMNetworkManager.m; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 		1EDB394B18CB65D9008E8565 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				1EBE82D918CBBFA800E8A9AF /* Settings.bundle */,
 				1EDB394C18CB65D9008E8565 /* SettingsHandler.h */,
 				1EDB394D18CB65D9008E8565 /* SettingsHandler.m */,
 			);
@@ -485,6 +488,7 @@
 				805E53D018CB3E3C004E7A1B /* images.png in Resources */,
 				1E36251018CB280A00E08E4A /* Images.xcassets in Resources */,
 				1E36250E18CB280A00E08E4A /* Spaceship.png in Resources */,
+				1EBE82DA18CBBFA800E8A9AF /* Settings.bundle in Resources */,
 				1E36250618CB280A00E08E4A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

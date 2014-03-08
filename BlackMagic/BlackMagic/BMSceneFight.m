@@ -65,7 +65,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         isMyTurn = NO;
         //reset the server
         
-        NSString* name = [self genRandStringLength:6];
+        NSString* name = @"BlackBone";//[self genRandStringLength:6];
         
             //reg test A
             [[BMNetworkManager sharedManager] registerPlayer:name onCompletion:^(NSDictionary *result) {
@@ -269,6 +269,18 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             //NSLog(@"res: %@", result);
             
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+            
+            if (gameState.isGameOver) {
+                
+                NSString* message = [NSString stringWithFormat:@"Winner: %@", enemy.health <= 0 ? @"You" : @"Enemy"];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over"
+                                                                message:message
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                return;
+            }
             
             if ([player.name isEqualToString:gameState.players[0][@"name"]]){
                 [player updatePlayerFromDictionary:gameState.players[0]];

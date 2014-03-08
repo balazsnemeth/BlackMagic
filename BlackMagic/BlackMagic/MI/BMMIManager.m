@@ -112,9 +112,6 @@ static BMMIManager *sharedMIManager = nil;
 
 - (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy inTurn:(NSInteger)turnCount{
     
-    if (turnCount == 1) {
-        NSLog(@"turn %d",turnCount);
-    }
     BMMIResult* res = [BMMIResult new];
     res.skipTurn = FALSE;
     NSArray* buyableCards = [self bayableCardsOfPlayer:player];
@@ -168,6 +165,7 @@ static BMMIManager *sharedMIManager = nil;
         BMCard* strongestIllusion = [self strongestOfCards:buyableCards inType:SPELL_TYPE];
         if (strongestIllusion) {
             //ha tudok, akkor valamilyen valószínűsséggel akár varázsolhatok is...
+            
         }
         res.skipTurn = TRUE;
         res.card = nil;
