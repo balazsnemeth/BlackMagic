@@ -34,6 +34,10 @@
     BMPlayer* player;
     
     BOOL isMyTurn;
+    
+    // experimental
+    BOOL cardDeckIsPresent;
+    UIView *newView;
 }
 
 
@@ -115,16 +119,21 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         manaBar.position = CGPointMake(110, 10);
         [self addChild:manaBar];
         
-        SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
         myLabel.name = @"buttonStart";
-        myLabel.text = @"Start Game";
-        myLabel.fontSize = 30;
-        myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+//        myLabel.text = @"pick";
+//        myLabel.fontSize = 30;
+        myLabel.position = CGPointMake(CGRectGetMinX(self.frame),
                                        CGRectGetMidY(self.frame));
-        
-        //[self addChild:myLabel];
+        [self addChild:myLabel];
+        [self setupViews];
     }
     return self;
+}
+
+- (void)setupViews
+{
+    newView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
 }
 
 -(void)addSpritesWithName:(NSString*)name FromArray:(NSArray*)array withSize:(CGSize)size{
@@ -148,6 +157,23 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:self];
+        SKNode* node = [self nodeAtPoint:location];
+        if ([node.name isEqualToString:@"buttonStart"])
+        {
+            if (!cardDeckIsPresent)
+            {
+                NSLog(@"BOOM");
+                [self.view.window.rootViewController.view addSubview:newView];
+                cardDeckIsPresent = YES;
+            }
+            else
+            {
+                NSLog(@"VOOM");
+                [newView removeFromSuperview];
+                cardDeckIsPresent = NO;
+            }
+            
+        }
         // NSLog(@"** TOUCH LOCATION ** \nx: %f / y: %f", location.x, location.y);
       
         SKNode* card = [self childNodeWithName:@"playerAvailableCard0"];
