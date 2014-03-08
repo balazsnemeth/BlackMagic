@@ -42,7 +42,6 @@
 		1E3625B118CB3E1C00E08E4A /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36259D18CB3E1C00E08E4A /* UIProgressView+AFNetworking.m */; };
 		1E3625B218CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36259F18CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m */; };
 		1E3625B318CB3E1C00E08E4A /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */; };
-		805E53C818CB34CD004E7A1B /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53C718CB34CD004E7A1B /* BMCard.m */; };
 		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
 		805E53D018CB3E3C004E7A1B /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53CF18CB3E3C004E7A1B /* images.png */; };
 		805E53D318CB441E004E7A1B /* Healthbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53D218CB441E004E7A1B /* Healthbar.png */; };
@@ -128,8 +127,8 @@
 		1E36259F18CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		1E3625A018CB3E1C00E08E4A /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
-		805E53C618CB34CD004E7A1B /* BMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCard.h; sourceTree = "<group>"; };
-		805E53C718CB34CD004E7A1B /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCard.m; sourceTree = "<group>"; };
+		805E53C618CB34CD004E7A1B /* BMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMCard.h; path = /Users/ibalogh/Documents/Projects/BlackMagic/BlackMagic/BlackMagic/BMCard.h; sourceTree = "<absolute>"; };
+		805E53C718CB34CD004E7A1B /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMCard.m; path = /Users/ibalogh/Documents/Projects/BlackMagic/BlackMagic/BlackMagic/BMCard.m; sourceTree = "<absolute>"; };
 		805E53C918CB3789004E7A1B /* BMSceneFight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSceneFight.h; sourceTree = "<group>"; };
 		805E53CA18CB3789004E7A1B /* BMSceneFight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMSceneFight.m; sourceTree = "<group>"; };
 		805E53CF18CB3E3C004E7A1B /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = images.png; sourceTree = "<group>"; };
@@ -225,10 +224,6 @@
 				1E36250B18CB280A00E08E4A /* BMStartScene.m */,
 				805E53C918CB3789004E7A1B /* BMSceneFight.h */,
 				805E53CA18CB3789004E7A1B /* BMSceneFight.m */,
-				805E53E418CB5D84004E7A1B /* BMPlayer.h */,
-				805E53E518CB5D84004E7A1B /* BMPlayer.m */,
-				805E53C618CB34CD004E7A1B /* BMCard.h */,
-				805E53C718CB34CD004E7A1B /* BMCard.m */,
 				1E36250D18CB280A00E08E4A /* Spaceship.png */,
 				805E53D118CB4407004E7A1B /* Art */,
 				1E36250F18CB280A00E08E4A /* Images.xcassets */,
@@ -360,6 +355,8 @@
 				8E98D7D918CB40B500B42F26 /* BMCardEffect.m */,
 				8E98D7DE18CB4B6600B42F26 /* BMCardAttribute.h */,
 				8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */,
+				805E53E418CB5D84004E7A1B /* BMPlayer.h */,
+				805E53E518CB5D84004E7A1B /* BMPlayer.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -473,7 +470,6 @@
 				805E53E118CB4CCE004E7A1B /* SKNode+SKTExtras.m in Sources */,
 				1E3625AC18CB3E1C00E08E4A /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1E3625A818CB3E1C00E08E4A /* AFURLRequestSerialization.m in Sources */,
-				805E53C818CB34CD004E7A1B /* BMCard.m in Sources */,
 				1E3625B118CB3E1C00E08E4A /* UIProgressView+AFNetworking.m in Sources */,
 				805E53E318CB4CCE004E7A1B /* SKTUtils.mm in Sources */,
 				1E3625A918CB3E1C00E08E4A /* AFURLResponseSerialization.m in Sources */,
