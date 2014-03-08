@@ -56,22 +56,20 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         isMyTurn = NO;
         //reset the server
-        [[BMNetworkManager sharedManager] resetServerOnCompletion:^{
+        
+        NSString* name = [self genRandStringLength:6];
+        
             //reg test A
-            [[BMNetworkManager sharedManager] registerPlayer:@"Bela" onCompletion:^(NSDictionary *result) {
+            [[BMNetworkManager sharedManager] registerPlayer:name onCompletion:^(NSDictionary *result) {
                 
                 //NSLog(@"res:%@",result);
                 player = [[BMPlayer alloc] initWithDictionary:result];
-                player.name = [self genRandStringLength:6];
+                player.name = name;
                 isMyTurn = YES;
             } failure:^(NSError *error) {
                 NSLog(@"error:%@",error);
             }];
             
-            
-        } failure:^(NSError *error) {
-            NSLog(@"error:%@",error);
-        }];
         
         
         fightPosition = self.frame.size.width / 2;
@@ -219,9 +217,16 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         isMyTurn = NO;
         
-        [[BMNetworkManager sharedManager] startRequestNextMove:@"Bela" onCompletion:^(NSDictionary *result) {
+        [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
             NSLog(@"res: %@", result);
             
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
+                                                            message:@"Dee dee doo doo."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+
             
         } failure:^(NSError *error) {
             NSLog(@"error %@", error);
