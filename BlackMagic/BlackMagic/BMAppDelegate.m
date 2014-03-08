@@ -14,60 +14,15 @@
 
 @implementation BMAppDelegate
 
-- (void) step:(NSString*)name{
-    //test vár, hogy léphessen
-    
-        [[BMNetworkManager sharedManager] startRequestNextMove:name onCompletion:^(NSDictionary *result) {
-            //test lép
-            double delayInSeconds = 1.1;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                NSDictionary* input = @{@"action": @"playCard", @"resourceType": @"fire", @"cardIndex": @(1)};
-                [[BMNetworkManager sharedManager] proceedPlayer:name withInput:input onCompletion:^(NSDictionary *result) {
-                    NSLog(@"res: %@",result);
-                    [self step:name];
-                } failure:^(NSError *error) {
-                    NSLog(@"error: %@",error);
-                }];
-            });
-        } failure:^(NSError *error) {
-            NSLog(@"error:%@",error);
-        }];
-//    });
-
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     // Override point for customization after application launch.
-    // Override point for customization after application launch.
-    // Override point for customization after application launch.
-    [SettingsHandler sharedSettings].serverIPAddress = @"localhost";
+    [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.102";
     [SettingsHandler sharedSettings].serverPort=8123;
     
     
-    //reset the server
-   /* [[BMNetworkManager sharedManager] resetServerOnCompletion:^{
-        //reg test A
-        [[BMNetworkManager sharedManager] registerPlayer:@"testA" onCompletion:^(NSDictionary *result) {
-            [self step:@"testA"];
-        } failure:^(NSError *error) {
-            NSLog(@"error:%@",error);
-        }];
-        
-        //reg test B
-        [[BMNetworkManager sharedManager] registerPlayer:@"testB" onCompletion:^(NSDictionary *result) {
-            NSLog(@"res:%@",result);
-            [self step:@"testB"];
-        } failure:^(NSError *error) {
-            NSLog(@"error:%@",error);
-        }];
-        
-        
-    } failure:^(NSError *error) {
-        NSLog(@"error:%@",error);
-    }];*/
+
     
     return YES;
 }

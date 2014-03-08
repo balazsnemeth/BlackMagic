@@ -150,10 +150,12 @@ static BMNetworkManager *sharedNetworkManager = nil;
         }
     } failure:^(NSError *error) {
         if (self.isPolling) {
-            self.polling = FALSE;
-            [self.pollingTimer invalidate];
-            self.pollingTimer = nil;
-            failureBlock(error);
+            if (error.code != -1) {
+                self.polling = FALSE;
+                [self.pollingTimer invalidate];
+                self.pollingTimer = nil;
+                failureBlock(error);
+            }
         }
     }];
 }

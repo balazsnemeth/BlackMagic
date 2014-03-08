@@ -32,28 +32,45 @@
     int fightPosition;
     
     BMPlayer* player;
+    
+    BOOL isMyTurn;
 }
 
+
+NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+-(NSString *) genRandStringLength: (int) len {
+    
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+    
+    for (int i=0; i<len; i++) {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random() % [letters length]]];
+    }
+    
+    return randomString;
+}
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
+        isMyTurn = NO;
         //reset the server
-        [[BMNetworkManager sharedManager] resetServerOnCompletion:^{
+        
+        NSString* name = [self genRandStringLength:6];
+        
             //reg test A
-            [[BMNetworkManager sharedManager] registerPlayer:@"testA" onCompletion:^(NSDictionary *result) {
+            [[BMNetworkManager sharedManager] registerPlayer:name onCompletion:^(NSDictionary *result) {
                 
                 //NSLog(@"res:%@",result);
                 player = [[BMPlayer alloc] initWithDictionary:result];
+                player.name = name;
+                isMyTurn = YES;
             } failure:^(NSError *error) {
                 NSLog(@"error:%@",error);
             }];
             
-            
-        } failure:^(NSError *error) {
-            NSLog(@"error:%@",error);
-        }];
+        
         
         fightPosition = self.frame.size.width / 2;
         
@@ -196,6 +213,25 @@
         movedCard.position = _touchPoint;
     }
     
+    if (isMyTurn){
+        
+        isMyTurn = NO;
+        
+        [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
+            NSLog(@"res: %@", result);
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
+                                                            message:@"Dee dee doo doo."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+
+            
+        } failure:^(NSError *error) {
+            NSLog(@"error %@", error);
+        }];
+    }
     //receive status
     // Choose card
     // send rest api

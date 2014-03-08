@@ -10,11 +10,13 @@
 
 @interface BMPlayer : NSObject
 
-@property (nonatomic, strong) NSDictionary* fireCards;
-@property (nonatomic, strong) NSDictionary* airCards;
-@property (nonatomic, strong) NSDictionary* earthCards;
-@property (nonatomic, strong) NSDictionary* illusionCards;
-@property (nonatomic, strong) NSDictionary* waterCards;
+@property (nonatomic, strong) NSArray* fireCards;
+@property (nonatomic, strong) NSArray* airCards;
+@property (nonatomic, strong) NSArray* earthCards;
+@property (nonatomic, strong) NSArray* illusionCards;
+@property (nonatomic, strong) NSArray* waterCards;
+
+@property (nonatomic, strong) NSString* name;
 
 @property (nonatomic, assign) int waterMana;
 @property (nonatomic, assign) int airMana;
