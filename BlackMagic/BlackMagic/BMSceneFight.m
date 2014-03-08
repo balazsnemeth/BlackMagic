@@ -88,21 +88,21 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         
         
-        fightPosition = self.frame.size.width / 2;
+        fightPosition = self.frame.size.height / 2;
         
-        playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 550 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 500 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 450 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 350 }]];
+        playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 250, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 300, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 400, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 450, fightPosition - 50}]];
         
-        opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ fightPosition, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 550 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 500 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 450 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 350 }]];
+        opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 250, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 300, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 400, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 450, fightPosition }]];
         
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
@@ -136,15 +136,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
         playerHealth.fontSize = 30;
-        playerHealth.position = CGPointMake(290, CGRectGetMidY(self.frame) - 30);
-        playerHealth.zRotation = -M_PI/2;
+        playerHealth.position = CGPointMake(self.frame.size.width / 2 - 10, 10);
+        //playerHealth.zRotation = -M_PI/2;
         [self addChild:playerHealth];
         
         opponentHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         opponentHealth.text = [NSString stringWithFormat:@"%i", 60];
         opponentHealth.fontSize = 30;
-        opponentHealth.position = CGPointMake(450, CGRectGetMidY(self.frame) - 30);
-        opponentHealth.zRotation = -M_PI/2;
+        opponentHealth.position = CGPointMake(self.frame.size.width / 2 - 10, 1000);
+        //opponentHealth.zRotation = -M_PI/2;
         [self addChild:opponentHealth];
         
         [self setupViews];

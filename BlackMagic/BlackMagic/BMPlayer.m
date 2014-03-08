@@ -74,7 +74,7 @@
 
 -(void)updatePlayerFromDictionary:(NSDictionary*)dictionary{
     
-    NSLog(@"player dict : %@", dictionary);
+    //NSLog(@"player dict : %@", dictionary);
     NSDictionary* resources = dictionary[@"availableResources"];
     
     NSMutableArray* slots = [NSMutableArray array];
@@ -86,7 +86,7 @@
     
     self.slots = slots;
     
-    NSLog(@"slots: %@", self.slots);
+    //NSLog(@"slots: %@", self.slots);
     
     self.waterMana = [resources[@"water"] integerValue];
     self.earthMana = [resources[@"earth"] integerValue];
