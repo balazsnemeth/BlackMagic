@@ -28,6 +28,11 @@
  */
 @property (nonatomic,strong) NSString* serverIPAddress;
 
+/**
+ Set (or get) the name of the device
+ */
+@property (nonatomic) NSInteger serverPort;
+
 /*
  Update the input device with the stored data.
  **/
