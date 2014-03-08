@@ -107,14 +107,18 @@ static BMNetworkManager *sharedNetworkManager = nil;
 - (void) proceedPlayer:(NSString*)playerName withInput:(NSDictionary*)step  onCompletion:(void (^)(NSDictionary *result))success
                failure:(void (^)(NSError *error))failure{
     NSMutableDictionary *myNewDictionary = [@{@"name": playerName} mutableCopy];
+    [myNewDictionary addEntriesFromDictionary:step];
+    if (!myNewDictionary[@"slotIndex"]) {
+        [myNewDictionary setObject:@(0) forKey:@"slotIndex"];
+    }
     
-    NSString* url = [NSString stringWithFormat:@"proceedWithInput?name=%@",playerName];
+ /*   NSString* url = [NSString stringWithFormat:@"proceedWithInput?name=%@",playerName];
     for (NSString* key in [step allKeys]) {
         NSString* aktPar = [NSString stringWithFormat:@"&%@=%@",key,step[key]];
         url = [url stringByAppendingString:aktPar];
     }
-    NSLog(@"url: %@",url);
-    [self networkRequestForUrlPath:url withParameters:nil onCompletion:success failure:failure];
+    NSLog(@"url: %@",url);*/
+    [self networkRequestForUrlPath:@"proceedWithInput" withParameters:myNewDictionary onCompletion:success failure:failure];
 }
 
 
@@ -131,7 +135,7 @@ static BMNetworkManager *sharedNetworkManager = nil;
     NSLog(@"enemi check");
     NSDictionary* p = @{@"name": timer.userInfo[@"name"]};
     void (^completionBlock)(NSDictionary *result) = timer.userInfo[@"completionBlock"];
-    //void (^failureBlock)(NSError *error) = timer.userInfo[@"failureBlock"];
+    void (^failureBlock)(NSError *error) = timer.userInfo[@"failureBlock"];
 
     [self networkRequestForUrlPath:@"getNextMove" withParameters:p onCompletion:^(NSDictionary *result) {
         NSNumber* proceed = [result objectForKey:@"proceed"];
@@ -139,13 +143,18 @@ static BMNetworkManager *sharedNetworkManager = nil;
         if (proceed.boolValue) {
             if (self.isPolling) {
                 self.polling = FALSE;
+                [self.pollingTimer invalidate];
+                self.pollingTimer = nil;
                 completionBlock(result);
             }
         }
     } failure:^(NSError *error) {
-/*        if (self.isPolling) {
+        if (self.isPolling) {
             self.polling = FALSE;
-        }*/
+            [self.pollingTimer invalidate];
+            self.pollingTimer = nil;
+            failureBlock(error);
+        }
     }];
 }
 
