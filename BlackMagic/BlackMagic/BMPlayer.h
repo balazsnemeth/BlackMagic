@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) NSString* name;
 
+@property (nonatomic, strong) NSArray* slots;
+
 @property (nonatomic, assign) int waterMana;
 @property (nonatomic, assign) int airMana;
 @property (nonatomic, assign) int fireMana;
@@ -27,5 +29,7 @@
 
 
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
+
+-(void)updatePlayerFromDictionary:(NSDictionary*)dictionary;
 
 @end

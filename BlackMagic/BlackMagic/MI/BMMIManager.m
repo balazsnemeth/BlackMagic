@@ -7,7 +7,7 @@
 //
 
 #import "BMMIManager.h"
-#import "BMCreatureSlot.h"
+#import "BMCreauterSlot.h"
 
 @interface BMMIManager()
 
@@ -101,7 +101,7 @@ static BMMIManager *sharedMIManager = nil;
 
 - (BOOL) hasFreeSlotOfPlayer:(BMPlayer*)player{
     BOOL outR = FALSE;
-    for (BMCreatureSlot* slot in player.slots) {
+    for (BMCreauterSlot* slot in player.slots) {
         if (slot.isEmpty) {
             outR = TRUE;
             break;
@@ -124,8 +124,8 @@ static BMMIManager *sharedMIManager = nil;
         int defenderPosition = NOT_DEFINED;
         int attackPosition = NOT_DEFINED;
         for (int i = 0; i<SLOT_COUNT; i++) {
-            BMCreatureSlot* currEnemySlot = enemy.slots[i];
-            BMCreatureSlot* currPlayerSlot = player.slots[i];
+            BMCreauterSlot* currEnemySlot = enemy.slots[i];
+            BMCreauterSlot* currPlayerSlot = player.slots[i];
             
             //VAN-e olyan slotom szabadon, ami előtt az ellenfél támad!
             if(!currEnemySlot.isEmpty){
@@ -167,6 +167,7 @@ static BMMIManager *sharedMIManager = nil;
         res.skipTurn = TRUE;
         res.card = nil;
     }
+    
     return res;
 }
 

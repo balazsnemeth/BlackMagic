@@ -105,31 +105,21 @@ static BMNetworkManager *sharedNetworkManager = nil;
 }
 
 
-- (void) proceedPlayer:(NSString*)playerName withInput:(BMMIResult*)step  onCompletion:(void (^)(NSDictionary *result))success
+- (void) proceedPlayer:(NSString*)playerName withInput:(NSDictionary*)step  onCompletion:(void (^)(NSDictionary *result))success
                failure:(void (^)(NSError *error))failure{
     
     
     
     NSMutableDictionary *myNewDictionary = [@{@"name": playerName} mutableCopy];
-    if (step.skipTurn) {
-        [myNewDictionary setObject:@"action" forKey:@"skipTurn"];
-    }
-    else{
-        [myNewDictionary setObject:@"playCard" forKey:@"action"];
-        [myNewDictionary setObject:step.card.type forKey:@"resourceType"];
-        [myNewDictionary setObject:@(step.slotIndex) forKey:@"slotIndex"];
-    }
-    if (!myNewDictionary[@"slotIndex"]) {
-        [myNewDictionary setObject:@(0) forKey:@"slotIndex"];
-    }
+   // [myNewDictionary addEntriesFromDictionary:step];
     
- /*   NSString* url = [NSString stringWithFormat:@"proceedWithInput?name=%@",playerName];
+    NSString* url = [NSString stringWithFormat:@"proceedWithInput?name=%@",playerName];
     for (NSString* key in [step allKeys]) {
         NSString* aktPar = [NSString stringWithFormat:@"&%@=%@",key,step[key]];
         url = [url stringByAppendingString:aktPar];
     }
-    NSLog(@"url: %@",url);*/
-    [self networkRequestForUrlPath:@"proceedWithInput" withParameters:myNewDictionary onCompletion:success failure:failure];
+    NSLog(@"url: %@",url);
+    [self networkRequestForUrlPath:url withParameters:nil onCompletion:success failure:failure];
 }
 
 
@@ -143,7 +133,7 @@ static BMNetworkManager *sharedNetworkManager = nil;
 
 
 - (void) checkEnemyNextMove:(NSTimer*)timer{
-    NSLog(@"enemi check");
+    //NSLog(@"enemi check");
     NSDictionary* p = @{@"name": timer.userInfo[@"name"]};
     void (^completionBlock)(NSDictionary *result) = timer.userInfo[@"completionBlock"];
     void (^failureBlock)(NSError *error) = timer.userInfo[@"failureBlock"];

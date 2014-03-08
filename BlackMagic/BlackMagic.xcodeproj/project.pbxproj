@@ -46,6 +46,8 @@
 		1EDB394A18CB658F008E8565 /* BMNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB394818CB658F008E8565 /* BMNetworkManager.m */; };
 		1EDB394E18CB65D9008E8565 /* SettingsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB394D18CB65D9008E8565 /* SettingsHandler.m */; };
 		1EDB395418CB6C1B008E8565 /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB395318CB6C1B008E8565 /* BMCard.m */; };
+		803D014B18CB84B4004EB0DF /* BMGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D014A18CB84B4004EB0DF /* BMGameState.m */; };
+		803D014E18CB8E07004EB0DF /* BMCreauterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D014D18CB8E07004EB0DF /* BMCreauterSlot.m */; };
 		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
 		805E53D018CB3E3C004E7A1B /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53CF18CB3E3C004E7A1B /* images.png */; };
 		805E53D318CB441E004E7A1B /* Healthbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53D218CB441E004E7A1B /* Healthbar.png */; };
@@ -139,6 +141,10 @@
 		1EDB394D18CB65D9008E8565 /* SettingsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsHandler.m; sourceTree = "<group>"; };
 		1EDB395218CB6C1B008E8565 /* BMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCard.h; sourceTree = "<group>"; };
 		1EDB395318CB6C1B008E8565 /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCard.m; sourceTree = "<group>"; };
+		803D014918CB84B4004EB0DF /* BMGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMGameState.h; sourceTree = "<group>"; };
+		803D014A18CB84B4004EB0DF /* BMGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMGameState.m; sourceTree = "<group>"; };
+		803D014C18CB8E07004EB0DF /* BMCreauterSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCreauterSlot.h; sourceTree = "<group>"; };
+		803D014D18CB8E07004EB0DF /* BMCreauterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCreauterSlot.m; sourceTree = "<group>"; };
 		805E53C918CB3789004E7A1B /* BMSceneFight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSceneFight.h; sourceTree = "<group>"; };
 		805E53CA18CB3789004E7A1B /* BMSceneFight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMSceneFight.m; sourceTree = "<group>"; };
 		805E53CF18CB3E3C004E7A1B /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = images.png; sourceTree = "<group>"; };
@@ -381,6 +387,10 @@
 				8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */,
 				805E53E418CB5D84004E7A1B /* BMPlayer.h */,
 				805E53E518CB5D84004E7A1B /* BMPlayer.m */,
+				803D014918CB84B4004EB0DF /* BMGameState.h */,
+				803D014A18CB84B4004EB0DF /* BMGameState.m */,
+				803D014C18CB8E07004EB0DF /* BMCreauterSlot.h */,
+				803D014D18CB8E07004EB0DF /* BMCreauterSlot.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -489,6 +499,7 @@
 				1E3625A718CB3E1C00E08E4A /* AFURLConnectionOperation.m in Sources */,
 				1E3625A218CB3E1C00E08E4A /* AFHTTPRequestOperation.m in Sources */,
 				805E53E018CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.m in Sources */,
+				803D014E18CB8E07004EB0DF /* BMCreauterSlot.m in Sources */,
 				1E3625A518CB3E1C00E08E4A /* AFNetworkReachabilityManager.m in Sources */,
 				1EBE82D818CB808A00E8A9AF /* BMMIResult.m in Sources */,
 				1E3625AA18CB3E1C00E08E4A /* AFURLSessionManager.m in Sources */,
@@ -501,6 +512,7 @@
 				1E3625A918CB3E1C00E08E4A /* AFURLResponseSerialization.m in Sources */,
 				1E36250918CB280A00E08E4A /* BMViewController.m in Sources */,
 				805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */,
+				803D014B18CB84B4004EB0DF /* BMGameState.m in Sources */,
 				1E36250C18CB280A00E08E4A /* BMStartScene.m in Sources */,
 				1E3625AF18CB3E1C00E08E4A /* UIButton+AFNetworking.m in Sources */,
 				805E53E618CB5D84004E7A1B /* BMPlayer.m in Sources */,

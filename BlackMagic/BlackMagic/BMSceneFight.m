@@ -11,6 +11,7 @@
 #import "BMNetworkManager.h"
 #import "BMPlayer.h"
 #import "BMMIManager.h"
+#import "BMGameState.h"
 
 @implementation BMSceneFight{
     SKSpriteNode *playerHealth;
@@ -33,6 +34,7 @@
     int fightPosition;
     
     BMPlayer* player;
+    BMPlayer* enemy;
     
     BOOL isMyTurn;
 }
@@ -65,12 +67,13 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 
                 //NSLog(@"res:%@",result);
                 player = [[BMPlayer alloc] initWithDictionary:result];
+                enemy = [[BMPlayer alloc] initWithDictionary:result];
                 player.name = name;
                 isMyTurn = YES;
             } failure:^(NSError *error) {
                 NSLog(@"error:%@",error);
             }];
-            
+        
         
         
         fightPosition = self.frame.size.width / 2;
@@ -200,6 +203,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
+
+
 #pragma mark -
 #pragma mark Game Loop
 
@@ -221,18 +226,34 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
             NSLog(@"res: %@", result);
             
-/*            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
-                                                            message:@"Dee dee doo doo."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];*/
+            BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+            
+            
+            
+            if ([player.name isEqualToString:gameState.players[0][@"name"]]){
+                [player updatePlayerFromDictionary:gameState.players[0]];
+                [enemy updatePlayerFromDictionary:gameState.players[1]];
+            }
+            else{
+                [player updatePlayerFromDictionary:gameState.players[1]];
+                [enemy updatePlayerFromDictionary:gameState.players[0]];
+            }
+            
+            BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
 
-            BMMIResult* step = [[BMMIManager sharedManager] suggestedCardForPlayer:self.player withEnemy:self.enemy inTurn:self.turnIndex];
-            [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:BMMIResult onCompletion:^(NSDictionary *result) {
-                //update-lni kell a dolgokat, és várni a következő körre!
-                
-                
+            NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
+        
+            [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
+                    //update-lni kell a dolgokat, és várni a következő körre!
+                    BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+                    if ([player.name isEqualToString:gameState.players[0][@"name"]]){
+                        [player updatePlayerFromDictionary:gameState.players[0]];
+                        [enemy updatePlayerFromDictionary:gameState.players[1]];
+                    }
+                    else{
+                        [player updatePlayerFromDictionary:gameState.players[1]];
+                        [enemy updatePlayerFromDictionary:gameState.players[0]];
+                    }
             } failure:^(NSError *error) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
                                                                 message:error.domain
@@ -242,6 +263,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 [alert show];
                 NSLog(@"error %@", error);
             }];
+
             
         } failure:^(NSError *error) {
             NSLog(@"error %@", error);
@@ -258,5 +280,56 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     // send rest api
     // wailt for new turn
 }
+
+#pragma mark -
+#pragma mark Helper
+
+- (NSDictionary*) stepInputTypeOfMIResult:(BMMIResult*)miResult{
+    NSMutableDictionary *myNewDictionary = [NSMutableDictionary new];
+    
+    if (miResult.skipTurn) {
+        [myNewDictionary setObject:@"action" forKey:@"skipTurn"];
+    }
+    else{
+        [myNewDictionary setObject:@"playCard" forKey:@"action"];
+        BMCard* card = miResult.card;
+        NSString* cardType = @"";
+        int cardIndex = NSNotFound;
+        cardIndex = [player.fireCards indexOfObject:card];
+        if (cardIndex != NSNotFound) {
+            cardType = CARD_TYPE_FIRE;
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.earthCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_EARTH;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.illusionCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_ILLUSION;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.airCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_AIR;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.waterCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_WATER;
+            }
+        }
+        
+        [myNewDictionary setObject:cardType forKey:@"resourceType"];
+        [myNewDictionary setObject:@(cardIndex) forKey:@"cardIndex"];
+        [myNewDictionary setObject:@(miResult.slotIndex) forKey:@"slotIndex"];
+    }
+    return myNewDictionary;
+}
+
 
 @end
