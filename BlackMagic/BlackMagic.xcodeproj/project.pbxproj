@@ -25,6 +25,7 @@
 		1E36252118CB280A00E08E4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E36251F18CB280A00E08E4A /* InfoPlist.strings */; };
 		1E36252318CB280A00E08E4A /* BlackMagicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36252218CB280A00E08E4A /* BlackMagicTests.m */; };
 		805E53C818CB34CD004E7A1B /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53C718CB34CD004E7A1B /* BMCard.m */; };
+		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		1E36252218CB280A00E08E4A /* BlackMagicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlackMagicTests.m; sourceTree = "<group>"; };
 		805E53C618CB34CD004E7A1B /* BMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCard.h; sourceTree = "<group>"; };
 		805E53C718CB34CD004E7A1B /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCard.m; sourceTree = "<group>"; };
+		805E53C918CB3789004E7A1B /* BMSceneFight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSceneFight.h; sourceTree = "<group>"; };
+		805E53CA18CB3789004E7A1B /* BMSceneFight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMSceneFight.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,8 @@
 				1E36250818CB280A00E08E4A /* BMViewController.m */,
 				1E36250A18CB280A00E08E4A /* BMStartScene.h */,
 				1E36250B18CB280A00E08E4A /* BMStartScene.m */,
+				805E53C918CB3789004E7A1B /* BMSceneFight.h */,
+				805E53CA18CB3789004E7A1B /* BMSceneFight.m */,
 				805E53C618CB34CD004E7A1B /* BMCard.h */,
 				805E53C718CB34CD004E7A1B /* BMCard.m */,
 				1E36250D18CB280A00E08E4A /* Spaceship.png */,
@@ -270,6 +275,7 @@
 			files = (
 				805E53C818CB34CD004E7A1B /* BMCard.m in Sources */,
 				1E36250918CB280A00E08E4A /* BMViewController.m in Sources */,
+				805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */,
 				1E36250C18CB280A00E08E4A /* BMStartScene.m in Sources */,
 				1E3624FF18CB280A00E08E4A /* main.m in Sources */,
 				1E36250318CB280A00E08E4A /* BMAppDelegate.m in Sources */,
