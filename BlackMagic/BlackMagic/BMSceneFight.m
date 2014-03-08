@@ -228,7 +228,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                                                   otherButtonTitles:nil];
             [alert show];*/
 
-            BMMIResult* step = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy];
+            BMMIResult* step = [[BMMIManager sharedManager] suggestedCardForPlayer:self.player withEnemy:self.enemy];
             [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:BMMIResult onCompletion:^(NSDictionary *result) {
                 //update-lni kell a dolgokat, és várni a következő körre!
                 

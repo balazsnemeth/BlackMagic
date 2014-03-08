@@ -7,6 +7,7 @@
 //
 
 #import "BMMIManager.h"
+#import "BMCreatureSlot.h"
 
 @implementation BMMIManager
 
@@ -106,9 +107,12 @@ static BMMIManager *sharedMIManager = nil;
         int defenderPosition = NOT_DEFINED;
         int attackPosition = NOT_DEFINED;
         for (int i = 0; i<SLOT_COUNT; i++) {
+            BMCreatureSlot* currEnemySlot = enemy.slots[i];
+            BMCreatureSlot* currPlayerSlot = player.slots[i];
+            
             //VAN-e olyan slotom szabadon, ami előtt az ellenfél támad!
-            if(enemy.slots[@(i)]){
-                if (!player.slots[@(i)]) {
+            if(!currEnemySlot.isEmpty){
+                if (currPlayerSlot.isEmpty) {
                     //Az ellenfélnek VAN slotja, és nekem NINCS -> VÉDEKEZÉS
                     defenderPosition = i;
                 }
@@ -118,7 +122,7 @@ static BMMIManager *sharedMIManager = nil;
             }
             else{
                 //Az ellenfélnek nincsen itt ellensége, ha nekem viszont lehetne itt szörnyem, hogy támadjam!
-                if (!player.slots[@(i)]) {
+                if (currPlayerSlot.isEmpty) {
                     //Az ellenfélnek nincs slotja, ÉS nekem sincs -> TÁMADÁS
                     attackPosition = i;
                 }
@@ -138,7 +142,9 @@ static BMMIManager *sharedMIManager = nil;
     }
     else{
         //Nincs szabad slotom!
-        //Most csak skippelek!
+        //Tudok-e varázsolni!
+        BMCard* strongestIllusion = [self strongestOfCards:buyableCards inType:SPELL_TYPE];
+        
         res.skipTurn = TRUE;
         res.card = nil;
     }
