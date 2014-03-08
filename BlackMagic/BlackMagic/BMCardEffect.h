@@ -17,11 +17,23 @@ typedef enum
     resourceAdd
 }CardEffectType;
 
+typedef enum
+{
+    fire,
+    water,
+    air,
+    earth,
+    illusion
+}EffectResourceType;
+
 @interface BMCardEffect : NSObject
 
 @property (nonatomic) NSInteger power;
+@property (nonatomic) EffectResourceType resourceType;
 @property (nonatomic) CardEffectType cardEffect;
 @property (nonatomic,copy) NSString *targetOwner;
 @property (nonatomic,copy) NSString *targetType;
+
+- (id)initWithDictionary:(NSDictionary*) aDictionary;
 
 @end

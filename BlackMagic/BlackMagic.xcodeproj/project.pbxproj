@@ -53,6 +53,7 @@
 		805E53E318CB4CCE004E7A1B /* SKTUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DE18CB4CCE004E7A1B /* SKTUtils.mm */; };
 		805E53E618CB5D84004E7A1B /* BMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53E518CB5D84004E7A1B /* BMPlayer.m */; };
 		8E98D7DA18CB40B500B42F26 /* BMCardEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7D918CB40B500B42F26 /* BMCardEffect.m */; };
+		8E98D7E018CB4B6600B42F26 /* BMCardAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,8 @@
 		805E53E518CB5D84004E7A1B /* BMPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMPlayer.m; sourceTree = "<group>"; };
 		8E98D7D818CB40B500B42F26 /* BMCardEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCardEffect.h; sourceTree = "<group>"; };
 		8E98D7D918CB40B500B42F26 /* BMCardEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCardEffect.m; sourceTree = "<group>"; };
+		8E98D7DE18CB4B6600B42F26 /* BMCardAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCardAttribute.h; sourceTree = "<group>"; };
+		8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCardAttribute.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,6 +358,8 @@
 				805E53C718CB34CD004E7A1B /* BMCard.m */,
 				8E98D7D818CB40B500B42F26 /* BMCardEffect.h */,
 				8E98D7D918CB40B500B42F26 /* BMCardEffect.m */,
+				8E98D7DE18CB4B6600B42F26 /* BMCardAttribute.h */,
+				8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				1E3625AF18CB3E1C00E08E4A /* UIButton+AFNetworking.m in Sources */,
 				805E53E618CB5D84004E7A1B /* BMPlayer.m in Sources */,
 				1E3625B018CB3E1C00E08E4A /* UIImageView+AFNetworking.m in Sources */,
+				8E98D7E018CB4B6600B42F26 /* BMCardAttribute.m in Sources */,
 				1E3625A318CB3E1C00E08E4A /* AFHTTPRequestOperationManager.m in Sources */,
 				805E53E218CB4CCE004E7A1B /* SKTAudio.m in Sources */,
 				1E3625A618CB3E1C00E08E4A /* AFSecurityPolicy.m in Sources */,
