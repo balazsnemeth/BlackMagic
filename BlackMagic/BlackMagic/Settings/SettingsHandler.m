@@ -58,6 +58,7 @@ static SettingsHandler *sharedSettings = nil;
     self.defaultSelectionTrueOrFalse = TRUE;
     self.letTheAppSleep = NO;
     self.serverIPAddress = @"localhost";
+    self.serverPort=8123;
     self.useExternalScreen=TRUE;
     [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:@"defaultSettingsExist"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -127,6 +128,19 @@ static SettingsHandler *sharedSettings = nil;
         return;
     }
     [[NSUserDefaults standardUserDefaults] setObject:serverIPAddress forKey:@"serverIPAddress"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
+- (NSInteger) serverPort{
+    return [[NSUserDefaults standardUserDefaults] stringForKey:@"serverPort"].integerValue;
+}
+
+- (void) setServerPort:(NSInteger)serverPort{
+    if (serverPort == self.serverPort) {
+        return;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:@(serverPort) forKey:@"serverPort"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
