@@ -16,7 +16,7 @@
 		1E36250318CB280A00E08E4A /* BMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36250218CB280A00E08E4A /* BMAppDelegate.m */; };
 		1E36250618CB280A00E08E4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E36250418CB280A00E08E4A /* Main.storyboard */; };
 		1E36250918CB280A00E08E4A /* BMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36250818CB280A00E08E4A /* BMViewController.m */; };
-		1E36250C18CB280A00E08E4A /* BMMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36250B18CB280A00E08E4A /* BMMyScene.m */; };
+		1E36250C18CB280A00E08E4A /* BMStartScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36250B18CB280A00E08E4A /* BMStartScene.m */; };
 		1E36250E18CB280A00E08E4A /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E36250D18CB280A00E08E4A /* Spaceship.png */; };
 		1E36251018CB280A00E08E4A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E36250F18CB280A00E08E4A /* Images.xcassets */; };
 		1E36251718CB280A00E08E4A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E36251618CB280A00E08E4A /* XCTest.framework */; };
@@ -51,8 +51,8 @@
 		1E36250518CB280A00E08E4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1E36250718CB280A00E08E4A /* BMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMViewController.h; sourceTree = "<group>"; };
 		1E36250818CB280A00E08E4A /* BMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMViewController.m; sourceTree = "<group>"; };
-		1E36250A18CB280A00E08E4A /* BMMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMMyScene.h; sourceTree = "<group>"; };
-		1E36250B18CB280A00E08E4A /* BMMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMMyScene.m; sourceTree = "<group>"; };
+		1E36250A18CB280A00E08E4A /* BMStartScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMStartScene.h; sourceTree = "<group>"; };
+		1E36250B18CB280A00E08E4A /* BMStartScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMStartScene.m; sourceTree = "<group>"; };
 		1E36250D18CB280A00E08E4A /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		1E36250F18CB280A00E08E4A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1E36251518CB280A00E08E4A /* BlackMagicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlackMagicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,8 +126,8 @@
 				1E36250418CB280A00E08E4A /* Main.storyboard */,
 				1E36250718CB280A00E08E4A /* BMViewController.h */,
 				1E36250818CB280A00E08E4A /* BMViewController.m */,
-				1E36250A18CB280A00E08E4A /* BMMyScene.h */,
-				1E36250B18CB280A00E08E4A /* BMMyScene.m */,
+				1E36250A18CB280A00E08E4A /* BMStartScene.h */,
+				1E36250B18CB280A00E08E4A /* BMStartScene.m */,
 				1E36250D18CB280A00E08E4A /* Spaceship.png */,
 				1E36250F18CB280A00E08E4A /* Images.xcassets */,
 				1E3624F918CB280A00E08E4A /* Supporting Files */,
@@ -264,7 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E36250918CB280A00E08E4A /* BMViewController.m in Sources */,
-				1E36250C18CB280A00E08E4A /* BMMyScene.m in Sources */,
+				1E36250C18CB280A00E08E4A /* BMStartScene.m in Sources */,
 				1E3624FF18CB280A00E08E4A /* main.m in Sources */,
 				1E36250318CB280A00E08E4A /* BMAppDelegate.m in Sources */,
 			);
@@ -479,6 +479,7 @@
 				1E36252818CB280A00E08E4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1E36252918CB280A00E08E4A /* Build configuration list for PBXNativeTarget "BlackMagicTests" */ = {
 			isa = XCConfigurationList;
@@ -487,6 +488,7 @@
 				1E36252B18CB280A00E08E4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

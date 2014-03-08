@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 BlackBone. All rights reserved.
 //
 
-#import "BMMyScene.h"
+#import "BMStartScene.h"
 
-@implementation BMMyScene
+@implementation StartScene
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
