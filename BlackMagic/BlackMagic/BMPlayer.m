@@ -13,7 +13,16 @@
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary {
     
     if (self = [super init]) {
+     
+//        for (<#type *object#> in <#collection#>) {
+//            <#statements#>
+//        }
         
+        _airCards = dictionary[@"cards"][@"air"];
+        _fireCards = dictionary[@"cards"][@"fire"];
+        _earthCards = dictionary[@"cards"][@"earth"];
+        _illusionCards = dictionary[@"cards"][@"illusion"];
+        _waterCards = dictionary[@"cards"][@"water"];
         
     }
     return self;
