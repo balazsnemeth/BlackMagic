@@ -13,6 +13,13 @@
 #import "BMMIManager.h"
 #import "BMGameState.h"
 
+#define widthGap 10
+#define heightGap 20
+#define cardWidth 50
+#define cardHeight 50
+#define cardDeckWidth 400
+#define cardDeckHeight 400
+
 @implementation BMSceneFight{
     SKLabelNode *playerHealth;
     SKLabelNode *opponentHealth;
@@ -124,7 +131,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         manaBar.position = CGPointMake(110, 10);
         [self addChild:manaBar];
         
-        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
+        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"images"];
+        myLabel.size = CGSizeMake(50, 50);
         myLabel.name = @"buttonStart";
 //        myLabel.text = @"pick";
 //        myLabel.fontSize = 30;
@@ -154,6 +162,22 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 - (void)setupViews
 {
     newView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
+    
+    for (int row = 0; row < 5; row++)
+    {
+        for (int column = 0; column < 4; column++)
+        {
+            CGFloat centerY = row * (cardHeight + heightGap);
+            CGFloat centerX = column * (cardWidth + widthGap);
+            
+            CGRect frame = CGRectMake(centerX, centerY, cardWidth, cardHeight);
+            UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
+            currentCardView.frame = frame;
+            [newView addSubview:currentCardView];
+            UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped)];
+            [currentCardView addGestureRecognizer:cardTapRecognizer];
+        }
+    }
 }
 
 -(void)addSpritesWithName:(NSString*)name FromArray:(NSArray*)array withSize:(CGSize)size{
@@ -184,23 +208,24 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             {
                 NSLog(@"BOOM");
                 [self.view.window.rootViewController.view addSubview:newView];
+                newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+                UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe)];
+                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+                [newView addGestureRecognizer:swipeRecognizer];
+                [UIView animateWithDuration:0.5 animations:^
+                 {
+                     newView.frame = CGRectMake(CGRectGetMinX(self.frame), self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+                 }];
                 cardDeckIsPresent = YES;
             }
-            else
-            {
-                NSLog(@"VOOM");
-                [newView removeFromSuperview];
-                cardDeckIsPresent = NO;
-            }
-            
         }
         // NSLog(@"** TOUCH LOCATION ** \nx: %f / y: %f", location.x, location.y);
-      
+        
         SKNode* card = [self childNodeWithName:@"playerAvailableCard0"];
         
         if([card containsPoint:location])
         {
-             NSLog(@"xxxxxxxxxxxxxxxxxxx touched hat");
+            NSLog(@"xxxxxxxxxxxxxxxxxxx touched hat");
             _touchingCard = YES;
             _touchPoint = location;
             movedCard = (SKSpriteNode*)card;
@@ -213,7 +238,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         }
     }
 }
-
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchPoint = [[touches anyObject] locationInNode:self];
@@ -245,7 +269,20 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
+- (void)cardDeckCardTapped
+{
+    NSLog(@"POW");
+}
 
+- (void)handleSwipe
+{
+    NSLog(@"VOOM");
+    [UIView animateWithDuration:0.5 animations:^
+     {
+         newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+     }];
+    cardDeckIsPresent = NO;
+}
 
 #pragma mark -
 #pragma mark Game Loop
