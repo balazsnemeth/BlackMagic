@@ -26,6 +26,7 @@
 		1E36252318CB280A00E08E4A /* BlackMagicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36252218CB280A00E08E4A /* BlackMagicTests.m */; };
 		805E53C818CB34CD004E7A1B /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53C718CB34CD004E7A1B /* BMCard.m */; };
 		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
+		805E53D018CB3E3C004E7A1B /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53CF18CB3E3C004E7A1B /* images.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		805E53C718CB34CD004E7A1B /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCard.m; sourceTree = "<group>"; };
 		805E53C918CB3789004E7A1B /* BMSceneFight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSceneFight.h; sourceTree = "<group>"; };
 		805E53CA18CB3789004E7A1B /* BMSceneFight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMSceneFight.m; sourceTree = "<group>"; };
+		805E53CF18CB3E3C004E7A1B /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = images.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				805E53CA18CB3789004E7A1B /* BMSceneFight.m */,
 				805E53C618CB34CD004E7A1B /* BMCard.h */,
 				805E53C718CB34CD004E7A1B /* BMCard.m */,
+				805E53CE18CB3B0E004E7A1B /* Art */,
 				1E36250D18CB280A00E08E4A /* Spaceship.png */,
 				1E36250F18CB280A00E08E4A /* Images.xcassets */,
 				1E3624F918CB280A00E08E4A /* Supporting Files */,
@@ -172,6 +175,14 @@
 				1E36251F18CB280A00E08E4A /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		805E53CE18CB3B0E004E7A1B /* Art */ = {
+			isa = PBXGroup;
+			children = (
+				805E53CF18CB3E3C004E7A1B /* images.png */,
+			);
+			name = Art;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E3624FD18CB280A00E08E4A /* InfoPlist.strings in Resources */,
+				805E53D018CB3E3C004E7A1B /* images.png in Resources */,
 				1E36251018CB280A00E08E4A /* Images.xcassets in Resources */,
 				1E36250E18CB280A00E08E4A /* Spaceship.png in Resources */,
 				1E36250618CB280A00E08E4A /* Main.storyboard in Resources */,
