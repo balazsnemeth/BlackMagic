@@ -71,4 +71,19 @@
     
 }
 
+-(void)updatePlayerFromDictionary:(NSDictionary*)dictionary{
+    
+    NSLog(@"player dict : %@", dictionary);
+    NSDictionary* resources = dictionary[@"availableResources"];
+    self.slots = dictionary[@"creatureSlots"];
+    
+    self.waterMana = [resources[@"water"] integerValue];
+    self.earthMana = [resources[@"earth"] integerValue];
+    self.fireMana = [resources[@"fire"] integerValue];
+    self.illusionMana = [resources[@"illusion"] integerValue];
+    self.airMana = [resources[@"air"] integerValue];
+    
+    
+}
+
 @end
