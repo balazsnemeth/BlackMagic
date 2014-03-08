@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BMMIResult.h"
 
 @interface BMNetworkManager : NSObject
 

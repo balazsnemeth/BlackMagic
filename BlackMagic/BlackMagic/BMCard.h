@@ -9,6 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "BMCardAttribute.h"
 
+#define CREATURE_TYPE @"creature"
+#define SPELL_TYPE @"spell"
+
+#define CARD_TYPE_AIR @"air"
+#define CARD_TYPE_EARTH @"earth"
+#define CARD_TYPE_FIRE @"fire"
+#define CARD_TYPE_WATER @"illusion"
+#define CARD_TYPE_ILLUSION @"water"
+
+
 @interface BMCard : NSObject
 
 @property (nonatomic,copy) BMCardAttribute* attribute;

@@ -27,6 +27,7 @@
 @property (nonatomic, assign) int illusionMana;
 @property (nonatomic, assign) int health;
 
+
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 
 -(void)updatePlayerFromDictionary:(NSDictionary*)dictionary;

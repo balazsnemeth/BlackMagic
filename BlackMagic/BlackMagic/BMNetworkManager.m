@@ -9,6 +9,7 @@
 #import "BMNetworkManager.h"
 #import "SettingsHandler.h"
 #import "AFNetworking.h"
+#import "BMCard.h"
 
 @interface BMNetworkManager()
 
@@ -52,7 +53,7 @@ static BMNetworkManager *sharedNetworkManager = nil;
 - (void) networkRequestForUrlPath:(NSString*)urlPart withParameters:(NSDictionary*)parameters onCompletion:(void (^)(NSDictionary *result))success
                               failure:(void (^)(NSError *error))failure{
     NSString* urlStr = [self urlStrWithEnd: urlPart];
-    //NSLog(@"url - %@",urlStr);
+    NSLog(@"url - %@",urlStr);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     [manager GET:urlStr parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -106,19 +107,19 @@ static BMNetworkManager *sharedNetworkManager = nil;
 
 - (void) proceedPlayer:(NSString*)playerName withInput:(NSDictionary*)step  onCompletion:(void (^)(NSDictionary *result))success
                failure:(void (^)(NSError *error))failure{
-    NSMutableDictionary *myNewDictionary = [@{@"name": playerName} mutableCopy];
-    [myNewDictionary addEntriesFromDictionary:step];
-    if (!myNewDictionary[@"slotIndex"]) {
-        [myNewDictionary setObject:@(0) forKey:@"slotIndex"];
-    }
     
- /*   NSString* url = [NSString stringWithFormat:@"proceedWithInput?name=%@",playerName];
+    
+    
+    NSMutableDictionary *myNewDictionary = [@{@"name": playerName} mutableCopy];
+   // [myNewDictionary addEntriesFromDictionary:step];
+    
+    NSString* url = [NSString stringWithFormat:@"proceedWithInput?name=%@",playerName];
     for (NSString* key in [step allKeys]) {
         NSString* aktPar = [NSString stringWithFormat:@"&%@=%@",key,step[key]];
         url = [url stringByAppendingString:aktPar];
     }
-    NSLog(@"url: %@",url);*/
-    [self networkRequestForUrlPath:@"proceedWithInput" withParameters:myNewDictionary onCompletion:success failure:failure];
+    NSLog(@"url: %@",url);
+    [self networkRequestForUrlPath:url withParameters:nil onCompletion:success failure:failure];
 }
 
 

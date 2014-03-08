@@ -21,9 +21,6 @@
     [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.102";
     [SettingsHandler sharedSettings].serverPort=8123;
     
-    
-
-    
     return YES;
 }
 							

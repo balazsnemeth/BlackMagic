@@ -10,6 +10,7 @@
 #import "SKTUtils.h"
 #import "BMNetworkManager.h"
 #import "BMPlayer.h"
+#import "BMMIManager.h"
 #import "BMGameState.h"
 
 @implementation BMSceneFight{
@@ -71,6 +72,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 
                 //NSLog(@"res:%@",result);
                 player = [[BMPlayer alloc] initWithDictionary:result];
+                enemy = [[BMPlayer alloc] initWithDictionary:result];
                 player.name = name;
                 isMyTurn = YES;
             } failure:^(NSError *error) {
@@ -243,6 +245,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
+
+
 #pragma mark -
 #pragma mark Game Loop
 
@@ -264,8 +268,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
             //NSLog(@"res: %@", result);
             
-            
-    
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
             
             
@@ -287,8 +289,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
         } failure:^(NSError *error) {
             NSLog(@"error %@", error);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"error"
-                                                            message:[NSString stringWithFormat:@"error: %@", error]
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                            message:error.domain
                                                            delegate:self
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
@@ -300,5 +302,56 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     // send rest api
     // wailt for new turn
 }
+
+#pragma mark -
+#pragma mark Helper
+
+- (NSDictionary*) stepInputTypeOfMIResult:(BMMIResult*)miResult{
+    NSMutableDictionary *myNewDictionary = [NSMutableDictionary new];
+    
+    if (miResult.skipTurn) {
+        [myNewDictionary setObject:@"action" forKey:@"skipTurn"];
+    }
+    else{
+        [myNewDictionary setObject:@"playCard" forKey:@"action"];
+        BMCard* card = miResult.card;
+        NSString* cardType = @"";
+        int cardIndex = NSNotFound;
+        cardIndex = [player.fireCards indexOfObject:card];
+        if (cardIndex != NSNotFound) {
+            cardType = CARD_TYPE_FIRE;
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.earthCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_EARTH;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.illusionCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_ILLUSION;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.airCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_AIR;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.waterCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_WATER;
+            }
+        }
+        
+        [myNewDictionary setObject:cardType forKey:@"resourceType"];
+        [myNewDictionary setObject:@(cardIndex) forKey:@"cardIndex"];
+        [myNewDictionary setObject:@(miResult.slotIndex) forKey:@"slotIndex"];
+    }
+    return myNewDictionary;
+}
+
 
 @end
