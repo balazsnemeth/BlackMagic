@@ -48,6 +48,7 @@
 		1EDB395418CB6C1B008E8565 /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB395318CB6C1B008E8565 /* BMCard.m */; };
 		803D014B18CB84B4004EB0DF /* BMGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D014A18CB84B4004EB0DF /* BMGameState.m */; };
 		803D014E18CB8E07004EB0DF /* BMCreauterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D014D18CB8E07004EB0DF /* BMCreauterSlot.m */; };
+		803D019C18CBB215004EB0DF /* BS_01_cards_08.png in Resources */ = {isa = PBXBuildFile; fileRef = 803D019B18CBB215004EB0DF /* BS_01_cards_08.png */; };
 		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
 		805E53D018CB3E3C004E7A1B /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53CF18CB3E3C004E7A1B /* images.png */; };
 		805E53D318CB441E004E7A1B /* Healthbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53D218CB441E004E7A1B /* Healthbar.png */; };
@@ -147,6 +148,7 @@
 		803D014A18CB84B4004EB0DF /* BMGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMGameState.m; sourceTree = "<group>"; };
 		803D014C18CB8E07004EB0DF /* BMCreauterSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCreauterSlot.h; sourceTree = "<group>"; };
 		803D014D18CB8E07004EB0DF /* BMCreauterSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCreauterSlot.m; sourceTree = "<group>"; };
+		803D019B18CBB215004EB0DF /* BS_01_cards_08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BS_01_cards_08.png; sourceTree = "<group>"; };
 		805E53C918CB3789004E7A1B /* BMSceneFight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSceneFight.h; sourceTree = "<group>"; };
 		805E53CA18CB3789004E7A1B /* BMSceneFight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMSceneFight.m; sourceTree = "<group>"; };
 		805E53CF18CB3E3C004E7A1B /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = images.png; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 		805E53D118CB4407004E7A1B /* Art */ = {
 			isa = PBXGroup;
 			children = (
+				803D019B18CBB215004EB0DF /* BS_01_cards_08.png */,
 				805E53D218CB441E004E7A1B /* Healthbar.png */,
 				805E53CF18CB3E3C004E7A1B /* images.png */,
 			);
@@ -478,6 +481,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				803D019C18CBB215004EB0DF /* BS_01_cards_08.png in Resources */,
 				8E98D7EA18CB8B0E00B42F26 /* CardDeckView.xib in Resources */,
 				1E3624FD18CB280A00E08E4A /* InfoPlist.strings in Resources */,
 				8E98D7EF18CB91CF00B42F26 /* CardView.xib in Resources */,

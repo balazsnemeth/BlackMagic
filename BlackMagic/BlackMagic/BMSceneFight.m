@@ -25,7 +25,7 @@
     NSArray* playerCardPositions;
     NSArray* opponenetCardPositions;
     
-    NSArray* playerAvailableCardPositions;
+    //NSArray* playerAvailableCardPositions;
     //SKSpriteNode *opponentMana;
     
     BOOL _touchingCard;
@@ -97,19 +97,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                                 [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 400 }],
                                 [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 350 }]];
         
-        playerAvailableCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 400, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 450, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 500, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 550, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 600, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 650, 250 }]];
-        
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         
         [self addSpritesWithName:@"playerCard" FromArray:playerCardPositions withSize:CGSizeMake(50, 50)];
         [self addSpritesWithName:@"opponenetCard"FromArray:opponenetCardPositions withSize:CGSizeMake(50, 50)];
-        [self addSpritesWithName:@"playerAvailableCard" FromArray:playerAvailableCardPositions withSize:CGSizeMake(50, 50)];
+        //[self addSpritesWithName:@"playerAvailableCard" FromArray:playerAvailableCardPositions withSize:CGSizeMake(50, 50)];
         
         
         SKSpriteNode* healthBar = [SKSpriteNode spriteNodeWithImageNamed:@"Healthbar"];
@@ -283,6 +276,40 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
             playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
             opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
+            
+            BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
+            
+            NSLog(@"health: %d", player.health);
+            
+            NSString* cardName = [NSString stringWithFormat:@"playerAvailableCard%d", miRes.slotIndex];
+            SKSpriteNode* card = (SKSpriteNode*)[self childNodeWithName:cardName];
+            card.color = [UIColor blackColor];
+            card.texture = nil;
+            
+
+            NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
+        
+            [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
+                    //update-lni kell a dolgokat, és várni a következő körre!
+                    BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+                    if ([player.name isEqualToString:gameState.players[0][@"name"]]){
+                        [player updatePlayerFromDictionary:gameState.players[0]];
+                        [enemy updatePlayerFromDictionary:gameState.players[1]];
+                    }
+                    else{
+                        [player updatePlayerFromDictionary:gameState.players[1]];
+                        [enemy updatePlayerFromDictionary:gameState.players[0]];
+                    }
+            } failure:^(NSError *error) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                                message:error.domain
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                NSLog(@"error %@", error);
+            }];
+
             
             
             //choose card
