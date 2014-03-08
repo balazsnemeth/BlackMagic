@@ -57,12 +57,15 @@
         }
         _earthCards = cards;
         
-        NSLog(@"water cards %@", _waterCards);
-        NSLog(@"fire cards %@", _fireCards);
-        NSLog(@"_earth cards %@", _earthCards);
-        NSLog(@"illusion cards %@", _illusionCards);
-        NSLog(@"air cards %@", _airCards);
+        _health = 60;
         
+        _waterMana = _airMana = _earthMana = _fireMana = _illusionMana = 15;
+//        
+//        NSLog(@"water cards %@", _waterCards);
+//        NSLog(@"fire cards %@", _fireCards);
+//        NSLog(@"_earth cards %@", _earthCards);
+//        NSLog(@"illusion cards %@", _illusionCards);
+//        NSLog(@"air cards %@", _airCards);
     }
     return self;
     

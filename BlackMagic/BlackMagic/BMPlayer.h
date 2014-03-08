@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSArray* illusionCards;
 @property (nonatomic, strong) NSArray* waterCards;
 
+@property (nonatomic, strong) NSString* name;
+
 @property (nonatomic, assign) int waterMana;
 @property (nonatomic, assign) int airMana;
 @property (nonatomic, assign) int fireMana;
