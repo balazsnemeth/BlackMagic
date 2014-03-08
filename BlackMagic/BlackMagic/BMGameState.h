@@ -12,11 +12,10 @@
 
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 
-@property (nonatomic, assign) BOOL isSucces;
-@property (nonatomic, strong) NSString* error;
 
 @property (nonatomic, assign) int currentPlayerIndex;
 @property (nonatomic, assign) BOOL isGameOver;
+@property (nonatomic, assign) int turnCount;
 
 @property (nonatomic, strong) NSArray* players;
 

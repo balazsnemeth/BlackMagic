@@ -8,6 +8,7 @@
 
 #import "BMPlayer.h"
 #import "BMCard.h"
+#import "BMCreauterSlot.h"
 
 @implementation BMPlayer
 
@@ -75,7 +76,17 @@
     
     NSLog(@"player dict : %@", dictionary);
     NSDictionary* resources = dictionary[@"availableResources"];
-    self.slots = dictionary[@"creatureSlots"];
+    
+    NSMutableArray* slots = [NSMutableArray array];
+    for (NSDictionary* dict in dictionary[@"creatureSlots"]) {
+        
+        BMCreauterSlot* slot = [[BMCreauterSlot alloc] initWithDictionary:dict];
+        [slots addObject:slot];
+    }
+    
+    self.slots = slots;
+    
+    NSLog(@"slots: %@", self.slots);
     
     self.waterMana = [resources[@"water"] integerValue];
     self.earthMana = [resources[@"earth"] integerValue];

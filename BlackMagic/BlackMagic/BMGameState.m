@@ -15,14 +15,13 @@
     
     if (self = [super init]) {
      
-        _isSucces = [dictionary[@"success"] boolValue];
-        _error = dictionary[@"error"];
         
         NSDictionary* gameState = dictionary[@"gameState"];
         
         _isGameOver = [gameState[@"gameOver"] boolValue];
         
         _players = gameState[@"players"];
+        _turnCount = [gameState[@"turnCount"] integerValue];
         
         NSLog(@"players: %@", _players);
     }

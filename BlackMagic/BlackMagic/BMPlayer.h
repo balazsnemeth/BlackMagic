@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) NSString* name;
 
-@property (nonatomic, strong) NSDictionary* slots;
+@property (nonatomic, strong) NSArray* slots;
 
 @property (nonatomic, assign) int waterMana;
 @property (nonatomic, assign) int airMana;

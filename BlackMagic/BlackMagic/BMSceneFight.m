@@ -222,16 +222,11 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
             NSLog(@"res: %@", result);
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
-                                                            message:@"Dee dee doo doo."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
             
-            
-
+    
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+            
+            
             
             if ([player.name isEqualToString:gameState.players[0][@"name"]]){
                 [player updatePlayerFromDictionary:gameState.players[0]];
@@ -247,6 +242,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
         } failure:^(NSError *error) {
             NSLog(@"error %@", error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"error"
+                                                            message:[NSString stringWithFormat:@"error: %@", error]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
         }];
     }
     //receive status
