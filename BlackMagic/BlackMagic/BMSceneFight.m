@@ -8,6 +8,8 @@
 
 #import "BMSceneFight.h"
 #import "SKTUtils.h"
+#import "BMNetworkManager.h"
+#import "BMPlayer.h"
 
 @implementation BMSceneFight{
     SKSpriteNode *playerHealth;
@@ -28,12 +30,30 @@
     SKSpriteNode* movedCard;
     
     int fightPosition;
+    
+    BMPlayer* player;
 }
 
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        
+        //reset the server
+        [[BMNetworkManager sharedManager] resetServerOnCompletion:^{
+            //reg test A
+            [[BMNetworkManager sharedManager] registerPlayer:@"testA" onCompletion:^(NSDictionary *result) {
+                
+                //NSLog(@"res:%@",result);
+                player = [[BMPlayer alloc] initWithDictionary:result];
+            } failure:^(NSError *error) {
+                NSLog(@"error:%@",error);
+            }];
+            
+            
+        } failure:^(NSError *error) {
+            NSLog(@"error:%@",error);
+        }];
         
         fightPosition = self.frame.size.width / 2;
         

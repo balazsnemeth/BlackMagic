@@ -7,6 +7,7 @@
 //
 
 #import "BMPlayer.h"
+#import "BMCard.h"
 
 @implementation BMPlayer
 
@@ -14,9 +15,21 @@
     
     if (self = [super init]) {
      
-//        for (<#type *object#> in <#collection#>) {
-//            <#statements#>
-//        }
+        NSLog(@"dic: %@", dictionary[@"cards"][@"air"]);
+        
+        for (NSDictionary* dict in dictionary[@"cards"]) {
+        
+            NSLog(@"dic: %@", dictionary[@"cards"][@"air"]);
+            
+//            
+//            for (NSArray* cardDict in dict) {
+//                
+//                BMCard* card = [[BMCard alloc] initWithDictionary:dict];
+//                
+//                NSLog(@"card: %@", card);
+//
+//            }
+        }
         
         _airCards = dictionary[@"cards"][@"air"];
         _fireCards = dictionary[@"cards"][@"fire"];

@@ -16,4 +16,13 @@
 @property (nonatomic, strong) NSDictionary* illusionCards;
 @property (nonatomic, strong) NSDictionary* waterCards;
 
+@property (nonatomic, assign) int waterMana;
+@property (nonatomic, assign) int airMana;
+@property (nonatomic, assign) int fireMana;
+@property (nonatomic, assign) int earthMana;
+@property (nonatomic, assign) int illusionMana;
+@property (nonatomic, assign) int health;
+
+-(instancetype)initWithDictionary:(NSDictionary*)dictionary;
+
 @end
