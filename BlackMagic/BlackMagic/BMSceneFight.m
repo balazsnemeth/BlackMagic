@@ -14,6 +14,13 @@
 #import "BMGameState.h"
 #import "UIAlertView+Blocks.h"
 
+#define widthGap 10
+#define heightGap 20
+#define cardWidth 50
+#define cardHeight 50
+#define cardDeckWidth 400
+#define cardDeckHeight 400
+
 @implementation BMSceneFight{
     SKLabelNode *playerHealth;
     SKLabelNode *opponentHealth;
@@ -99,21 +106,21 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [self registerUserWithName:name];
         //reg test A
         
-        fightPosition = self.frame.size.width / 2;
+        fightPosition = self.frame.size.height / 2;
         
-        playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 550 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 500 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 450 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 350 }]];
+        playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 250, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 300, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 400, fightPosition - 50}],
+                                [NSValue valueWithCGPoint:(CGPoint){ 450, fightPosition - 50}]];
         
-        opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ fightPosition, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 550 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 500 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 450 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 350 }]];
+        opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 250, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 300, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 400, fightPosition }],
+                                [NSValue valueWithCGPoint:(CGPoint){ 450, fightPosition }]];
         
         playerAvailableCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 400, 250 }],
                                    [NSValue valueWithCGPoint:(CGPoint){ 450, 250 }],
@@ -142,7 +149,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         manaBar.position = CGPointMake(110, 10);
         [self addChild:manaBar];
         
-        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
+        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"images"];
+        myLabel.size = CGSizeMake(50, 50);
         myLabel.name = @"buttonStart";
 //        myLabel.text = @"pick";
 //        myLabel.fontSize = 30;
@@ -153,15 +161,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
         playerHealth.fontSize = 30;
-        playerHealth.position = CGPointMake(290, CGRectGetMidY(self.frame) - 30);
-        playerHealth.zRotation = -M_PI/2;
+        playerHealth.position = CGPointMake(self.frame.size.width / 2 - 10, 10);
+        //playerHealth.zRotation = -M_PI/2;
         [self addChild:playerHealth];
         
         opponentHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         opponentHealth.text = [NSString stringWithFormat:@"%i", 60];
         opponentHealth.fontSize = 30;
-        opponentHealth.position = CGPointMake(450, CGRectGetMidY(self.frame) - 30);
-        opponentHealth.zRotation = -M_PI/2;
+        opponentHealth.position = CGPointMake(self.frame.size.width / 2 - 10, 1000);
+        //opponentHealth.zRotation = -M_PI/2;
         [self addChild:opponentHealth];
         
         [self setupViews];
@@ -172,6 +180,22 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 - (void)setupViews
 {
     newView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
+    
+    for (int row = 0; row < 5; row++)
+    {
+        for (int column = 0; column < 4; column++)
+        {
+            CGFloat centerY = row * (cardHeight + heightGap);
+            CGFloat centerX = column * (cardWidth + widthGap);
+            
+            CGRect frame = CGRectMake(centerX, centerY, cardWidth, cardHeight);
+            UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
+            currentCardView.frame = frame;
+            [newView addSubview:currentCardView];
+            UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped)];
+            [currentCardView addGestureRecognizer:cardTapRecognizer];
+        }
+    }
 }
 
 -(void)addSpritesWithName:(NSString*)name FromArray:(NSArray*)array withSize:(CGSize)size{
@@ -202,23 +226,24 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             {
                 NSLog(@"BOOM");
                 [self.view.window.rootViewController.view addSubview:newView];
+                newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+                UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe)];
+                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+                [newView addGestureRecognizer:swipeRecognizer];
+                [UIView animateWithDuration:0.5 animations:^
+                 {
+                     newView.frame = CGRectMake(CGRectGetMinX(self.frame), self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+                 }];
                 cardDeckIsPresent = YES;
             }
-            else
-            {
-                NSLog(@"VOOM");
-                [newView removeFromSuperview];
-                cardDeckIsPresent = NO;
-            }
-            
         }
         // NSLog(@"** TOUCH LOCATION ** \nx: %f / y: %f", location.x, location.y);
-      
+        
         SKNode* card = [self childNodeWithName:@"playerAvailableCard0"];
         
         if([card containsPoint:location])
         {
-             NSLog(@"xxxxxxxxxxxxxxxxxxx touched hat");
+            NSLog(@"xxxxxxxxxxxxxxxxxxx touched hat");
             _touchingCard = YES;
             _touchPoint = location;
             movedCard = (SKSpriteNode*)card;
@@ -231,7 +256,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         }
     }
 }
-
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchPoint = [[touches anyObject] locationInNode:self];
@@ -263,7 +287,20 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
+- (void)cardDeckCardTapped
+{
+    NSLog(@"POW");
+}
 
+- (void)handleSwipe
+{
+    NSLog(@"VOOM");
+    [UIView animateWithDuration:0.5 animations:^
+     {
+         newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+     }];
+    cardDeckIsPresent = NO;
+}
 
 #pragma mark -
 #pragma mark Game Loop
