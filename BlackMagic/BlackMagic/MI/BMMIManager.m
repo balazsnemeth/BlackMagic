@@ -9,6 +9,12 @@
 #import "BMMIManager.h"
 #import "BMCreatureSlot.h"
 
+@interface BMMIManager()
+
+@property (nonatomic) NSInteger lastHealthIllusionTurnIndex;
+
+@end
+
 @implementation BMMIManager
 
 static int const SLOT_COUNT = 6;
@@ -30,7 +36,7 @@ static BMMIManager *sharedMIManager = nil;
 {
     self = [super init];
     if (self) {
-        ;
+        _lastHealthIllusionTurnIndex = NOT_DEFINED;
     }
     return self;
 }
@@ -104,7 +110,7 @@ static BMMIManager *sharedMIManager = nil;
     return outR;
 }
 
-- (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy{
+- (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy inTurn:(NSInteger)turnCount{
     BMMIResult* res = [BMMIResult new];
     res.skipTurn = FALSE;
     NSArray* buyableCards = [self bayableCardsOfPlayer:player];
@@ -155,7 +161,9 @@ static BMMIManager *sharedMIManager = nil;
         //Nincs szabad slotom!
         //Tudok-e varázsolni!
         BMCard* strongestIllusion = [self strongestOfCards:buyableCards inType:SPELL_TYPE];
-        
+        if (strongestIllusion) {
+            //ha tudok, akkor valamilyen valószínűsséggel akár varázsolhatok is...
+        }
         res.skipTurn = TRUE;
         res.card = nil;
     }

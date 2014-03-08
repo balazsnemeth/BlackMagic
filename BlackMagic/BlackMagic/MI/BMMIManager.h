@@ -15,6 +15,6 @@
 
 + (BMMIManager*) sharedManager;
 
-- (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy;
+- (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy inTurn:(NSInteger)turnCount;
 
 @end
