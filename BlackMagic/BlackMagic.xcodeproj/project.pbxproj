@@ -43,6 +43,7 @@
 		1E3625B218CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36259F18CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m */; };
 		1E3625B318CB3E1C00E08E4A /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */; };
 		805E53C818CB34CD004E7A1B /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53C718CB34CD004E7A1B /* BMCard.m */; };
+		8E98D7DA18CB40B500B42F26 /* BMCardEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7D918CB40B500B42F26 /* BMCardEffect.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,8 @@
 		1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		805E53C618CB34CD004E7A1B /* BMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCard.h; sourceTree = "<group>"; };
 		805E53C718CB34CD004E7A1B /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCard.m; sourceTree = "<group>"; };
+		8E98D7D818CB40B500B42F26 /* BMCardEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCardEffect.h; sourceTree = "<group>"; };
+		8E98D7D918CB40B500B42F26 /* BMCardEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCardEffect.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,7 @@
 		1E3624F818CB280A00E08E4A /* BlackMagic */ = {
 			isa = PBXGroup;
 			children = (
+				8EA3CD1718CB3DC600EB79A3 /* Model */,
 				1E36257918CB3E1C00E08E4A /* AFNetworking */,
 				1E36258D18CB3E1C00E08E4A /* Settings */,
 				1E36259018CB3E1C00E08E4A /* UIKit+AFNetworking */,
@@ -190,8 +194,6 @@
 				1E36250818CB280A00E08E4A /* BMViewController.m */,
 				1E36250A18CB280A00E08E4A /* BMStartScene.h */,
 				1E36250B18CB280A00E08E4A /* BMStartScene.m */,
-				805E53C618CB34CD004E7A1B /* BMCard.h */,
-				805E53C718CB34CD004E7A1B /* BMCard.m */,
 				1E36250D18CB280A00E08E4A /* Spaceship.png */,
 				1E36250F18CB280A00E08E4A /* Images.xcassets */,
 				1E3624F918CB280A00E08E4A /* Supporting Files */,
@@ -285,6 +287,17 @@
 				1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */,
 			);
 			path = "UIKit+AFNetworking";
+			sourceTree = "<group>";
+		};
+		8EA3CD1718CB3DC600EB79A3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				805E53C618CB34CD004E7A1B /* BMCard.h */,
+				805E53C718CB34CD004E7A1B /* BMCard.m */,
+				8E98D7D818CB40B500B42F26 /* BMCardEffect.h */,
+				8E98D7D918CB40B500B42F26 /* BMCardEffect.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,6 +414,7 @@
 				1E3625B018CB3E1C00E08E4A /* UIImageView+AFNetworking.m in Sources */,
 				1E3625A318CB3E1C00E08E4A /* AFHTTPRequestOperationManager.m in Sources */,
 				1E3625A618CB3E1C00E08E4A /* AFSecurityPolicy.m in Sources */,
+				8E98D7DA18CB40B500B42F26 /* BMCardEffect.m in Sources */,
 				1E3625AE18CB3E1C00E08E4A /* UIAlertView+AFNetworking.m in Sources */,
 				1E3625B318CB3E1C00E08E4A /* UIWebView+AFNetworking.m in Sources */,
 				1E3625AD18CB3E1C00E08E4A /* UIActivityIndicatorView+AFNetworking.m in Sources */,
