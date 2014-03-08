@@ -15,27 +15,53 @@
     
     if (self = [super init]) {
      
-        NSLog(@"dic: %@", dictionary[@"cards"][@"air"]);
+        //NSLog(@"dic: %@", dictionary[@"cards"][@"air"]);
         
-        for (NSDictionary* dict in dictionary[@"cards"]) {
-        
-            NSLog(@"dic: %@", dictionary[@"cards"][@"air"]);
+        NSMutableArray* cards = [NSMutableArray array];
+        for (NSDictionary* dict in dictionary[@"cards"][@"air"]) {
             
-//            
-//            for (NSArray* cardDict in dict) {
-//                
-//                BMCard* card = [[BMCard alloc] initWithDictionary:dict];
-//                
-//                NSLog(@"card: %@", card);
-//
-//            }
+            BMCard* card = [[BMCard alloc] initWithDictionary:dict];
+            [cards addObject:card];
         }
+        _airCards = cards;
         
-        _airCards = dictionary[@"cards"][@"air"];
-        _fireCards = dictionary[@"cards"][@"fire"];
-        _earthCards = dictionary[@"cards"][@"earth"];
-        _illusionCards = dictionary[@"cards"][@"illusion"];
-        _waterCards = dictionary[@"cards"][@"water"];
+        cards = [NSMutableArray array];
+        for (NSDictionary* dict in dictionary[@"cards"][@"water"]) {
+            
+            BMCard* card = [[BMCard alloc] initWithDictionary:dict];
+            [cards addObject:card];
+        }
+        _waterCards = cards;
+        
+        cards = [NSMutableArray array];
+        for (NSDictionary* dict in dictionary[@"cards"][@"illusion"]) {
+            
+            BMCard* card = [[BMCard alloc] initWithDictionary:dict];
+            [cards addObject:card];
+        }
+        _illusionCards = cards;
+        
+        cards = [NSMutableArray array];
+        for (NSDictionary* dict in dictionary[@"cards"][@"fire"]) {
+            
+            BMCard* card = [[BMCard alloc] initWithDictionary:dict];
+            [cards addObject:card];
+        }
+        _fireCards = cards;
+        
+        cards = [NSMutableArray array];
+        for (NSDictionary* dict in dictionary[@"cards"][@"earth"]) {
+            
+            BMCard* card = [[BMCard alloc] initWithDictionary:dict];
+            [cards addObject:card];
+        }
+        _earthCards = cards;
+        
+        NSLog(@"water cards %@", _waterCards);
+        NSLog(@"fire cards %@", _fireCards);
+        NSLog(@"_earth cards %@", _earthCards);
+        NSLog(@"illusion cards %@", _illusionCards);
+        NSLog(@"air cards %@", _airCards);
         
     }
     return self;
