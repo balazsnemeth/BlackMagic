@@ -26,6 +26,8 @@
     BOOL _touchingCard;
     CGPoint _touchPoint;
     SKSpriteNode* movedCard;
+    
+    int fightPosition;
 }
 
 
@@ -33,19 +35,21 @@
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
-        playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 100, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 210, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 320, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 430, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 540, 400 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 650, 400 }]];
+        fightPosition = self.frame.size.width / 2;
         
-        opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 100, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 210, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 320, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 430, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 540, 600 }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 650, 600 }]];
+        playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 600 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 550 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 500 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 450 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 400 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition - 50, 350 }]];
+        
+        opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ fightPosition, 600 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 550 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 500 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 450 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 400 }],
+                                [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 350 }]];
         
         playerAvailableCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 400, 250 }],
                                    [NSValue valueWithCGPoint:(CGPoint){ 450, 250 }],
@@ -57,8 +61,8 @@
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         
-        [self addSpritesWithName:@"playerCard" FromArray:playerCardPositions withSize:CGSizeMake(100, 100)];
-        [self addSpritesWithName:@"opponenetCard"FromArray:opponenetCardPositions withSize:CGSizeMake(100, 100)];
+        [self addSpritesWithName:@"playerCard" FromArray:playerCardPositions withSize:CGSizeMake(50, 50)];
+        [self addSpritesWithName:@"opponenetCard"FromArray:opponenetCardPositions withSize:CGSizeMake(50, 50)];
         [self addSpritesWithName:@"playerAvailableCard" FromArray:playerAvailableCardPositions withSize:CGSizeMake(50, 50)];
         
         
@@ -166,12 +170,16 @@
     if (_touchingCard)
     {
         _touchPoint.x = Clamp(_touchPoint.x, movedCard.size.width / 2, self.size.width - movedCard.size.width / 2);
-        _touchPoint.y = Clamp(_touchPoint.y,
-                              movedCard.size.height / 2,
+        _touchPoint.y = Clamp(_touchPoint.y, movedCard.size.height / 2,
                               self.size.height - movedCard.size.height / 2);
         
         movedCard.position = _touchPoint;
     }
+    
+    //receive status
+    // Choose card
+    // send rest api
+    // wailt for new turn
 }
 
 @end

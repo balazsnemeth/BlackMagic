@@ -51,6 +51,7 @@
 		805E53E118CB4CCE004E7A1B /* SKNode+SKTExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DA18CB4CCE004E7A1B /* SKNode+SKTExtras.m */; };
 		805E53E218CB4CCE004E7A1B /* SKTAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DC18CB4CCE004E7A1B /* SKTAudio.m */; };
 		805E53E318CB4CCE004E7A1B /* SKTUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DE18CB4CCE004E7A1B /* SKTUtils.mm */; };
+		805E53E618CB5D84004E7A1B /* BMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53E518CB5D84004E7A1B /* BMPlayer.m */; };
 		8E98D7DA18CB40B500B42F26 /* BMCardEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7D918CB40B500B42F26 /* BMCardEffect.m */; };
 /* End PBXBuildFile section */
 
@@ -142,6 +143,8 @@
 		805E53DC18CB4CCE004E7A1B /* SKTAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTAudio.m; sourceTree = "<group>"; };
 		805E53DD18CB4CCE004E7A1B /* SKTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTUtils.h; sourceTree = "<group>"; };
 		805E53DE18CB4CCE004E7A1B /* SKTUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SKTUtils.mm; sourceTree = "<group>"; };
+		805E53E418CB5D84004E7A1B /* BMPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPlayer.h; sourceTree = "<group>"; };
+		805E53E518CB5D84004E7A1B /* BMPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMPlayer.m; sourceTree = "<group>"; };
 		8E98D7D818CB40B500B42F26 /* BMCardEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCardEffect.h; sourceTree = "<group>"; };
 		8E98D7D918CB40B500B42F26 /* BMCardEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCardEffect.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +222,8 @@
 				1E36250B18CB280A00E08E4A /* BMStartScene.m */,
 				805E53C918CB3789004E7A1B /* BMSceneFight.h */,
 				805E53CA18CB3789004E7A1B /* BMSceneFight.m */,
+				805E53E418CB5D84004E7A1B /* BMPlayer.h */,
+				805E53E518CB5D84004E7A1B /* BMPlayer.m */,
 				805E53C618CB34CD004E7A1B /* BMCard.h */,
 				805E53C718CB34CD004E7A1B /* BMCard.m */,
 				1E36250D18CB280A00E08E4A /* Spaceship.png */,
@@ -471,6 +476,7 @@
 				805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */,
 				1E36250C18CB280A00E08E4A /* BMStartScene.m in Sources */,
 				1E3625AF18CB3E1C00E08E4A /* UIButton+AFNetworking.m in Sources */,
+				805E53E618CB5D84004E7A1B /* BMPlayer.m in Sources */,
 				1E3625B018CB3E1C00E08E4A /* UIImageView+AFNetworking.m in Sources */,
 				1E3625A318CB3E1C00E08E4A /* AFHTTPRequestOperationManager.m in Sources */,
 				805E53E218CB4CCE004E7A1B /* SKTAudio.m in Sources */,
