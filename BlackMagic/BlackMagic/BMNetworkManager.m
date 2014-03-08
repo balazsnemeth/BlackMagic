@@ -53,7 +53,7 @@ static BMNetworkManager *sharedNetworkManager = nil;
 - (void) networkRequestForUrlPath:(NSString*)urlPart withParameters:(NSDictionary*)parameters onCompletion:(void (^)(NSDictionary *result))success
                               failure:(void (^)(NSError *error))failure{
     NSString* urlStr = [self urlStrWithEnd: urlPart];
-    NSLog(@"url - %@",urlStr);
+    //NSLog(@"url - %@",urlStr);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     [manager GET:urlStr parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -68,7 +68,11 @@ static BMNetworkManager *sharedNetworkManager = nil;
         }
         else{
             if (failure) {
-                failure([NSError errorWithDomain:[finalError componentsJoinedByString:@", "] code:-1 userInfo:nil]);
+                if ([finalError isKindOfClass:NSArray.class]) {
+                    failure([NSError errorWithDomain:[finalError componentsJoinedByString:@", "] code:-1 userInfo:nil]);
+                }
+                else
+                    failure([NSError errorWithDomain:(NSString*)finalError code:-1 userInfo:nil]);
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

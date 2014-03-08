@@ -94,6 +94,8 @@
     self.illusionMana = [resources[@"illusion"] integerValue];
     self.airMana = [resources[@"air"] integerValue];
     
+    self.health =  [dictionary[@"health"] integerValue];
+    
     
 }
 
