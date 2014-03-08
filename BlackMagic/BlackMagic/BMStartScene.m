@@ -7,6 +7,7 @@
 //
 
 #import "BMStartScene.h"
+#import "BMSceneFight.h"
 
 @implementation StartScene
 
@@ -15,24 +16,16 @@
         /* Setup your scene here */
         
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
-//        
-//        SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-//        
-//        myLabel.text = @"Hello, World!";
-//        myLabel.fontSize = 30;
-//        myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-//                                       CGRectGetMidY(self.frame));
-//        
-//        [self addChild:myLabel];
         
-        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"bg_title_page"];
-        background.anchorPoint = CGPointZero;
-        background.position = CGPointZero;
+        SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         
-        [self addChild:background];
+        myLabel.name = @"buttonStart";
+        myLabel.text = @"Start Game";
+        myLabel.fontSize = 30;
+        myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                       CGRectGetMidY(self.frame));
         
-        //[self setUpBookTitle];
-        //[self setUpSoundButton];
+        [self addChild:myLabel];
     }
     return self;
 }
@@ -41,18 +34,17 @@
     /* Called when a touch begins */
     
     for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
+        CGPoint touchLocation = [touch locationInNode:self];
+        SKNode *node = [self nodeAtPoint:touchLocation];
         
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-        
-        sprite.position = location;
-        
-        SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-        
-        [sprite runAction:[SKAction repeatActionForever:action]];
-        
-        [self addChild:sprite];
+        if ([node.name isEqualToString:@"buttonStart"]) {
+            BMSceneFight *scene = [[BMSceneFight alloc] initWithSize:self.size];
+            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:1];
+            [self.view presentScene:scene transition:sceneTransition];
+
+        }
     }
+    
 }
 
 -(void)update:(CFTimeInterval)currentTime {

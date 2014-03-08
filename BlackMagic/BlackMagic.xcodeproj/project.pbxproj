@@ -43,6 +43,14 @@
 		1E3625B218CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36259F18CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m */; };
 		1E3625B318CB3E1C00E08E4A /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */; };
 		805E53C818CB34CD004E7A1B /* BMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53C718CB34CD004E7A1B /* BMCard.m */; };
+		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
+		805E53D018CB3E3C004E7A1B /* images.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53CF18CB3E3C004E7A1B /* images.png */; };
+		805E53D318CB441E004E7A1B /* Healthbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805E53D218CB441E004E7A1B /* Healthbar.png */; };
+		805E53DF18CB4CCE004E7A1B /* SKAction+SKTExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53D618CB4CCE004E7A1B /* SKAction+SKTExtras.m */; };
+		805E53E018CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53D818CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.m */; };
+		805E53E118CB4CCE004E7A1B /* SKNode+SKTExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DA18CB4CCE004E7A1B /* SKNode+SKTExtras.m */; };
+		805E53E218CB4CCE004E7A1B /* SKTAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DC18CB4CCE004E7A1B /* SKTAudio.m */; };
+		805E53E318CB4CCE004E7A1B /* SKTUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 805E53DE18CB4CCE004E7A1B /* SKTUtils.mm */; };
 		8E98D7DA18CB40B500B42F26 /* BMCardEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7D918CB40B500B42F26 /* BMCardEffect.m */; };
 		8E98D7E018CB4B6600B42F26 /* BMCardAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98D7DF18CB4B6600B42F26 /* BMCardAttribute.m */; };
 /* End PBXBuildFile section */
@@ -121,6 +129,20 @@
 		1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		805E53C618CB34CD004E7A1B /* BMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCard.h; sourceTree = "<group>"; };
 		805E53C718CB34CD004E7A1B /* BMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCard.m; sourceTree = "<group>"; };
+		805E53C918CB3789004E7A1B /* BMSceneFight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSceneFight.h; sourceTree = "<group>"; };
+		805E53CA18CB3789004E7A1B /* BMSceneFight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMSceneFight.m; sourceTree = "<group>"; };
+		805E53CF18CB3E3C004E7A1B /* images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = images.png; sourceTree = "<group>"; };
+		805E53D218CB441E004E7A1B /* Healthbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Healthbar.png; sourceTree = "<group>"; };
+		805E53D518CB4CCE004E7A1B /* SKAction+SKTExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKAction+SKTExtras.h"; sourceTree = "<group>"; };
+		805E53D618CB4CCE004E7A1B /* SKAction+SKTExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKAction+SKTExtras.m"; sourceTree = "<group>"; };
+		805E53D718CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKEmitterNode+SKTExtras.h"; sourceTree = "<group>"; };
+		805E53D818CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKEmitterNode+SKTExtras.m"; sourceTree = "<group>"; };
+		805E53D918CB4CCE004E7A1B /* SKNode+SKTExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+SKTExtras.h"; sourceTree = "<group>"; };
+		805E53DA18CB4CCE004E7A1B /* SKNode+SKTExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+SKTExtras.m"; sourceTree = "<group>"; };
+		805E53DB18CB4CCE004E7A1B /* SKTAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTAudio.h; sourceTree = "<group>"; };
+		805E53DC18CB4CCE004E7A1B /* SKTAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTAudio.m; sourceTree = "<group>"; };
+		805E53DD18CB4CCE004E7A1B /* SKTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTUtils.h; sourceTree = "<group>"; };
+		805E53DE18CB4CCE004E7A1B /* SKTUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SKTUtils.mm; sourceTree = "<group>"; };
 		8E98D7D818CB40B500B42F26 /* BMCardEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCardEffect.h; sourceTree = "<group>"; };
 		8E98D7D918CB40B500B42F26 /* BMCardEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCardEffect.m; sourceTree = "<group>"; };
 		8E98D7DE18CB4B6600B42F26 /* BMCardAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCardAttribute.h; sourceTree = "<group>"; };
@@ -186,6 +208,7 @@
 		1E3624F818CB280A00E08E4A /* BlackMagic */ = {
 			isa = PBXGroup;
 			children = (
+				805E53D418CB4CCE004E7A1B /* SKTUtils */,
 				8EA3CD1718CB3DC600EB79A3 /* Model */,
 				1E36257918CB3E1C00E08E4A /* AFNetworking */,
 				1E36258D18CB3E1C00E08E4A /* Settings */,
@@ -197,7 +220,12 @@
 				1E36250818CB280A00E08E4A /* BMViewController.m */,
 				1E36250A18CB280A00E08E4A /* BMStartScene.h */,
 				1E36250B18CB280A00E08E4A /* BMStartScene.m */,
+				805E53C918CB3789004E7A1B /* BMSceneFight.h */,
+				805E53CA18CB3789004E7A1B /* BMSceneFight.m */,
+				805E53C618CB34CD004E7A1B /* BMCard.h */,
+				805E53C718CB34CD004E7A1B /* BMCard.m */,
 				1E36250D18CB280A00E08E4A /* Spaceship.png */,
+				805E53D118CB4407004E7A1B /* Art */,
 				1E36250F18CB280A00E08E4A /* Images.xcassets */,
 				1E3624F918CB280A00E08E4A /* Supporting Files */,
 			);
@@ -292,6 +320,32 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		805E53D118CB4407004E7A1B /* Art */ = {
+			isa = PBXGroup;
+			children = (
+				805E53D218CB441E004E7A1B /* Healthbar.png */,
+				805E53CF18CB3E3C004E7A1B /* images.png */,
+			);
+			name = Art;
+			sourceTree = "<group>";
+		};
+		805E53D418CB4CCE004E7A1B /* SKTUtils */ = {
+			isa = PBXGroup;
+			children = (
+				805E53D518CB4CCE004E7A1B /* SKAction+SKTExtras.h */,
+				805E53D618CB4CCE004E7A1B /* SKAction+SKTExtras.m */,
+				805E53D718CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.h */,
+				805E53D818CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.m */,
+				805E53D918CB4CCE004E7A1B /* SKNode+SKTExtras.h */,
+				805E53DA18CB4CCE004E7A1B /* SKNode+SKTExtras.m */,
+				805E53DB18CB4CCE004E7A1B /* SKTAudio.h */,
+				805E53DC18CB4CCE004E7A1B /* SKTAudio.m */,
+				805E53DD18CB4CCE004E7A1B /* SKTUtils.h */,
+				805E53DE18CB4CCE004E7A1B /* SKTUtils.mm */,
+			);
+			path = SKTUtils;
+			sourceTree = "<group>";
+		};
 		8EA3CD1718CB3DC600EB79A3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,6 +437,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E3624FD18CB280A00E08E4A /* InfoPlist.strings in Resources */,
+				805E53D318CB441E004E7A1B /* Healthbar.png in Resources */,
+				805E53D018CB3E3C004E7A1B /* images.png in Resources */,
 				1E36251018CB280A00E08E4A /* Images.xcassets in Resources */,
 				1E36250E18CB280A00E08E4A /* Spaceship.png in Resources */,
 				1E36250618CB280A00E08E4A /* Main.storyboard in Resources */,
@@ -406,25 +462,31 @@
 			files = (
 				1E3625A718CB3E1C00E08E4A /* AFURLConnectionOperation.m in Sources */,
 				1E3625A218CB3E1C00E08E4A /* AFHTTPRequestOperation.m in Sources */,
+				805E53E018CB4CCE004E7A1B /* SKEmitterNode+SKTExtras.m in Sources */,
 				1E3625A518CB3E1C00E08E4A /* AFNetworkReachabilityManager.m in Sources */,
 				1E3625AA18CB3E1C00E08E4A /* AFURLSessionManager.m in Sources */,
+				805E53E118CB4CCE004E7A1B /* SKNode+SKTExtras.m in Sources */,
 				1E3625AC18CB3E1C00E08E4A /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1E3625A818CB3E1C00E08E4A /* AFURLRequestSerialization.m in Sources */,
 				805E53C818CB34CD004E7A1B /* BMCard.m in Sources */,
 				1E3625B118CB3E1C00E08E4A /* UIProgressView+AFNetworking.m in Sources */,
+				805E53E318CB4CCE004E7A1B /* SKTUtils.mm in Sources */,
 				1E3625A918CB3E1C00E08E4A /* AFURLResponseSerialization.m in Sources */,
 				1E36250918CB280A00E08E4A /* BMViewController.m in Sources */,
+				805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */,
 				1E36250C18CB280A00E08E4A /* BMStartScene.m in Sources */,
 				1E3625AF18CB3E1C00E08E4A /* UIButton+AFNetworking.m in Sources */,
 				1E3625B018CB3E1C00E08E4A /* UIImageView+AFNetworking.m in Sources */,
 				8E98D7E018CB4B6600B42F26 /* BMCardAttribute.m in Sources */,
 				1E3625A318CB3E1C00E08E4A /* AFHTTPRequestOperationManager.m in Sources */,
+				805E53E218CB4CCE004E7A1B /* SKTAudio.m in Sources */,
 				1E3625A618CB3E1C00E08E4A /* AFSecurityPolicy.m in Sources */,
 				8E98D7DA18CB40B500B42F26 /* BMCardEffect.m in Sources */,
 				1E3625AE18CB3E1C00E08E4A /* UIAlertView+AFNetworking.m in Sources */,
 				1E3625B318CB3E1C00E08E4A /* UIWebView+AFNetworking.m in Sources */,
 				1E3625AD18CB3E1C00E08E4A /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				1E3624FF18CB280A00E08E4A /* main.m in Sources */,
+				805E53DF18CB4CCE004E7A1B /* SKAction+SKTExtras.m in Sources */,
 				1E3625B218CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m in Sources */,
 				1E36250318CB280A00E08E4A /* BMAppDelegate.m in Sources */,
 				1E3625A418CB3E1C00E08E4A /* AFHTTPSessionManager.m in Sources */,
