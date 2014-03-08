@@ -48,7 +48,7 @@
     
     // experimental
     BOOL cardDeckIsPresent;
-    UIView *newView;
+    UIView *cardDeckView;
 }
 
 
@@ -136,8 +136,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         myLabel.name = @"buttonStart";
 //        myLabel.text = @"pick";
 //        myLabel.fontSize = 30;
-        myLabel.position = CGPointMake(CGRectGetMinX(self.frame),
-                                       CGRectGetMidY(self.frame));
+        myLabel.position = CGPointMake(CGRectGetMaxX(self.frame),
+                                       CGRectGetMinY(self.frame));
         [self addChild:myLabel];
         
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
@@ -161,7 +161,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 
 - (void)setupViews
 {
-    newView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
+    cardDeckView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
     
     for (int row = 0; row < 5; row++)
     {
@@ -173,7 +173,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             CGRect frame = CGRectMake(centerX, centerY, cardWidth, cardHeight);
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
-            [newView addSubview:currentCardView];
+            [cardDeckView addSubview:currentCardView];
             UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped)];
             [currentCardView addGestureRecognizer:cardTapRecognizer];
         }
@@ -207,19 +207,27 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             if (!cardDeckIsPresent)
             {
                 NSLog(@"BOOM");
-                [self.view.window.rootViewController.view addSubview:newView];
-                newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+                [self.view.window.rootViewController.view addSubview:cardDeckView];
+                cardDeckView.frame = CGRectMake(self.view.bounds.size.width/2 - cardDeckWidth/2, CGRectGetMaxY(self.frame), cardDeckWidth, cardDeckHeight);
                 UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe)];
-                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-                [newView addGestureRecognizer:swipeRecognizer];
+                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+                [cardDeckView addGestureRecognizer:swipeRecognizer];
                 [UIView animateWithDuration:0.5 animations:^
                  {
-                     newView.frame = CGRectMake(CGRectGetMinX(self.frame), self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+                     cardDeckView.frame = CGRectMake(self.view.bounds.size.width/2 - cardDeckWidth/2, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
                  }];
                 cardDeckIsPresent = YES;
             }
+            else
+            {
+                NSLog(@"VOOM");
+                [UIView animateWithDuration:0.5 animations:^
+                {
+                    cardDeckView.frame = CGRectMake(self.view.bounds.size.width/2 - cardDeckWidth/2, CGRectGetMaxY(self.frame), cardDeckWidth, cardDeckHeight);
+                }];
+                cardDeckIsPresent = NO;
+            }
         }
-        // NSLog(@"** TOUCH LOCATION ** \nx: %f / y: %f", location.x, location.y);
         
         SKNode* card = [self childNodeWithName:@"playerAvailableCard0"];
         
@@ -279,7 +287,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     NSLog(@"VOOM");
     [UIView animateWithDuration:0.5 animations:^
      {
-         newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+         cardDeckView.frame = CGRectMake(self.view.bounds.size.width/2 - cardDeckWidth/2, CGRectGetMaxY(self.frame), cardDeckWidth, cardDeckHeight);
      }];
     cardDeckIsPresent = NO;
 }
