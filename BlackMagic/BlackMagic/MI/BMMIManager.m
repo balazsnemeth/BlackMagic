@@ -52,31 +52,31 @@ static BMMIManager *sharedMIManager = nil;
     NSMutableArray* buyableCards = [NSMutableArray new];
     for (BMCard* card in player.fireCards) {
         NSNumber* n = card.cost[@"amount"];
-        if (n.integerValue < player.fireMana) {
+        if (n.integerValue <= player.fireMana) {
             [buyableCards addObject:card];
         }
     }
     for (BMCard* card in player.waterCards) {
         NSNumber* n = card.cost[@"amount"];
-        if (n.integerValue < player.waterMana) {
+        if (n.integerValue <= player.waterMana) {
             [buyableCards addObject:card];
         }
     }
 /*    for (BMCard* card in player.airCards) {
         NSNumber* n = card.cost[@"amount"];
-        if (n.integerValue < player.airMana) {
+        if (n.integerValue <= player.airMana) {
             [buyableCards addObject:card];
         }
     }*/
     for (BMCard* card in player.illusionCards) {
         NSNumber* n = card.cost[@"amount"];
-        if (n.integerValue < player.illusionMana) {
+        if (n.integerValue <= player.illusionMana) {
             [buyableCards addObject:card];
         }
     }
     for (BMCard* card in player.earthCards) {
         NSNumber* n = card.cost[@"amount"];
-        if (n.integerValue < player.earthMana) {
+        if (n.integerValue <= player.earthMana) {
             [buyableCards addObject:card];
         }
     }
@@ -111,6 +111,10 @@ static BMMIManager *sharedMIManager = nil;
 }
 
 - (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy inTurn:(NSInteger)turnCount{
+    
+    if (turnCount == 1) {
+        NSLog(@"turn %d",turnCount);
+    }
     BMMIResult* res = [BMMIResult new];
     res.skipTurn = FALSE;
     NSArray* buyableCards = [self bayableCardsOfPlayer:player];
@@ -156,6 +160,7 @@ static BMMIManager *sharedMIManager = nil;
         else{
             creaturePlace = defenderPosition;
         }
+        res.slotIndex = creaturePlace;
     }
     else{
         //Nincs szabad slotom!
@@ -167,7 +172,6 @@ static BMMIManager *sharedMIManager = nil;
         res.skipTurn = TRUE;
         res.card = nil;
     }
-    
     return res;
 }
 

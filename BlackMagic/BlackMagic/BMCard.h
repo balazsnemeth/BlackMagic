@@ -15,8 +15,8 @@
 #define CARD_TYPE_AIR @"air"
 #define CARD_TYPE_EARTH @"earth"
 #define CARD_TYPE_FIRE @"fire"
-#define CARD_TYPE_WATER @"illusion"
-#define CARD_TYPE_ILLUSION @"water"
+#define CARD_TYPE_WATER @"water"
+#define CARD_TYPE_ILLUSION @"illusion"
 
 
 @interface BMCard : NSObject

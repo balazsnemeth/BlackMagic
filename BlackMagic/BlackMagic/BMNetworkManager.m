@@ -53,7 +53,7 @@ static BMNetworkManager *sharedNetworkManager = nil;
 - (void) networkRequestForUrlPath:(NSString*)urlPart withParameters:(NSDictionary*)parameters onCompletion:(void (^)(NSDictionary *result))success
                               failure:(void (^)(NSError *error))failure{
     NSString* urlStr = [self urlStrWithEnd: urlPart];
-    NSLog(@"url - %@",urlStr);
+    //NSLog(@"url - %@",urlStr);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     [manager GET:urlStr parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -68,7 +68,11 @@ static BMNetworkManager *sharedNetworkManager = nil;
         }
         else{
             if (failure) {
-                failure([NSError errorWithDomain:[finalError componentsJoinedByString:@", "] code:-1 userInfo:nil]);
+                if ([finalError isKindOfClass:NSArray.class]) {
+                    failure([NSError errorWithDomain:[finalError componentsJoinedByString:@", "] code:-1 userInfo:nil]);
+                }
+                else
+                    failure([NSError errorWithDomain:(NSString*)finalError code:-1 userInfo:nil]);
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -97,11 +101,17 @@ static BMNetworkManager *sharedNetworkManager = nil;
     self.polling = TRUE;
     
     
-    self.pollingTimer = [NSTimer scheduledTimerWithTimeInterval:self.pollingPeriod
+/*    self.pollingTimer = [NSTimer scheduledTimerWithTimeInterval:self.pollingPeriod
                                                     target:self
                                                        selector:@selector(checkEnemyNextMove:)
                                                   userInfo:@{@"name": playerName,@"completionBlock":success,@"failureBlock":failure}
-                                                   repeats:YES];
+                                                   repeats:YES];*/
+    self.pollingTimer = [NSTimer timerWithTimeInterval:self.pollingPeriod
+                                                        target:self
+                                                       selector:@selector(checkEnemyNextMove:)
+                                                       userInfo:@{@"name": playerName,@"completionBlock":success,@"failureBlock":failure}
+                                                        repeats:YES];
+    [self checkEnemyNextMove:self.pollingTimer];
 }
 
 
@@ -140,7 +150,6 @@ static BMNetworkManager *sharedNetworkManager = nil;
 
     [self networkRequestForUrlPath:@"getNextMove" withParameters:p onCompletion:^(NSDictionary *result) {
         NSNumber* proceed = [result objectForKey:@"proceed"];
-        
         if (proceed.boolValue) {
             if (self.isPolling) {
                 self.polling = FALSE;
@@ -149,6 +158,10 @@ static BMNetworkManager *sharedNetworkManager = nil;
                 completionBlock(result);
             }
         }
+        else{
+            //Újra nézem!
+            [self checkEnemyNextMove:timer];
+        }
     } failure:^(NSError *error) {
         if (self.isPolling) {
             if (error.code != -1) {
@@ -156,6 +169,9 @@ static BMNetworkManager *sharedNetworkManager = nil;
                 [self.pollingTimer invalidate];
                 self.pollingTimer = nil;
                 failureBlock(error);
+            }
+            else{
+                [self checkEnemyNextMove:timer];
             }
         }
     }];

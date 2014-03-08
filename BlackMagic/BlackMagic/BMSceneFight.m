@@ -263,8 +263,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
             
-            
-            
             if ([player.name isEqualToString:gameState.players[0][@"name"]]){
                 [player updatePlayerFromDictionary:gameState.players[0]];
                 [enemy updatePlayerFromDictionary:gameState.players[1]];
@@ -337,7 +335,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     NSMutableDictionary *myNewDictionary = [NSMutableDictionary new];
     
     if (miResult.skipTurn) {
-        [myNewDictionary setObject:@"action" forKey:@"skipTurn"];
+        [myNewDictionary setObject:@"skipTurn" forKey:@"action"];
     }
     else{
         [myNewDictionary setObject:@"playCard" forKey:@"action"];
