@@ -7,12 +7,62 @@
 //
 
 #import "BMAppDelegate.h"
+#import "BMNetworkManager.h"
+#import "SettingsHandler.h"
+
 
 @implementation BMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    // Override point for customization after application launch.
+    [SettingsHandler sharedSettings].serverIPAddress = @"localhost";
+    [SettingsHandler sharedSettings].serverPort=8123;
+    
+    
+    //reset the server
+    [[BMNetworkManager sharedManager] resetServerOnCompletion:^{
+        //reg test A
+        [[BMNetworkManager sharedManager] registerPlayer:@"testA" onCompletion:^(NSDictionary *result) {
+            NSLog(@"res:%@",result);
+        } failure:^(NSError *error) {
+            NSLog(@"error:%@",error);
+        }];
+        
+        //reg test B
+        [[BMNetworkManager sharedManager] registerPlayer:@"testB" onCompletion:^(NSDictionary *result) {
+            NSLog(@"res:%@",result);
+            //megkérdi, jöhet-e ő!
+            [[BMNetworkManager sharedManager] startRequestNextMove:@"testB" onCompletion:^(NSDictionary *result) {
+                NSLog(@"lépett - res:%@",result);
+            } failure:^(NSError *error) {
+                NSLog(@"error:%@",error);
+            }];
+            
+            
+        } failure:^(NSError *error) {
+            NSLog(@"error:%@",error);
+        }];
+        
+        
+        
+        //testA lép
+        double delayInSeconds = 1.1;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            NSDictionary* input = @{@"action": @"playCard", @"resourceType": @"fire", @"cardIndex": @(2)};
+            [[BMNetworkManager sharedManager] proceedPlayer:@"testA" withInput:input onCompletion:^(NSDictionary *result) {
+                NSLog(@"res: %@",result);
+            } failure:^(NSError *error) {
+                NSLog(@"error: %@",error);
+            }];
+        });
+        
+    } failure:^(NSError *error) {
+        NSLog(@"error:%@",error);
+    }];
+    
     return YES;
 }
 							
