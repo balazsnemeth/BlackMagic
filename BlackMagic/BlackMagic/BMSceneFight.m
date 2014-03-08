@@ -14,7 +14,7 @@
 
 @implementation BMSceneFight{
     SKSpriteNode *playerHealth;
-    SKSpriteNode *opponentrHealth;
+    SKSpriteNode *opponentHealth;
     SKSpriteNode *playerMana;
     
     
