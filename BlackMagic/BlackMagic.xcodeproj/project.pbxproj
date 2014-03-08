@@ -140,8 +140,8 @@
 				805E53CA18CB3789004E7A1B /* BMSceneFight.m */,
 				805E53C618CB34CD004E7A1B /* BMCard.h */,
 				805E53C718CB34CD004E7A1B /* BMCard.m */,
-				805E53CE18CB3B0E004E7A1B /* Art */,
 				1E36250D18CB280A00E08E4A /* Spaceship.png */,
+				805E53CF18CB3E3C004E7A1B /* images.png */,
 				1E36250F18CB280A00E08E4A /* Images.xcassets */,
 				1E3624F918CB280A00E08E4A /* Supporting Files */,
 			);
@@ -175,14 +175,6 @@
 				1E36251F18CB280A00E08E4A /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		805E53CE18CB3B0E004E7A1B /* Art */ = {
-			isa = PBXGroup;
-			children = (
-				805E53CF18CB3E3C004E7A1B /* images.png */,
-			);
-			name = Art;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
