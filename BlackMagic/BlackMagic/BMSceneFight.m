@@ -10,6 +10,7 @@
 #import "SKTUtils.h"
 #import "BMNetworkManager.h"
 #import "BMPlayer.h"
+#import "BMMIManager.h"
 #import "BMGameState.h"
 
 #define widthGap 10
@@ -20,9 +21,10 @@
 #define cardDeckHeight 400
 
 @implementation BMSceneFight{
-    SKSpriteNode *playerHealth;
-    SKSpriteNode *opponentrHealth;
+    SKLabelNode *playerHealth;
+    SKLabelNode *opponentHealth;
     SKSpriteNode *playerMana;
+    
     
     
     NSArray* playerMinions;
@@ -30,7 +32,7 @@
     NSArray* playerCardPositions;
     NSArray* opponenetCardPositions;
     
-    NSArray* playerAvailableCardPositions;
+    //NSArray* playerAvailableCardPositions;
     //SKSpriteNode *opponentMana;
     
     BOOL _touchingCard;
@@ -77,6 +79,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 
                 //NSLog(@"res:%@",result);
                 player = [[BMPlayer alloc] initWithDictionary:result];
+                enemy = [[BMPlayer alloc] initWithDictionary:result];
                 player.name = name;
                 isMyTurn = YES;
             } failure:^(NSError *error) {
@@ -101,19 +104,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                                 [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 400 }],
                                 [NSValue valueWithCGPoint:(CGPoint){ fightPosition, 350 }]];
         
-        playerAvailableCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 400, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 450, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 500, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 550, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 600, 250 }],
-                                   [NSValue valueWithCGPoint:(CGPoint){ 650, 250 }]];
-        
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         
         [self addSpritesWithName:@"playerCard" FromArray:playerCardPositions withSize:CGSizeMake(50, 50)];
         [self addSpritesWithName:@"opponenetCard"FromArray:opponenetCardPositions withSize:CGSizeMake(50, 50)];
-        [self addSpritesWithName:@"playerAvailableCard" FromArray:playerAvailableCardPositions withSize:CGSizeMake(50, 50)];
+        //[self addSpritesWithName:@"playerAvailableCard" FromArray:playerAvailableCardPositions withSize:CGSizeMake(50, 50)];
         
         
         SKSpriteNode* healthBar = [SKSpriteNode spriteNodeWithImageNamed:@"Healthbar"];
@@ -136,6 +132,21 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         myLabel.position = CGPointMake(CGRectGetMinX(self.frame),
                                        CGRectGetMidY(self.frame));
         [self addChild:myLabel];
+        
+        playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        playerHealth.text = [NSString stringWithFormat:@"%i", 60];
+        playerHealth.fontSize = 30;
+        playerHealth.position = CGPointMake(290, CGRectGetMidY(self.frame) - 30);
+        playerHealth.zRotation = -M_PI/2;
+        [self addChild:playerHealth];
+        
+        opponentHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        opponentHealth.text = [NSString stringWithFormat:@"%i", 60];
+        opponentHealth.fontSize = 30;
+        opponentHealth.position = CGPointMake(450, CGRectGetMidY(self.frame) - 30);
+        opponentHealth.zRotation = -M_PI/2;
+        [self addChild:opponentHealth];
+        
         [self setupViews];
     }
     return self;
@@ -286,13 +297,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         isMyTurn = NO;
         
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
-            NSLog(@"res: %@", result);
+            //NSLog(@"res: %@", result);
             
-            
-    
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
-            
-            
             
             if ([player.name isEqualToString:gameState.players[0][@"name"]]){
                 [player updatePlayerFromDictionary:gameState.players[0]];
@@ -303,13 +310,50 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 [enemy updatePlayerFromDictionary:gameState.players[0]];
             }
             
+            playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
+            opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
+            
+            BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
+            
+            NSLog(@"health: %d", player.health);
+            
+            NSString* cardName = [NSString stringWithFormat:@"playerAvailableCard%d", miRes.slotIndex];
+            SKSpriteNode* card = (SKSpriteNode*)[self childNodeWithName:cardName];
+            card.color = [UIColor blackColor];
+            card.texture = nil;
+            
+
+            NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
+        
+            [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
+                    //update-lni kell a dolgokat, és várni a következő körre!
+                    BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+                    if ([player.name isEqualToString:gameState.players[0][@"name"]]){
+                        [player updatePlayerFromDictionary:gameState.players[0]];
+                        [enemy updatePlayerFromDictionary:gameState.players[1]];
+                    }
+                    else{
+                        [player updatePlayerFromDictionary:gameState.players[1]];
+                        [enemy updatePlayerFromDictionary:gameState.players[0]];
+                    }
+            } failure:^(NSError *error) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                                message:error.domain
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                NSLog(@"error %@", error);
+            }];
+
+            
             
             //choose card
             
         } failure:^(NSError *error) {
             NSLog(@"error %@", error);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"error"
-                                                            message:[NSString stringWithFormat:@"error: %@", error]
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                            message:error.domain
                                                            delegate:self
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
@@ -321,5 +365,56 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     // send rest api
     // wailt for new turn
 }
+
+#pragma mark -
+#pragma mark Helper
+
+- (NSDictionary*) stepInputTypeOfMIResult:(BMMIResult*)miResult{
+    NSMutableDictionary *myNewDictionary = [NSMutableDictionary new];
+    
+    if (miResult.skipTurn) {
+        [myNewDictionary setObject:@"skipTurn" forKey:@"action"];
+    }
+    else{
+        [myNewDictionary setObject:@"playCard" forKey:@"action"];
+        BMCard* card = miResult.card;
+        NSString* cardType = @"";
+        int cardIndex = NSNotFound;
+        cardIndex = [player.fireCards indexOfObject:card];
+        if (cardIndex != NSNotFound) {
+            cardType = CARD_TYPE_FIRE;
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.earthCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_EARTH;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.illusionCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_ILLUSION;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.airCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_AIR;
+            }
+        }
+        if (cardIndex == NSNotFound) {
+            cardIndex = [player.waterCards indexOfObject:card];
+            if (cardIndex != NSNotFound) {
+                cardType = CARD_TYPE_WATER;
+            }
+        }
+        
+        [myNewDictionary setObject:cardType forKey:@"resourceType"];
+        [myNewDictionary setObject:@(cardIndex) forKey:@"cardIndex"];
+        [myNewDictionary setObject:@(miResult.slotIndex) forKey:@"slotIndex"];
+    }
+    return myNewDictionary;
+}
+
 
 @end

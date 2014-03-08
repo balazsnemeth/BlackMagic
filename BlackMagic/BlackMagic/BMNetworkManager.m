@@ -9,6 +9,7 @@
 #import "BMNetworkManager.h"
 #import "SettingsHandler.h"
 #import "AFNetworking.h"
+#import "BMCard.h"
 
 @interface BMNetworkManager()
 
@@ -67,7 +68,11 @@ static BMNetworkManager *sharedNetworkManager = nil;
         }
         else{
             if (failure) {
-                failure([NSError errorWithDomain:[finalError componentsJoinedByString:@", "] code:-1 userInfo:nil]);
+                if ([finalError isKindOfClass:NSArray.class]) {
+                    failure([NSError errorWithDomain:[finalError componentsJoinedByString:@", "] code:-1 userInfo:nil]);
+                }
+                else
+                    failure([NSError errorWithDomain:(NSString*)finalError code:-1 userInfo:nil]);
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -96,29 +101,35 @@ static BMNetworkManager *sharedNetworkManager = nil;
     self.polling = TRUE;
     
     
-    self.pollingTimer = [NSTimer scheduledTimerWithTimeInterval:self.pollingPeriod
+/*    self.pollingTimer = [NSTimer scheduledTimerWithTimeInterval:self.pollingPeriod
                                                     target:self
                                                        selector:@selector(checkEnemyNextMove:)
                                                   userInfo:@{@"name": playerName,@"completionBlock":success,@"failureBlock":failure}
-                                                   repeats:YES];
+                                                   repeats:YES];*/
+    self.pollingTimer = [NSTimer timerWithTimeInterval:self.pollingPeriod
+                                                        target:self
+                                                       selector:@selector(checkEnemyNextMove:)
+                                                       userInfo:@{@"name": playerName,@"completionBlock":success,@"failureBlock":failure}
+                                                        repeats:YES];
+    [self checkEnemyNextMove:self.pollingTimer];
 }
 
 
 - (void) proceedPlayer:(NSString*)playerName withInput:(NSDictionary*)step  onCompletion:(void (^)(NSDictionary *result))success
                failure:(void (^)(NSError *error))failure{
-    NSMutableDictionary *myNewDictionary = [@{@"name": playerName} mutableCopy];
-    [myNewDictionary addEntriesFromDictionary:step];
-    if (!myNewDictionary[@"slotIndex"]) {
-        [myNewDictionary setObject:@(0) forKey:@"slotIndex"];
-    }
     
- /*   NSString* url = [NSString stringWithFormat:@"proceedWithInput?name=%@",playerName];
+    
+    
+    NSMutableDictionary *myNewDictionary = [@{@"name": playerName} mutableCopy];
+   // [myNewDictionary addEntriesFromDictionary:step];
+    
+    NSString* url = [NSString stringWithFormat:@"proceedWithInput?name=%@",playerName];
     for (NSString* key in [step allKeys]) {
         NSString* aktPar = [NSString stringWithFormat:@"&%@=%@",key,step[key]];
         url = [url stringByAppendingString:aktPar];
     }
-    NSLog(@"url: %@",url);*/
-    [self networkRequestForUrlPath:@"proceedWithInput" withParameters:myNewDictionary onCompletion:success failure:failure];
+    NSLog(@"url: %@",url);
+    [self networkRequestForUrlPath:url withParameters:nil onCompletion:success failure:failure];
 }
 
 
@@ -139,7 +150,6 @@ static BMNetworkManager *sharedNetworkManager = nil;
 
     [self networkRequestForUrlPath:@"getNextMove" withParameters:p onCompletion:^(NSDictionary *result) {
         NSNumber* proceed = [result objectForKey:@"proceed"];
-        
         if (proceed.boolValue) {
             if (self.isPolling) {
                 self.polling = FALSE;
@@ -148,6 +158,10 @@ static BMNetworkManager *sharedNetworkManager = nil;
                 completionBlock(result);
             }
         }
+        else{
+            //Újra nézem!
+            [self checkEnemyNextMove:timer];
+        }
     } failure:^(NSError *error) {
         if (self.isPolling) {
             if (error.code != -1) {
@@ -155,6 +169,9 @@ static BMNetworkManager *sharedNetworkManager = nil;
                 [self.pollingTimer invalidate];
                 self.pollingTimer = nil;
                 failureBlock(error);
+            }
+            else{
+                [self checkEnemyNextMove:timer];
             }
         }
     }];
