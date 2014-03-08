@@ -12,6 +12,7 @@
 #import "BMPlayer.h"
 #import "BMMIManager.h"
 #import "BMGameState.h"
+#import "UIAlertView+Blocks.h"
 
 #define widthGap 10
 #define heightGap 20
@@ -48,6 +49,7 @@
     // experimental
     BOOL cardDeckIsPresent;
     UIView *newView;
+    BOOL gameOver;
 }
 
 
@@ -87,6 +89,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         /* Setup your scene here */
         
         isMyTurn = NO;
+        gameOver = NO;
         //reset the server
         
         [self addBackground];
@@ -95,20 +98,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         opponenetCardSprites = [NSMutableArray array];
         
         NSString* name = [self genRandStringLength:6];
-        
-            //reg test A
-            [[BMNetworkManager sharedManager] registerPlayer:name onCompletion:^(NSDictionary *result) {
-                
-                //NSLog(@"res:%@",result);
-                player = [[BMPlayer alloc] initWithDictionary:result];
-                enemy = [[BMPlayer alloc] initWithDictionary:result];
-                player.name = name;
-                isMyTurn = YES;
-            } failure:^(NSError *error) {
-                NSLog(@"error:%@",error);
-            }];
-        
-        
+        [self registerUserWithName:name];
+        //reg test A
         
         fightPosition = self.frame.size.height / 2;
         
@@ -330,8 +321,42 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 #pragma mark -
 #pragma mark Game Loop
 
+- (void)statusUpdate:(NSDictionary *)result
+{
+    //update-lni kell a dolgokat, és várni a következő körre!
+    BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+    if ([player.name isEqualToString:gameState.players[0][@"name"]]){
+        [player updatePlayerFromDictionary:gameState.players[0]];
+        [enemy updatePlayerFromDictionary:gameState.players[1]];
+    }
+    else{
+        [player updatePlayerFromDictionary:gameState.players[1]];
+        [enemy updatePlayerFromDictionary:gameState.players[0]];
+    }
+    playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
+    opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
+    if (gameState.isGameOver) {
+        gameOver = TRUE;
+    }
+}
+
 -(void)update:(CFTimeInterval)currentTime
 {
+    if (gameOver) {
+        //TODO: gameOver screen!
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSLog(@"Game over");
+            NSString* message = [NSString stringWithFormat:@"Winner: %@", enemy.health < player.health ? @"You" : @"Enemy"];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over"
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        });
+        return;
+    }
     if (_touchingCard)
     {
         _touchPoint.x = Clamp(_touchPoint.x, movedCard.size.width / 2, self.size.width - movedCard.size.width / 2);
@@ -349,28 +374,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             //NSLog(@"res: %@", result);
             
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+            [self statusUpdate:result];
             
-            if (gameState.isGameOver) {
-                
-                NSString* message = [NSString stringWithFormat:@"Winner: %@", enemy.health <= 0 ? @"You" : @"Enemy"];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over"
-                                                                message:message
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-                return;
-            }
-            
-            if ([player.name isEqualToString:gameState.players[0][@"name"]]){
-                [player updatePlayerFromDictionary:gameState.players[0]];
-                [enemy updatePlayerFromDictionary:gameState.players[1]];
-            }
-            else{
-                [player updatePlayerFromDictionary:gameState.players[1]];
-                [enemy updatePlayerFromDictionary:gameState.players[0]];
-            }
-            NSLog(@"számolok");
+//            NSLog(@"számolok");
             BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
             
             SKSpriteNode* node = playerCardSprites[miRes.slotIndex];
@@ -379,18 +385,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
         
             [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
-                    //update-lni kell a dolgokat, és várni a következő körre!
-                    BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
-                    if ([player.name isEqualToString:gameState.players[0][@"name"]]){
-                        [player updatePlayerFromDictionary:gameState.players[0]];
-                        [enemy updatePlayerFromDictionary:gameState.players[1]];
-                    }
-                    else{
-                        [player updatePlayerFromDictionary:gameState.players[1]];
-                        [enemy updatePlayerFromDictionary:gameState.players[0]];
-                    }
-                playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
-                opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
+                [self statusUpdate:result];
                 isMyTurn = YES;
                 
             } failure:^(NSError *error) {
