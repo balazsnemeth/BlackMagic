@@ -25,8 +25,6 @@
 @property (nonatomic, assign) int illusionMana;
 @property (nonatomic, assign) int health;
 
-@property (nonatomic, strong) NSDictionary* slots;
-
 
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 

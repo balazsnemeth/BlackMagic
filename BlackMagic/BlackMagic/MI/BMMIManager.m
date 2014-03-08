@@ -93,6 +93,17 @@ static BMMIManager *sharedMIManager = nil;
     return strongestCard;
 }
 
+- (BOOL) hasFreeSlotOfPlayer:(BMPlayer*)player{
+    BOOL outR = FALSE;
+    for (BMCreatureSlot* slot in player.slots) {
+        if (slot.isEmpty) {
+            outR = TRUE;
+            break;
+        }
+    }
+    return outR;
+}
+
 - (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy{
     BMMIResult* res = [BMMIResult new];
     res.skipTurn = FALSE;
@@ -102,7 +113,7 @@ static BMMIManager *sharedMIManager = nil;
     //hová tegyem?
     //1. Van-e szabad helyem -> ott tudok vagy védekezni, vagy támadni!
     int creaturePlace = NOT_DEFINED;
-    if (player.slots.count < SLOT_COUNT) {
+    if ([self hasFreeSlotOfPlayer:player]) {
         //Van szabad slotom!
         int defenderPosition = NOT_DEFINED;
         int attackPosition = NOT_DEFINED;
