@@ -10,6 +10,7 @@
 #import "SKTUtils.h"
 #import "BMNetworkManager.h"
 #import "BMPlayer.h"
+#import "BMGameState.h"
 
 @implementation BMSceneFight{
     SKSpriteNode *playerHealth;
@@ -32,6 +33,7 @@
     int fightPosition;
     
     BMPlayer* player;
+    BMPlayer* enemy;
     
     BOOL isMyTurn;
     
@@ -73,7 +75,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             } failure:^(NSError *error) {
                 NSLog(@"error:%@",error);
             }];
-            
+        
         
         
         fightPosition = self.frame.size.width / 2;
@@ -246,16 +248,32 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
             NSLog(@"res: %@", result);
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL"
-                                                            message:@"Dee dee doo doo."
+            
+    
+            BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
+            
+            
+            
+            if ([player.name isEqualToString:gameState.players[0][@"name"]]){
+                [player updatePlayerFromDictionary:gameState.players[0]];
+                [enemy updatePlayerFromDictionary:gameState.players[1]];
+            }
+            else{
+                [player updatePlayerFromDictionary:gameState.players[1]];
+                [enemy updatePlayerFromDictionary:gameState.players[0]];
+            }
+            
+            
+            //choose card
+            
+        } failure:^(NSError *error) {
+            NSLog(@"error %@", error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"error"
+                                                            message:[NSString stringWithFormat:@"error: %@", error]
                                                            delegate:self
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
-
-            
-        } failure:^(NSError *error) {
-            NSLog(@"error %@", error);
         }];
     }
     //receive status
