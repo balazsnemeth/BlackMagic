@@ -46,7 +46,7 @@ static BMNetworkManager *sharedNetworkManager = nil;
 }
 
 - (NSString*) urlStrWithEnd:(NSString*)end{
-    NSString* urlStr = [NSString stringWithFormat:@"http://%@:%d/%@",[SettingsHandler sharedSettings].serverIPAddress,[SettingsHandler sharedSettings].serverPort,end];
+    NSString* urlStr = [NSString stringWithFormat:@"http://%@/%@",[SettingsHandler sharedSettings].serverIPAddress,end];
     return urlStr;
 }
 
@@ -143,7 +143,7 @@ static BMNetworkManager *sharedNetworkManager = nil;
 
 
 - (void) checkEnemyNextMove:(NSTimer*)timer{
-    //NSLog(@"enemi check");
+    NSLog(@"enemi check");
     NSDictionary* p = @{@"name": timer.userInfo[@"name"]};
     void (^completionBlock)(NSDictionary *result) = timer.userInfo[@"completionBlock"];
     void (^failureBlock)(NSError *error) = timer.userInfo[@"failureBlock"];

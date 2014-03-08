@@ -13,13 +13,6 @@
 #import "BMMIManager.h"
 #import "BMGameState.h"
 
-#define widthGap 10
-#define heightGap 20
-#define cardWidth 50
-#define cardHeight 50
-#define cardDeckWidth 400
-#define cardDeckHeight 400
-
 @implementation BMSceneFight{
     SKLabelNode *playerHealth;
     SKLabelNode *opponentHealth;
@@ -32,7 +25,7 @@
     NSArray* playerCardPositions;
     NSArray* opponenetCardPositions;
     
-    //NSArray* playerAvailableCardPositions;
+    NSArray* playerAvailableCardPositions;
     //SKSpriteNode *opponentMana;
     
     BOOL _touchingCard;
@@ -104,12 +97,19 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                                 [NSValue valueWithCGPoint:(CGPoint){ 400, fightPosition }],
                                 [NSValue valueWithCGPoint:(CGPoint){ 450, fightPosition }]];
         
+        playerAvailableCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 400, 250 }],
+                                   [NSValue valueWithCGPoint:(CGPoint){ 450, 250 }],
+                                   [NSValue valueWithCGPoint:(CGPoint){ 500, 250 }],
+                                   [NSValue valueWithCGPoint:(CGPoint){ 550, 250 }],
+                                   [NSValue valueWithCGPoint:(CGPoint){ 600, 250 }],
+                                   [NSValue valueWithCGPoint:(CGPoint){ 650, 250 }]];
+        
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         
         [self addSpritesWithName:@"playerCard" FromArray:playerCardPositions withSize:CGSizeMake(50, 50)];
         [self addSpritesWithName:@"opponenetCard"FromArray:opponenetCardPositions withSize:CGSizeMake(50, 50)];
-        //[self addSpritesWithName:@"playerAvailableCard" FromArray:playerAvailableCardPositions withSize:CGSizeMake(50, 50)];
+        [self addSpritesWithName:@"playerAvailableCard" FromArray:playerAvailableCardPositions withSize:CGSizeMake(50, 50)];
         
         
         SKSpriteNode* healthBar = [SKSpriteNode spriteNodeWithImageNamed:@"Healthbar"];
@@ -124,8 +124,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         manaBar.position = CGPointMake(110, 10);
         [self addChild:manaBar];
         
-        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"images"];
-        myLabel.size = CGSizeMake(50, 50);
+        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
         myLabel.name = @"buttonStart";
 //        myLabel.text = @"pick";
 //        myLabel.fontSize = 30;
@@ -155,22 +154,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 - (void)setupViews
 {
     newView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
-    
-    for (int row = 0; row < 5; row++)
-    {
-        for (int column = 0; column < 4; column++)
-        {
-            CGFloat centerY = row * (cardHeight + heightGap);
-            CGFloat centerX = column * (cardWidth + widthGap);
-            
-            CGRect frame = CGRectMake(centerX, centerY, cardWidth, cardHeight);
-            UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
-            currentCardView.frame = frame;
-            [newView addSubview:currentCardView];
-            UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped)];
-            [currentCardView addGestureRecognizer:cardTapRecognizer];
-        }
-    }
 }
 
 -(void)addSpritesWithName:(NSString*)name FromArray:(NSArray*)array withSize:(CGSize)size{
@@ -201,16 +184,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             {
                 NSLog(@"BOOM");
                 [self.view.window.rootViewController.view addSubview:newView];
-                newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
-                UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe)];
-                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-                [newView addGestureRecognizer:swipeRecognizer];
-                [UIView animateWithDuration:0.5 animations:^
-                {
-                    newView.frame = CGRectMake(CGRectGetMinX(self.frame), self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
-                }];
                 cardDeckIsPresent = YES;
             }
+            else
+            {
+                NSLog(@"VOOM");
+                [newView removeFromSuperview];
+                cardDeckIsPresent = NO;
+            }
+            
         }
         // NSLog(@"** TOUCH LOCATION ** \nx: %f / y: %f", location.x, location.y);
       
@@ -263,20 +245,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
-- (void)cardDeckCardTapped
-{
-    NSLog(@"POW");
-}
 
-- (void)handleSwipe
-{
-    NSLog(@"VOOM");
-    [UIView animateWithDuration:0.5 animations:^
-    {
-        newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
-    }];
-    cardDeckIsPresent = NO;
-}
 
 #pragma mark -
 #pragma mark Game Loop
@@ -301,6 +270,18 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
             
+            if (gameState.isGameOver) {
+                
+                NSString* message = [NSString stringWithFormat:@"Winner: %@", enemy.health <= 0 ? @"You" : @"Enemy"];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over"
+                                                                message:message
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                return;
+            }
+            
             if ([player.name isEqualToString:gameState.players[0][@"name"]]){
                 [player updatePlayerFromDictionary:gameState.players[0]];
                 [enemy updatePlayerFromDictionary:gameState.players[1]];
@@ -309,19 +290,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 [player updatePlayerFromDictionary:gameState.players[1]];
                 [enemy updatePlayerFromDictionary:gameState.players[0]];
             }
-            
-            playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
-            opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
-            
+            NSLog(@"számolok");
             BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
-            
-            NSLog(@"health: %d", player.health);
-            
-            NSString* cardName = [NSString stringWithFormat:@"playerAvailableCard%d", miRes.slotIndex];
-            SKSpriteNode* card = (SKSpriteNode*)[self childNodeWithName:cardName];
-            card.color = [UIColor blackColor];
-            card.texture = nil;
-            
 
             NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
         
@@ -336,6 +306,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                         [player updatePlayerFromDictionary:gameState.players[1]];
                         [enemy updatePlayerFromDictionary:gameState.players[0]];
                     }
+                playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
+                opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
+                isMyTurn = YES;
             } failure:^(NSError *error) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
                                                                 message:error.domain
@@ -345,10 +318,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 [alert show];
                 NSLog(@"error %@", error);
             }];
-
-            
-            
-            //choose card
             
         } failure:^(NSError *error) {
             NSLog(@"error %@", error);
