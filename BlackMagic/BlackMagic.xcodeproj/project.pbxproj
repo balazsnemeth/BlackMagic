@@ -202,6 +202,8 @@
 		8E98D8DF18CC38D300B42F26 /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8DA18CC38D300B42F26 /* water.png */; };
 		8E98D8E218CC4DB500B42F26 /* EarthLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8E018CC4DB500B42F26 /* EarthLine.png */; };
 		8E98D8E318CC4DB500B42F26 /* waterline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8E118CC4DB500B42F26 /* waterline.png */; };
+		8E98D8E618CC572E00B42F26 /* 184422__qubodup__sword-slash-attack.flac in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8E518CC572600B42F26 /* 184422__qubodup__sword-slash-attack.flac */; };
+		8E98D8E818CC573C00B42F26 /* 221683__timbre__another-magic-wand-spell-tinkle.flac in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8E718CC573C00B42F26 /* 221683__timbre__another-magic-wand-spell-tinkle.flac */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -453,6 +455,8 @@
 		8E98D8DA18CC38D300B42F26 /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
 		8E98D8E018CC4DB500B42F26 /* EarthLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EarthLine.png; sourceTree = "<group>"; };
 		8E98D8E118CC4DB500B42F26 /* waterline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waterline.png; sourceTree = "<group>"; };
+		8E98D8E518CC572600B42F26 /* 184422__qubodup__sword-slash-attack.flac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "184422__qubodup__sword-slash-attack.flac"; sourceTree = "<group>"; };
+		8E98D8E718CC573C00B42F26 /* 221683__timbre__another-magic-wand-spell-tinkle.flac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "221683__timbre__another-magic-wand-spell-tinkle.flac"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -516,6 +520,7 @@
 		1E3624F818CB280A00E08E4A /* BlackMagic */ = {
 			isa = PBXGroup;
 			children = (
+				8E98D8E418CC571500B42F26 /* Audio */,
 				1EDB394B18CB65D9008E8565 /* Settings */,
 				1EDB394418CB6583008E8565 /* MI */,
 				805E53D418CB4CCE004E7A1B /* SKTUtils */,
@@ -818,6 +823,15 @@
 			path = SKTUtils;
 			sourceTree = "<group>";
 		};
+		8E98D8E418CC571500B42F26 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				8E98D8E718CC573C00B42F26 /* 221683__timbre__another-magic-wand-spell-tinkle.flac */,
+				8E98D8E518CC572600B42F26 /* 184422__qubodup__sword-slash-attack.flac */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
 		8EA3CD1718CB3DC600EB79A3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -925,6 +939,7 @@
 				8E98D8CB18CC357F00B42F26 /* Faerie Sage-02.png in Resources */,
 				8E98D8BB18CC34D400B42F26 /* Hydra_1.png in Resources */,
 				8E98D82918CC346600B42F26 /* FirePriest_05.png in Resources */,
+				8E98D8E618CC572E00B42F26 /* 184422__qubodup__sword-slash-attack.flac in Resources */,
 				8E98D81318CC345100B42F26 /* InfiniteWall-04.png in Resources */,
 				8E98D85B18CC348500B42F26 /* BurgulB2.png in Resources */,
 				8E98D89B18CC34BC00B42F26 /* PhoenixB_3.png in Resources */,
@@ -933,6 +948,7 @@
 				8E98D83518CC346600B42F26 /* IllB_04.png in Resources */,
 				8027625E18CC4FF40018AD71 /* Icon-76.png in Resources */,
 				8E98D87118CC349600B42F26 /* SeaSprite-08.png in Resources */,
+				8E98D8E818CC573C00B42F26 /* 221683__timbre__another-magic-wand-spell-tinkle.flac in Resources */,
 				1EB4727018CC492900F41B9D /* cardDown.wav in Resources */,
 				8E98D89F18CC34BC00B42F26 /* Phoenix3.png in Resources */,
 				8E98D83C18CC347400B42F26 /* Chain Lighting+Tornado.zip in Resources */,
