@@ -14,10 +14,10 @@
 #import "BMGameState.h"
 #import "UIAlertView+Blocks.h"
 
-#define widthGap 10
+#define widthGap 20
 #define heightGap 20
-#define cardWidth 120
-#define cardHeight 120
+#define cardWidth 115
+#define cardHeight 115
 #define cardDeckWidth 400
 #define cardDeckHeight 400
 
@@ -239,7 +239,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             CGRect frame = CGRectMake(centerX, centerY, cardWidth, cardHeight);
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
-            currentCardView.backgroundColor = [UIColor redColor];
             [cardDeckView addSubview:currentCardView];
             UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped)];
             [currentCardView addGestureRecognizer:cardTapRecognizer];
@@ -348,6 +347,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 - (void)cardDeckCardTapped
 {
     NSLog(@"POW");
+    UILabel *detailsLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.frame), CGRectGetHeight(self.frame) - 30, self.view.bounds.size.width, 21)];
+    detailsLabel.text = @"dwawdafwfwafwafwa";
+    detailsLabel.textColor = [UIColor redColor];
+    [cardDeckView addSubview:detailsLabel];
 }
 
 - (void)handleSwipe
