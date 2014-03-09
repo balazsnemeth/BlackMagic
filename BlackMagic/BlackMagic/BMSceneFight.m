@@ -172,6 +172,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         [self positionFight];
         
+        
+        
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1.0];
         
         
@@ -188,6 +190,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             //card00.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:card00.size];
             [self addChild:card00];
             [playerCardSprites addObject:card00];
+            
+            
+            
             num++;
         }
         
@@ -447,9 +452,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             closestNode = closestSlot;
         }
         
-        
-        
-        
     }
 }
 
@@ -613,16 +615,28 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
             [self statusUpdate:result];
             
+            BMCard* enemyCard = [player cardForID:gameState.enemyCardID];
+            
+            NSString* cardType = @"";
+            int cardIndex = NSNotFound;
+            SKSpriteNode* node = opponenetCardSprites[gameState.enemySlotIndex];
+            
+            [self extracted_method:enemyCard cardIndex_p:&cardIndex cardType_p:&cardType];
+            NSString* imageName = [NSString stringWithFormat:@"%@%dB", cardType, cardIndex];
+            NSLog(@"imageName: %@", imageName);
+            node.texture = [SKTexture textureWithImageNamed:imageName];
+            
 //            NSLog(@"számolok");
             BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
             
-            SKSpriteNode* node = playerCardSprites[miRes.slotIndex];
-            NSString* cardType = @"";
-            int cardIndex = NSNotFound;
+            node = playerCardSprites[miRes.slotIndex];
+            cardType = @"";
+            cardIndex = NSNotFound;
             
             [self extracted_method:miRes.card cardIndex_p:&cardIndex cardType_p:&cardType];
-            NSString* imageName = [NSString stringWithFormat:@"%@%dW", cardType, cardIndex];
+            imageName = [NSString stringWithFormat:@"%@%dW", cardType, cardIndex];
             NSLog(@"imageName: %@", imageName);
+            node.color = [UIColor whiteColor];
             node.texture = [SKTexture textureWithImageNamed:imageName];
             
             float x = enemy.health - player.health;
@@ -633,24 +647,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
             fightPosition += x;
             [self positionFight];
-            
-//            int num = 0;
-//            for (SKSpriteNode* value in playerCardSprites) {
-//                
-//                NSValue* val = playerCardPositions[num];
-//                value.position = val.CGPointValue;
-//                num++;
-//            }
-//            
-//            num = 0;
-//            for (SKSpriteNode* value in opponenetCardSprites) {
-//                
-//                NSValue* val = opponenetCardPositions[num];
-//                value.position = val.CGPointValue;
-//                num++;
-//            }
-            
-//            whiteBackground.position =
 
             NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
         

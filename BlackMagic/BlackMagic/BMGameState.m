@@ -23,6 +23,15 @@
         _players = gameState[@"players"];
         _turnCount = [gameState[@"turnCount"] integerValue];
         
+        NSDictionary* enemyInput = dictionary[@"enemyInput"];
+        
+        if (enemyInput){
+            
+            _enemyAction = enemyInput[@"playCard"];
+            _enemyCardID = [enemyInput[@"cardID"] integerValue];
+            _enemySlotIndex = [enemyInput[@"slotIndex"] integerValue];
+        }
+        
        // NSLog(@"players: %@", _players);
     }
     

@@ -7,7 +7,6 @@
 //
 
 #import "BMPlayer.h"
-#import "BMCard.h"
 #import "BMCreauterSlot.h"
 
 @implementation BMPlayer
@@ -69,6 +68,45 @@
 //        NSLog(@"air cards %@", _airCards);
     }
     return self;
+    
+}
+
+-(BMCard*)cardForID:(NSInteger)identifier{
+    
+    for (BMCard* card in self.earthCards) {
+        
+        if (identifier == card.identifier){
+            return card;
+        }
+    }
+    
+    for (BMCard* card in self.waterCards) {
+        
+        if (identifier == card.identifier){
+            return card;
+        }
+    }
+    
+    for (BMCard* card in self.airCards) {
+        
+        if (identifier == card.identifier){
+            return card;
+        }
+    }
+    for (BMCard* card in self.illusionCards) {
+        
+        if (identifier == card.identifier){
+            return card;
+        }
+    }
+    for (BMCard* card in self.fireCards) {
+        
+        if (identifier == card.identifier){
+            return card;
+        }
+    }
+    
+    return nil;
     
 }
 

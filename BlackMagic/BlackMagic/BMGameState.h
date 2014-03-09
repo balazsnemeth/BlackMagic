@@ -13,6 +13,10 @@
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 
 
+@property (nonatomic, strong) NSString* enemyAction;
+@property (nonatomic, assign) NSInteger enemyCardID;
+@property (nonatomic, assign) int enemySlotIndex;
+
 @property (nonatomic, assign) int currentPlayerIndex;
 @property (nonatomic, assign) BOOL isGameOver;
 @property (nonatomic, assign) int turnCount;
