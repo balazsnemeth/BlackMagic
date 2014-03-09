@@ -8,6 +8,7 @@
 
 #import "BMMIManager.h"
 #import "BMCreauterSlot.h"
+#import "BMCardEffect.h"
 
 @interface BMMIManager()
 
@@ -62,12 +63,12 @@ static BMMIManager *sharedMIManager = nil;
             [buyableCards addObject:card];
         }
     }
-//    for (BMCard* card in player.airCards) {
-//        NSNumber* n = card.cost[@"amount"];
-//        if (n.integerValue <= player.airMana) {
-//            [buyableCards addObject:card];
-//        }
-//    }
+    for (BMCard* card in player.airCards) {
+        NSNumber* n = card.cost[@"amount"];
+        if (n.integerValue <= player.airMana) {
+            [buyableCards addObject:card];
+        }
+    }
     for (BMCard* card in player.illusionCards) {
         NSNumber* n = card.cost[@"amount"];
         if (n.integerValue <= player.illusionMana) {
@@ -81,6 +82,127 @@ static BMMIManager *sharedMIManager = nil;
         }
     }
     return buyableCards;
+}
+
+
+
+- (id) randomObjectFromArray:(NSArray*)array
+{
+    if ([array count] == 0) {
+        return nil;
+    }
+    return [array objectAtIndex: arc4random() % [array count]];
+}
+
+
+- (int) numberOfDamageIllusionOfPlayer:(BMPlayer*)player{
+    NSInteger damageCard = 0;
+    for (BMCard* card in player.fireCards) {
+        if ([card.type isEqualToString:SPELL_TYPE]) {
+            if (card.attribute) {
+                for (BMCardEffect* effect in card.attribute.effects) {
+                    if (effect.cardEffect == damageAllCreature) {
+                        damageCard++;
+                    }
+                }
+            }
+        }
+    }
+    for (BMCard* card in player.waterCards) {
+        if ([card.type isEqualToString:SPELL_TYPE]) {
+            if (card.attribute) {
+                for (BMCardEffect* effect in card.attribute.effects) {
+                    if (effect.cardEffect == damageAllCreature) {
+                        damageCard++;
+                    }
+                }
+            }
+        }
+    }
+    for (BMCard* card in player.airCards) {
+        if ([card.type isEqualToString:SPELL_TYPE]) {
+            if (card.attribute) {
+                for (BMCardEffect* effect in card.attribute.effects) {
+                    if (effect.cardEffect == damageAllCreature) {
+                        damageCard++;
+                    }
+                }
+            }
+        }
+    }
+    for (BMCard* card in player.illusionCards) {
+        if ([card.type isEqualToString:SPELL_TYPE]) {
+            if (card.attribute) {
+                for (BMCardEffect* effect in card.attribute.effects) {
+                    if (effect.cardEffect == damageAllCreature) {
+                        damageCard++;
+                    }
+                }
+            }
+        }
+    }
+    for (BMCard* card in player.earthCards) {
+        if ([card.type isEqualToString:SPELL_TYPE]) {
+            if (card.attribute) {
+                for (BMCardEffect* effect in card.attribute.effects) {
+                    if (effect.cardEffect == damageAllCreature) {
+                        damageCard++;
+                    }
+                }
+            }
+        }
+    }
+    return damageCard;
+}
+
+/**Kiválogatom a dombolókat, és random választok közülük!*/
+- (BMCard*) strongestDamageOfCards:(NSArray*)cards minimumRankCount:(NSInteger)rankCount{
+    
+    if (rankCount > 4) {
+        rankCount = 4;
+    }
+    if (rankCount <= 0) {
+        rankCount = 1;
+    }
+    NSMutableArray* damageCards = [NSMutableArray array];
+    for (BMCard* card in cards) {
+        if ([card.type isEqualToString:SPELL_TYPE]) {
+            //            NSNumber* n = card.cost[@"amount"];
+            if (card.attribute) {
+                for (BMCardEffect* effect in card.attribute.effects) {
+                    if (effect.cardEffect == damageAllCreature) {
+                        [damageCards addObject: card];
+                    }
+                }
+            }
+        }
+    }
+    /**Ha nagy a rankcount, akkor várhatok a sorsolással*/
+    if (damageCards.count <= rankCount) {
+        return nil;
+    }
+    else{
+        return [self randomObjectFromArray:damageCards];
+    }
+}
+
+
+
+- (BMCard*) getHealthIncreaseIllusion:(NSArray*)cards{
+    BMCard* strongestCard = nil;
+    for (BMCard* card in cards) {
+        if ([card.type isEqualToString:SPELL_TYPE]) {
+//            NSNumber* n = card.cost[@"amount"];
+            if (card.attribute) {
+                for (BMCardEffect* effect in card.attribute.effects) {
+                    if (effect.cardEffect == heal) {
+                        return card;
+                    }
+                }
+            }
+        }
+    }
+    return strongestCard;
 }
 
 - (BMCard*) strongestOfCards:(NSArray*)cards inType:(NSString*)type{
@@ -121,6 +243,7 @@ static BMMIManager *sharedMIManager = nil;
     //1. Van-e szabad helyem -> ott tudok vagy védekezni, vagy támadni!
     int creaturePlace = NOT_DEFINED;
     if ([self hasFreeSlotOfPlayer:player]) {
+        NSLog(@"%d - add slot",turnCount);
         //Van szabad slotom!
         int defenderPosition = NOT_DEFINED;
         int attackPosition = NOT_DEFINED;
@@ -161,14 +284,46 @@ static BMMIManager *sharedMIManager = nil;
     }
     else{
         //Nincs szabad slotom!
-        //Tudok-e varázsolni!
-        BMCard* strongestIllusion = [self strongestOfCards:buyableCards inType:SPELL_TYPE];
-        if (strongestIllusion) {
-            //ha tudok, akkor valamilyen valószínűsséggel akár varázsolhatok is...
-            
+        BMCard* illusion = nil;
+        if (player.health < enemy.health) {
+            //meg kell próbálnom gyógyító varázslatot
+            illusion = [self getHealthIncreaseIllusion:buyableCards];
         }
-        res.skipTurn = TRUE;
-        res.card = nil;
+        else{
+            //meg kell néznem, tudom-e őt rombolni
+                //megnézem, hogy mennyivel vezetek, és ettől függően várhatok erősebb rombolásra!
+           
+                int lifeDiff = (player.health - enemy.health);
+                int unit = 1;
+                if (lifeDiff < 10) {
+                    unit = 1;
+                }
+                else if(lifeDiff < 16){
+                    unit = 2;
+                }
+                else if(lifeDiff < 24){
+                    unit = 3;
+                }
+                else if(lifeDiff < 30){
+                    unit = 4;
+                }
+                int maxDamageCard = [self numberOfDamageIllusionOfPlayer:player];
+                if (maxDamageCard < unit && unit != 1) {
+                    unit = maxDamageCard;
+                }
+                illusion = [self strongestDamageOfCards:buyableCards minimumRankCount:unit];
+                //ha tudok, akkor varázsolhatok is
+        }
+        if (illusion) {
+            res.card = illusion;
+            //be kell állítani!
+            res.slotIndex = 0;
+        }
+        else{
+            //Ha nem tudok varázsolni, akkor skippelek, hogy növeljem a pontjaimat!
+            res.skipTurn = TRUE;
+            res.card = nil;
+        }
     }
     return res;
 }

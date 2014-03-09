@@ -16,8 +16,8 @@
 
 #define widthGap 10
 #define heightGap 20
-#define cardWidth 50
-#define cardHeight 50
+#define cardWidth 120
+#define cardHeight 120
 #define cardDeckWidth 400
 #define cardDeckHeight 400
 
@@ -48,6 +48,7 @@
     
     // experimental
     BOOL cardDeckIsPresent;
+    UIView *cardDeckView;
     UIView *newView;
     BOOL gameOver;
 }
@@ -96,7 +97,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                         NSLog(@"Reset successfull!");
                         [self registerUserWithName:name];
                     } failure:^(NSError *error) {
-                        NSLog(@"Reset unsuccessfull!");
+                        NSLog(@"Reset unsuccessfull! Error: %@",error);
                     }];
                 }
             }];
@@ -138,7 +139,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [self registerUserWithName:name];
         //reg test A
         
-        fightPosition = self.frame.size.height / 2;
+        fightPosition = self.frame.size.width / 2;
         
         [self positionFight];
         
@@ -195,8 +196,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         myLabel.name = @"buttonStart";
 //        myLabel.text = @"pick";
 //        myLabel.fontSize = 30;
-        myLabel.position = CGPointMake(CGRectGetMinX(self.frame),
-                                       CGRectGetMidY(self.frame));
+        myLabel.position = CGPointMake(CGRectGetMaxX(self.frame),
+                                       CGRectGetMinY(self.frame));
         [self addChild:myLabel];
         
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
@@ -221,19 +222,25 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 
 - (void)setupViews
 {
-    newView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
+    cardDeckView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
     
-    for (int row = 0; row < 5; row++)
+    
+}
+
+- (void)addCardsToDeck
+{
+    for (int column = 0; column < 5; column++)
     {
-        for (int column = 0; column < 4; column++)
+        for (int row = 0; row < 4; row++)
         {
-            CGFloat centerY = row * (cardHeight + heightGap);
-            CGFloat centerX = column * (cardWidth + widthGap);
+            CGFloat centerY = row * (cardHeight + heightGap) + cardHeight/2;
+            CGFloat centerX = column * (cardWidth + widthGap) + cardWidth/2;
             
             CGRect frame = CGRectMake(centerX, centerY, cardWidth, cardHeight);
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
-            [newView addSubview:currentCardView];
+            currentCardView.backgroundColor = [UIColor redColor];
+            [cardDeckView addSubview:currentCardView];
             UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped)];
             [currentCardView addGestureRecognizer:cardTapRecognizer];
         }
@@ -267,19 +274,28 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             if (!cardDeckIsPresent)
             {
                 NSLog(@"BOOM");
-                [self.view.window.rootViewController.view addSubview:newView];
-                newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+                [self.view.window.rootViewController.view addSubview:cardDeckView];
+                cardDeckView.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), self.view.bounds.size.width, CGRectGetMaxY(self.frame) - CGRectGetMinY(self.frame));
                 UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe)];
-                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-                [newView addGestureRecognizer:swipeRecognizer];
+                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+                [cardDeckView addGestureRecognizer:swipeRecognizer];
                 [UIView animateWithDuration:0.5 animations:^
                  {
-                     newView.frame = CGRectMake(CGRectGetMinX(self.frame), self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+                     cardDeckView.frame = CGRectMake(CGRectGetMinX(self.frame), self.view.bounds.size.height/2 - cardDeckHeight/2, self.view.bounds.size.width, CGRectGetMaxY(self.frame) - CGRectGetMinY(self.frame));
                  }];
+                [self addCardsToDeck];
                 cardDeckIsPresent = YES;
             }
+            else
+            {
+                NSLog(@"VOOM");
+                [UIView animateWithDuration:0.5 animations:^
+                {
+                    cardDeckView.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), self.view.bounds.size.width, CGRectGetMaxY(self.frame) - CGRectGetMinY(self.frame));
+                }];
+                cardDeckIsPresent = NO;
+            }
         }
-        // NSLog(@"** TOUCH LOCATION ** \nx: %f / y: %f", location.x, location.y);
         
         SKNode* card = [self childNodeWithName:@"playerAvailableCard0"];
         
@@ -339,7 +355,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     NSLog(@"VOOM");
     [UIView animateWithDuration:0.5 animations:^
      {
-         newView.frame = CGRectMake(CGRectGetMinX(self.frame) - cardDeckWidth, self.view.bounds.size.height/2 - cardDeckHeight/2, cardDeckWidth, cardDeckHeight);
+         cardDeckView.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), self.view.bounds.size.width, CGRectGetMaxY(self.frame) - CGRectGetMinY(self.frame));
      }];
     cardDeckIsPresent = NO;
 }
