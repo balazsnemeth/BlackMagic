@@ -661,6 +661,9 @@
 			isa = PBXGroup;
 			children = (
 				1EB4726F18CC492900F41B9D /* cardDown.wav */,
+				8027625818CC4FDA0018AD71 /* Icons */,
+				8E98D8E018CC4DB500B42F26 /* EarthLine.png */,
+				8E98D8E118CC4DB500B42F26 /* waterline.png */,
 				1EB4726D18CC3BF800F41B9D /* backgroung.mp3 */,
 				8E98D8D618CC38D300B42F26 /* air.png */,
 				8E98D8D718CC38D300B42F26 /* earth.png */,

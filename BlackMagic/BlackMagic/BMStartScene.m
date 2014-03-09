@@ -8,6 +8,7 @@
 
 #import "BMStartScene.h"
 #import "BMSceneFight.h"
+#import "SettingsHandler.h"
 
 @implementation StartScene{
 }
@@ -61,14 +62,16 @@
         }
         
         else if ([node.name isEqualToString:@"buttonStartCPU"]) {
-            
-            //TODO set up simulation
+            [SettingsHandler sharedSettings].autoPlayByAI = TRUE;
             BMSceneFight *scene = [[BMSceneFight alloc] initWithSize:self.size];
             SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
             [self.view presentScene:scene transition:sceneTransition];
         }
         else if ([node.name isEqualToString:@"buttonReset"]) {
-            //TODO Reset server
+            [SettingsHandler sharedSettings].autoPlayByAI = FALSE;
+            BMSceneFight *scene = [[BMSceneFight alloc] initWithSize:self.size];
+            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
+            [self.view presentScene:scene transition:sceneTransition];
         }
     }
     
