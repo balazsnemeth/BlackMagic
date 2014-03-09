@@ -25,7 +25,7 @@
     SKLabelNode *playerHealth;
     SKLabelNode *opponentHealth;
     SKSpriteNode *playerMana;
-    
+    SKSpriteNode* whiteBackground;
     
     
     NSMutableArray* playerCardSprites;
@@ -68,20 +68,57 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 
 -(void)addBackground{
     
-    SKSpriteNode* card00 = [SKSpriteNode spriteNodeWithImageNamed:@"FieldW"];
-    card00.size = CGSizeMake(self.frame.size.width, self.frame.size.height / 2 +60);
+    whiteBackground = [SKSpriteNode spriteNodeWithImageNamed:@"FieldW"];
+    whiteBackground.size = CGSizeMake(self.frame.size.width, self.frame.size.height / 2 +60);
     //card00.anchorPoint = CGPointZero;
-    card00.position = CGPointMake(380, 800);
+    whiteBackground.position = CGPointMake(380, 800);
     //card00.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:card00.size];
-    [self addChild:card00];
+    [self addChild:whiteBackground];
     
-    SKSpriteNode* card01 = [SKSpriteNode spriteNodeWithImageNamed:@"Fieldb"];
-    card01.size = CGSizeMake(self.frame.size.width, self.frame.size.height / 2 +60);
-    //card00.anchorPoint = CGPointZero;
-    card01.position = CGPointMake(380, 200);
-    //card00.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:card00.size];
-    //[self addChild:card01];
+}
+
+- (void) registerUserWithName:(NSString*)name{
+    [[BMNetworkManager sharedManager] registerPlayer:name onCompletion:^(NSDictionary *result) {
+        
+        //NSLog(@"res:%@",result);
+        player = [[BMPlayer alloc] initWithDictionary:result];
+        enemy = [[BMPlayer alloc] initWithDictionary:result];
+        player.name = name;
+        isMyTurn = YES;
+    } failure:^(NSError *error) {
+        NSLog(@"error:%@",error);
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [UIAlertView showWithTitle:@"Hiba a regisztrációnál" message:@"Újraindítottad a szervert?" cancelButtonTitle:@"Mégsem" otherButtonTitles:@[@"Újraindítom most"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex != alertView.cancelButtonIndex) {
+                    [[BMNetworkManager sharedManager] resetServerOnCompletion:^{
+                        NSLog(@"Reset successfull!");
+                        [self registerUserWithName:name];
+                    } failure:^(NSError *error) {
+                        NSLog(@"Reset unsuccessfull!");
+                    }];
+                }
+            }];
+        });
+        return;
+    }];
+}
+
+- (void)positionFight {
+    playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 275, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 425, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 500, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 575, fightPosition - 50}]];
     
+    opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 275, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 425, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 500, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 575, fightPosition }]];
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -103,19 +140,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         fightPosition = self.frame.size.height / 2;
         
-        playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition - 50}],
-                                [NSValue valueWithCGPoint:(CGPoint){ 275, fightPosition - 50}],
-                                [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition - 50}],
-                                [NSValue valueWithCGPoint:(CGPoint){ 425, fightPosition - 50}],
-                                [NSValue valueWithCGPoint:(CGPoint){ 500, fightPosition - 50}],
-                                [NSValue valueWithCGPoint:(CGPoint){ 575, fightPosition - 50}]];
-        
-        opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 275, fightPosition }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 425, fightPosition }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 500, fightPosition }],
-                                [NSValue valueWithCGPoint:(CGPoint){ 575, fightPosition }]];
+        [self positionFight];
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1.0];
         
@@ -184,7 +209,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         opponentHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         opponentHealth.text = [NSString stringWithFormat:@"%i", 60];
         opponentHealth.fontSize = 30;
-        opponentHealth.position = CGPointMake(self.frame.size.width / 2 - 10, 1000);
+        opponentHealth.fontColor = [UIColor blackColor];
+        opponentHealth.position = CGPointMake(self.frame.size.width / 2 - 10, 995);
         //opponentHealth.zRotation = -M_PI/2;
         [self addChild:opponentHealth];
         
@@ -380,11 +406,41 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
             
             SKSpriteNode* node = playerCardSprites[miRes.slotIndex];
-            node.texture = [SKTexture textureWithImageNamed:@"Spaceship"];
+            NSString* imageName = [NSString stringWithFormat:@"%@%dW", miRes.card.cost[@"type"], miRes.card.identifier];
+            NSLog(@"imageName: %@", imageName);
+            node.texture = [SKTexture textureWithImageNamed:imageName];
+            
+            float x = player.health - enemy.health;
+            
+            x = x*10;
+            
+            NSLog(@"player: %d enemy: %d x : %f", player.health, enemy.health, x);
+            
+            fightPosition += x;
+            [self positionFight];
+            
+            int num = 0;
+            for (SKSpriteNode* value in playerCardSprites) {
+                
+                NSValue* val = playerCardPositions[num];
+                value.position = val.CGPointValue;
+                num++;
+            }
+            
+            num = 0;
+            for (SKSpriteNode* value in opponenetCardSprites) {
+                
+                NSValue* val = opponenetCardPositions[num];
+                value.position = val.CGPointValue;
+                num++;
+            }
+            
+//            whiteBackground.position =
 
             NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
         
             [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
+                
                 [self statusUpdate:result];
                 isMyTurn = YES;
                 
