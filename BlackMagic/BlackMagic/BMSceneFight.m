@@ -13,6 +13,7 @@
 #import "BMMIManager.h"
 #import "BMGameState.h"
 #import "UIAlertView+Blocks.h"
+#import "BMStartScene.h"
 
 #define widthGap 20
 #define heightGap 20
@@ -231,6 +232,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         cardButton.position = CGPointMake(730,30);
         [self addChild:cardButton];
         
+        SKSpriteNode *hamburgerButton = [SKSpriteNode spriteNodeWithImageNamed:@"MenuButton"];
+        hamburgerButton.size = CGSizeMake(54.78515625, 50);
+        hamburgerButton.name = @"hamburger";
+        hamburgerButton.position = CGPointMake(CGRectGetMinX(self.frame) + hamburgerButton.size.width, 30);
+        [self addChild:hamburgerButton];
+        
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
         playerHealth.fontSize = 30;
@@ -254,8 +261,78 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 - (void)setupViews
 {
     cardDeckView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
-    
-    
+}
+
+- (UIImage*) cardImageForIndex:(NSInteger)index{
+    switch (index)
+    {
+        case 0:
+            return [UIImage imageNamed:@"WalloffireB1"];
+            break;
+        case 1:
+            return [UIImage imageNamed:@"SeaSprite-01"];
+            break;
+        case 2:
+            return [UIImage imageNamed:@"Faerie Sage-01"];
+            break;
+        case 3:
+            return [UIImage imageNamed:@"ElevenHealer-05"];
+            break;
+        case 4:
+            return [UIImage imageNamed:@"DreamofPlenty-01"];
+            break;
+        case 5:
+            return [UIImage imageNamed:@"FirePriestB_01"];
+            break;
+        case 6:
+            return [UIImage imageNamed:@"MerfolkApostate-01"];
+            break;
+        case 7:
+            return [UIImage imageNamed:@"PhoenixB_1"];
+            break;
+        case 8:
+            return [UIImage imageNamed:@"Rejuvenation+StoneRain-01"];
+            break;
+        case 9:
+            return [UIImage imageNamed:@"IllB_01"];
+            break;
+        case 10:
+            return [UIImage imageNamed:@"BurgulB1"];
+            break;
+        case 11:
+            return [UIImage imageNamed:@"MindMasterB_1"];
+            break;
+        case 12:
+            return [UIImage imageNamed:@"Chain Lighting+Tornado-01"];
+            break;
+        case 13:
+            return [UIImage imageNamed:@""];
+            break;
+        case 14:
+            return [UIImage imageNamed:@""];
+            break;
+        case 15:
+            return [UIImage imageNamed:@""];
+            break;
+        case 16:
+            return [UIImage imageNamed:@""];
+            break;
+        case 17:
+            return [UIImage imageNamed:@""];
+            break;
+        case 18:
+            return [UIImage imageNamed:@"earth1W"];
+            break;
+        case 19:
+            return [UIImage imageNamed:@""];
+            break;
+        case 20:
+            return [UIImage imageNamed:@""];
+            break;
+        default:
+            return nil;
+            break;
+    }
 }
 
 - (void)addCardsToDeck
@@ -271,6 +348,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
             currentCardView.tag = row*5+column;
+            
+            
             currentCardView.backgroundColor = [UIColor redColor];
             [cardDeckView addSubview:currentCardView];
             UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped:)];
@@ -344,6 +423,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 }];
                 cardDeckIsPresent = NO;
             }
+        }
+        
+        if ([node.name isEqualToString:@"hamburger"])
+        {
+            NSLog(@"BAM");
+            StartScene *startScene = [[StartScene alloc] initWithSize:self.size];
+            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
+            [self.view presentScene:startScene transition:sceneTransition];
+            
         }
         
         SKNode* card = [self childNodeWithName:@"playerAvailableCard0"];
@@ -534,6 +622,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 //    CGPoint p = [gestureRec locationInView:cardDeckView];
     int row = (int)gestureRec.view.tag/5;
     int col = gestureRec.view.tag - row*5;
+    NSLog(@"%ld",(long)gestureRec.view.tag);
     BMCard* card = [self cardAtCol:col atRow:row];
     cardDescriptionTextView.text = card.description;
     NSLog(@"POW - (%d,%d)",row,col);

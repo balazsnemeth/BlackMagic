@@ -37,7 +37,7 @@
         SKNode *node = [self nodeAtPoint:touchLocation];
         if ([node.name isEqualToString:@"buttonStart"]) {
             BMSceneFight *scene = [[BMSceneFight alloc] initWithSize:self.size];
-            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:1];
+            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
             [self.view presentScene:scene transition:sceneTransition];
         }
     }
