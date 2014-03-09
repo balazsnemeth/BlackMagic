@@ -262,43 +262,43 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     switch (index)
     {
         case 0:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"WalloffireB1"];
             break;
         case 1:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"SeaSprite-01"];
             break;
         case 2:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"Faerie Sage-01"];
             break;
         case 3:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"ElevenHealer-05"];
             break;
         case 4:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"DreamofPlenty-01"];
             break;
         case 5:
-            return [UIImage imageNamed:@"fire1W"];
+            return [UIImage imageNamed:@"FirePriestB_01"];
             break;
         case 6:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"MerfolkApostate-01"];
             break;
         case 7:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"PhoenixB_1"];
             break;
         case 8:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"Rejuvenation+StoneRain-01"];
             break;
         case 9:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"IllB_01"];
             break;
         case 10:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"BurgulB1"];
             break;
         case 11:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"MindMasterB_1"];
             break;
         case 12:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"Chain Lighting+Tornado-01"];
             break;
         case 13:
             return [UIImage imageNamed:@""];
