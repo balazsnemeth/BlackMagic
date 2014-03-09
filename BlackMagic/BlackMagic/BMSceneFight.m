@@ -13,8 +13,8 @@
 #import "BMMIManager.h"
 #import "BMGameState.h"
 #import "UIAlertView+Blocks.h"
+#import "BMStartScene.h"
 #import "SettingsHandler.h"
-@import AVFoundation;
 
 #define widthGap 20
 #define heightGap 20
@@ -60,7 +60,6 @@
     UITextView* cardDescriptionTextView;
     BOOL gameOver;
     UIImageView *dragAndDropImgView;
-    AVAudioPlayer * backgroundMusicPlayer;
 }
 
 
@@ -167,7 +166,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         playerCardSprites = [NSMutableArray array];
         opponenetCardSprites = [NSMutableArray array];
         
-        NSString* name = [self genRandStringLength:6];
+        NSString* name = @"BlackBone"; //[self genRandStringLength:6];
         [self registerUserWithName:name];
         //reg test A
         
@@ -252,17 +251,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         [self setupViews];
         
-        NSError *error;
-        NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"backgroung" withExtension:@"mp3"];
-        backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
-        backgroundMusicPlayer.numberOfLoops = -1;
-        [backgroundMusicPlayer prepareToPlay];
         
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [backgroundMusicPlayer play];
-        });
         
     }
     return self;
@@ -524,11 +513,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         int minIndex = -1;
         int i = 0;
         for (SKSpriteNode* slotNode in playerCardSprites) {
-            CGPoint p1 = dragAndDropImgView.frame.origin;
+            CGPoint p1 = dragAndDropImgView.center;
             CGPoint p2 = slotNode.position;
+            if (p2.y == 840) {
+                p2.y = 850;
+            }
             CGFloat xDist = (p2.x - p1.x);
             CGFloat yDist = (p2.y - p1.y);
             CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
+            NSLog(@"dist:(%f,%f)",p2.x,p2.y);
             if (minDist > distance) {
                 closestSlot = slotNode;
                 minDist = distance;
@@ -752,8 +745,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
             [self statusUpdate:result];
-            
-//            NSLog(@"számolok");
             
             
 //            int num = 0;
