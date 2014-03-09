@@ -13,6 +13,7 @@
 #import "BMMIManager.h"
 #import "BMGameState.h"
 #import "UIAlertView+Blocks.h"
+#import "BMStartScene.h"
 
 #define widthGap 20
 #define heightGap 20
@@ -224,6 +225,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         cardButton.position = CGPointMake(730,30);
         [self addChild:cardButton];
         
+        SKSpriteNode *hamburgerButton = [SKSpriteNode spriteNodeWithImageNamed:@"MenuButton"];
+        hamburgerButton.size = CGSizeMake(54.78515625, 50);
+        hamburgerButton.name = @"hamburger";
+        hamburgerButton.position = CGPointMake(CGRectGetMinX(self.frame) + hamburgerButton.size.width, 30);
+        [self addChild:hamburgerButton];
+        
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
         playerHealth.fontSize = 30;
@@ -409,6 +416,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                 }];
                 cardDeckIsPresent = NO;
             }
+        }
+        
+        if ([node.name isEqualToString:@"hamburger"])
+        {
+            NSLog(@"BAM");
+            StartScene *startScene = [[StartScene alloc] initWithSize:self.size];
+            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
+            [self.view presentScene:startScene transition:sceneTransition];
+            
         }
         
         SKNode* card = [self childNodeWithName:@"playerAvailableCard0"];
