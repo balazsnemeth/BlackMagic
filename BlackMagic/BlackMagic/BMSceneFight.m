@@ -15,6 +15,7 @@
 #import "UIAlertView+Blocks.h"
 #import "BMStartScene.h"
 #import "SettingsHandler.h"
+#import "MBProgressHUD.h"
 
 #define widthGap 20
 #define heightGap 20
@@ -60,6 +61,7 @@
     UITextView* cardDescriptionTextView;
     BOOL gameOver;
     UIImageView *dragAndDropImgView;
+    MBProgressHUD* HUD;
 }
 
 
@@ -166,7 +168,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         playerCardSprites = [NSMutableArray array];
         opponenetCardSprites = [NSMutableArray array];
         
-        NSString* name = @"BlackBone"; //[self genRandStringLength:6];
+        NSString* name = [self genRandStringLength:6];
         [self registerUserWithName:name];
         //reg test A
         
@@ -511,32 +513,37 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     return newImage;
 }
 
+- (SKSpriteNode *)getClosestSlot {
+    CGFloat minDist;
+    SKSpriteNode* closestSlot = playerCardSprites[0];
+    int minIndex = -1;
+    int i = 0;
+    for (SKSpriteNode* slotNode in playerCardSprites) {
+        CGPoint p1 = dragAndDropImgView.center;
+        CGPoint p2 = slotNode.position;
+        if (p2.y == 840) {
+            p2.y = 850;
+        }
+        CGFloat xDist = (p2.x - p1.x);
+        CGFloat yDist = (p2.y - p1.y);
+        CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
+        if (minDist > distance) {
+            closestSlot = slotNode;
+            minDist = distance;
+            minIndex = i;
+            //legközelebbi (rátenni az effectet)
+        }
+        //összes többi (eltüntetni az effectet)
+        i++;
+    }
+    return closestSlot;
+}
+
 - (void) updateMySlots{
     if (dragAndDropImgView) {
         CGFloat minDist = 10000;
-        SKSpriteNode* closestSlot = playerCardSprites[0];
-        int minIndex = -1;
-        int i = 0;
-        for (SKSpriteNode* slotNode in playerCardSprites) {
-            CGPoint p1 = dragAndDropImgView.center;
-            CGPoint p2 = slotNode.position;
-            if (p2.y == 840) {
-                p2.y = 850;
-            }
-            CGFloat xDist = (p2.x - p1.x);
-            CGFloat yDist = (p2.y - p1.y);
-            CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
-            NSLog(@"dist:(%f,%f)",p2.x,p2.y);
-            if (minDist > distance) {
-                closestSlot = slotNode;
-                minDist = distance;
-                minIndex = i;
-                //legközelebbi (rátenni az effectet)
-            }
-            //összes többi (eltüntetni az effectet)
-            i++;
-        }
-        NSLog(@"minIndex:%d",minIndex);
+        SKSpriteNode *closestSlot;
+        closestSlot = [self getClosestSlot];
         if (closestSlot == closestNode){
             return;
         }
@@ -545,7 +552,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             closestSlot.position = CGPointMake(closestSlot.position.x, closestSlot.position.y - 10);
             closestNode = closestSlot;
         }
-        
     }
 }
 
@@ -586,10 +592,27 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             //ide letesszük
             [dragAndDropImgView removeFromSuperview];
             dragAndDropImgView = nil;
+            int index = gestureRec.view.tag;
             int row = (int)gestureRec.view.tag/5;
             int col = gestureRec.view.tag - row*5;
             BMCard* card = [self cardAtCol:col atRow:row];
+            
+            SKSpriteNode *closestSlot;
+            closestSlot = [self getClosestSlot];
+
+            BMMIResult* miRes = [BMMIResult new];
+            miRes.slotIndex = [playerCardSprites indexOfObject:closestSlot];
+            miRes.card = card;
+            miRes.skipTurn = FALSE;
+            
             //Az ehhez tartozó sprite-ot aktiválni!
+            
+            UIImage* cardImg = [self cardImageForIndex:index];
+            closestSlot.texture = [SKTexture textureWithImage:cardImg];
+            
+            [self performNextStep:miRes];
+            
+            
             
             return;
         }
@@ -696,6 +719,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     [self positionFight];
     
     NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
+    
+    [self runAction:[SKAction playSoundFileNamed:@"cardDown.wav" waitForCompletion:NO]];
+    
     [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
         
         [self statusUpdate:result];
@@ -742,8 +768,21 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         isMyTurn = NO;
         
+        if (![SettingsHandler sharedSettings].autoPlayByAI) {
+            HUD = [[MBProgressHUD alloc] initWithView:self.view];
+            [self.view addSubview:HUD];
+            HUD.labelText = @"Waiting for a player";
+            HUD.dimBackground = TRUE;
+            [HUD show:YES];
+        }
+        
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
             //NSLog(@"res: %@", result);
+            
+            if (![SettingsHandler sharedSettings].autoPlayByAI) {
+                
+                [HUD hide:YES];
+            }
             
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
             [self statusUpdate:result];
