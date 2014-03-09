@@ -32,16 +32,13 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
-    
     for (UITouch *touch in touches) {
         CGPoint touchLocation = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:touchLocation];
-        
         if ([node.name isEqualToString:@"buttonStart"]) {
             BMSceneFight *scene = [[BMSceneFight alloc] initWithSize:self.size];
             SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:1];
             [self.view presentScene:scene transition:sceneTransition];
-
         }
     }
     
