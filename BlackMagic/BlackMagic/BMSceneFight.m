@@ -493,6 +493,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
+- (void)hideSelectionView {
+    NSLog(@"VOOM");
+    [UIView animateWithDuration:0.5 animations:^
+     {
+         cardDeckView.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), self.view.bounds.size.width, CGRectGetMaxY(self.frame) - CGRectGetMinY(self.frame));
+     }];
+    cardDeckIsPresent = NO;
+}
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     for (UITouch *touch in touches)
     {
@@ -522,12 +531,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             }
             else
             {
-                NSLog(@"VOOM");
-                [UIView animateWithDuration:0.5 animations:^
-                {
-                    cardDeckView.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), self.view.bounds.size.width, CGRectGetMaxY(self.frame) - CGRectGetMinY(self.frame));
-                }];
-                cardDeckIsPresent = NO;
+                [self hideSelectionView];
             }
         }
         
@@ -689,6 +693,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
     else if(gestureRec.state == UIGestureRecognizerStateEnded || gestureRec.state == UIGestureRecognizerStateCancelled){
         if (dragAndDropImgView) {
+            
             CGPoint location = [gestureRec locationInView:cardDeckView];
             dragAndDropImgView.center = location;
             //ide letesszük
@@ -883,6 +888,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             [self.view addSubview:HUD];
             HUD.labelText = @"Waiting for a player";
             HUD.dimBackground = TRUE;
+            self.view.userInteractionEnabled = NO;
             [HUD show:YES];
         }
         
@@ -895,6 +901,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
             if (![SettingsHandler sharedSettings].autoPlayByAI) {
                 [self refreshCardOnDeck];
+                self.view.userInteractionEnabled = YES;
                 [HUD hide:YES];
             }
 
