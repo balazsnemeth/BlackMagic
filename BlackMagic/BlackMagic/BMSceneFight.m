@@ -53,6 +53,7 @@
     UIView *newView;
     UITextView* cardDescriptionTextView;
     BOOL gameOver;
+    UIImageView *dragAndDropImgView;
 }
 
 
@@ -242,18 +243,19 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
             currentCardView.tag = row*5+column;
+            currentCardView.backgroundColor = [UIColor redColor];
             [cardDeckView addSubview:currentCardView];
             UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped:)];
             [currentCardView addGestureRecognizer:cardTapRecognizer];
             
             UILongPressGestureRecognizer* longRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longDeckCard:)];
-            longRecognizer.minimumPressDuration = 0.4;
+            longRecognizer.minimumPressDuration = 0.2;
             [currentCardView addGestureRecognizer:longRecognizer];
             
         }
     }
     
-    cardDescriptionTextView = [[UITextView alloc]initWithFrame:CGRectMake(cardWidth/2,4*(cardHeight + heightGap) + heightGap, 5*cardWidth+4*widthGap,60)];
+    cardDescriptionTextView = [[UITextView alloc]initWithFrame:CGRectMake(cardWidth/2,4*(cardHeight + heightGap) + cardHeight/2, 5*cardWidth+4*widthGap,60)];
     cardDescriptionTextView.editable = FALSE;
     cardDescriptionTextView.font = [UIFont fontWithName:@"Arial" size:24];
     [cardDescriptionTextView setTextColor:[UIColor whiteColor]];
@@ -279,7 +281,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:self];
@@ -289,6 +290,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             if (!cardDeckIsPresent)
             {
                 NSLog(@"BOOM");
+                cardDescriptionTextView.text = @"";
                 [self.view.window.rootViewController.view addSubview:cardDeckView];
                 cardDeckView.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), self.view.bounds.size.width, CGRectGetMaxY(self.frame) - CGRectGetMinY(self.frame));
                 UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe)];
@@ -336,6 +338,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"touchesEnded");
+
+    
+    
     if (_touchingCard)
     {
         CGPoint currentPoint = [[touches anyObject] locationInNode:self];
@@ -360,9 +366,52 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
+- (UIImage *)imageFromView:(UIView *)view
+{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, YES, 0.0);
+    // [view.layer renderInContext:UIGraphicsGetCurrentContext()]; // <- same result...
+    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
+    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
 - (void)longDeckCard:(UITapGestureRecognizer*)gestureRec
 {
-
+    if(gestureRec.state == UIGestureRecognizerStateBegan){
+        if (!dragAndDropImgView) {
+            NSLog(@"long and create");
+            UIImage* img = [self imageFromView:gestureRec.view];
+            dragAndDropImgView = [[UIImageView alloc] initWithFrame:gestureRec.view.frame];
+            dragAndDropImgView.image = img;
+            [cardDeckView addSubview:dragAndDropImgView];
+            CGPoint location = [gestureRec locationInView:cardDeckView];
+            [UIView animateWithDuration:0.2 animations:^{
+                dragAndDropImgView.center = location;
+            }];
+        }
+        else{
+            NSLog(@"long");
+        }
+    }
+    else if(gestureRec.state == UIGestureRecognizerStateChanged){
+        if (dragAndDropImgView) {
+            CGPoint location = [gestureRec locationInView:cardDeckView];
+            dragAndDropImgView.center = location;
+        }
+    }
+    else if(gestureRec.state == UIGestureRecognizerStateEnded || gestureRec.state == UIGestureRecognizerStateCancelled){
+        if (dragAndDropImgView) {
+            CGPoint location = [gestureRec locationInView:cardDeckView];
+            dragAndDropImgView.center = location;
+            //ide letesszük
+            [dragAndDropImgView removeFromSuperview];
+            dragAndDropImgView = nil;
+            return;
+        }
+    }
+    
 }
 
 - (BMCard*) cardAtCol:(int) col atRow:(int)row{
