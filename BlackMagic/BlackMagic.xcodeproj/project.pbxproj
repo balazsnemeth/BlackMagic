@@ -191,6 +191,8 @@
 		8E98D8DD18CC38D300B42F26 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8D818CC38D300B42F26 /* fire.png */; };
 		8E98D8DE18CC38D300B42F26 /* illusion.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8D918CC38D300B42F26 /* illusion.png */; };
 		8E98D8DF18CC38D300B42F26 /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8DA18CC38D300B42F26 /* water.png */; };
+		8E98D8E218CC4DB500B42F26 /* EarthLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8E018CC4DB500B42F26 /* EarthLine.png */; };
+		8E98D8E318CC4DB500B42F26 /* waterline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8E118CC4DB500B42F26 /* waterline.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -430,6 +432,8 @@
 		8E98D8D818CC38D300B42F26 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
 		8E98D8D918CC38D300B42F26 /* illusion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = illusion.png; sourceTree = "<group>"; };
 		8E98D8DA18CC38D300B42F26 /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
+		8E98D8E018CC4DB500B42F26 /* EarthLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EarthLine.png; sourceTree = "<group>"; };
+		8E98D8E118CC4DB500B42F26 /* waterline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waterline.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -623,6 +627,8 @@
 		805E53D118CB4407004E7A1B /* Art */ = {
 			isa = PBXGroup;
 			children = (
+				8E98D8E018CC4DB500B42F26 /* EarthLine.png */,
+				8E98D8E118CC4DB500B42F26 /* waterline.png */,
 				1EB4726D18CC3BF800F41B9D /* backgroung.mp3 */,
 				8E98D8D618CC38D300B42F26 /* air.png */,
 				8E98D8D718CC38D300B42F26 /* earth.png */,
@@ -918,6 +924,7 @@
 				8E98D80218CC343A00B42F26 /* Rejuvenation+StoneRain-01.png in Resources */,
 				8E98D8CF18CC357F00B42F26 /* Faerie Sage-06.png in Resources */,
 				8E98D8DC18CC38D300B42F26 /* earth.png in Resources */,
+				8E98D8E318CC4DB500B42F26 /* waterline.png in Resources */,
 				8E98D8CC18CC357F00B42F26 /* Faerie Sage-03.png in Resources */,
 				8E98D8AA18CC34C800B42F26 /* MindMaster_3.png in Resources */,
 				8E98D8C018CC34D400B42F26 /* HydraB_3.png in Resources */,
@@ -961,6 +968,7 @@
 				805E53D018CB3E3C004E7A1B /* images.png in Resources */,
 				8E98D87A18CC34A400B42F26 /* MerfolkApostate-07.png in Resources */,
 				8E98D86F18CC349600B42F26 /* SeaSprite-06.png in Resources */,
+				8E98D8E218CC4DB500B42F26 /* EarthLine.png in Resources */,
 				8E98D8CD18CC357F00B42F26 /* Faerie Sage-04.png in Resources */,
 				1EB4726E18CC3BF800F41B9D /* backgroung.mp3 in Resources */,
 				8E98D85A18CC348500B42F26 /* BurgulB1.png in Resources */,
