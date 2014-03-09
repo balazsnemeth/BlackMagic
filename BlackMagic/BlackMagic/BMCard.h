@@ -28,6 +28,7 @@
 @property (nonatomic,copy) NSString* name;
 @property (nonatomic,copy) NSString* type;
 @property (nonatomic) BOOL hasEffectInEveryRound;
+@property (nonatomic) int index;
 
 - (id)initWithDictionary:(NSDictionary*) aDictionary;
 
