@@ -15,9 +15,10 @@
     self = [super init];
     if (self)
     {
-        _power = [aDictionary[@"power"] integerValue];
-        _resourceType = [self parseResourceType:aDictionary[@"resourceType"]];
-        _cardEffect = [self parseCardEffectType:aDictionary[@"type"]];
+        NSDictionary* details = aDictionary[@"effect"];
+        _power = [details[@"power"] integerValue];
+        _resourceType = [self parseResourceType:details[@"resourceType"]];
+        _cardEffect = [self parseCardEffectType:details[@"type"]];
         _targetOwner = aDictionary[@"targetOwner"];
         _targetType = aDictionary[@"targetType"];
         

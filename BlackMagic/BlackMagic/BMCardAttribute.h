@@ -12,6 +12,8 @@
 
 @property (nonatomic) NSInteger attack;
 @property (nonatomic) NSInteger health;
+
+/**item types: BMCardEffect */
 @property (nonatomic,copy) NSArray* effects;
 @property (nonatomic,copy) NSArray* immunities;
 
