@@ -16,17 +16,35 @@
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
-        self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
+        self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1.0];
         
-        SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        SKLabelNode *startLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         
-        myLabel.name = @"buttonStart";
-        myLabel.text = @"Start Game";
-        myLabel.fontSize = 30;
-        myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                       CGRectGetMidY(self.frame));
+        startLabel.name = @"buttonStart";
+        startLabel.text = @"Play Game";
+        startLabel.fontSize = 30;
+        startLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                       CGRectGetMidY(self.frame) + 60);
+        [self addChild:startLabel];
         
-        [self addChild:myLabel];
+        
+        SKLabelNode *autoLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        
+        autoLabel.name = @"buttonStartCPU";
+        autoLabel.text = @"Simulation";
+        autoLabel.fontSize = 30;
+        autoLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                          CGRectGetMidY(self.frame) + 0);
+        [self addChild:autoLabel];
+        
+        SKLabelNode *resetLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        
+        resetLabel.name = @"buttonReset";
+        resetLabel.text = @"Reset Server";
+        resetLabel.fontSize = 30;
+        resetLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                          CGRectGetMidY(self.frame) - 60);
+        [self addChild:resetLabel];
     }
     return self;
 }
@@ -40,6 +58,17 @@
             BMSceneFight *scene = [[BMSceneFight alloc] initWithSize:self.size];
             SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
             [self.view presentScene:scene transition:sceneTransition];
+        }
+        
+        else if ([node.name isEqualToString:@"buttonStartCPU"]) {
+            
+            //TODO set up simulation
+            BMSceneFight *scene = [[BMSceneFight alloc] initWithSize:self.size];
+            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
+            [self.view presentScene:scene transition:sceneTransition];
+        }
+        else if ([node.name isEqualToString:@"buttonReset"]) {
+            //TODO Reset server
         }
     }
     
