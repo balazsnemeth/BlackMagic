@@ -76,9 +76,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 -(void)addBackground{
     
     whiteBackground = [SKSpriteNode spriteNodeWithImageNamed:@"FieldW"];
-    whiteBackground.size = CGSizeMake(self.frame.size.width, self.frame.size.height / 2 +60);
+    whiteBackground.size = CGSizeMake(self.frame.size.width, self.frame.size.height);
     //card00.anchorPoint = CGPointZero;
-    whiteBackground.position = CGPointMake(380, 800);
+    whiteBackground.position = CGPointMake(380, 1025);
     //card00.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:card00.size];
     [self addChild:whiteBackground];
     
@@ -144,9 +144,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [node runAction:fadeIn];
     }
     
-    SKAction *fadeIn = [SKAction moveTo:CGPointMake(whiteBackground.position.x, fightPosition + 285) duration:0.5];
+    SKAction *fadeIn = [SKAction moveTo:CGPointMake(whiteBackground.position.x, fightPosition + 512) duration:0.5];
     [whiteBackground runAction:fadeIn];
-    //whiteBackground.position = CGPointMake(whiteBackground.position.x, fightPosition + 285);
+    //whiteBackground.position = CGPointMake(whiteBackground.position.x, fightPosition + 510);
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -218,14 +218,11 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         manaBar.position = CGPointMake(110, 10);
         [self addChild:manaBar];
         
-        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"images"];
-        myLabel.size = CGSizeMake(50, 50);
-        myLabel.name = @"buttonStart";
-//        myLabel.text = @"pick";
-//        myLabel.fontSize = 30;
-        myLabel.position = CGPointMake(CGRectGetMaxX(self.frame),
-                                       CGRectGetMinY(self.frame));
-        [self addChild:myLabel];
+        SKSpriteNode *cardButton = [SKSpriteNode spriteNodeWithImageNamed:@"CardButton"];
+        cardButton.size = CGSizeMake(50, 50);
+        cardButton.name = @"buttonStart";
+        cardButton.position = CGPointMake(730,30);
+        [self addChild:cardButton];
         
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
@@ -566,7 +563,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             NSLog(@"imageName: %@", imageName);
             node.texture = [SKTexture textureWithImageNamed:imageName];
             
-            float x = player.health - enemy.health;
+            float x = enemy.health - player.health;
             
             x = x*10;
             
