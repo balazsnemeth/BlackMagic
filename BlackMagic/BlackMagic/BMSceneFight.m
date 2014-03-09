@@ -239,7 +239,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             CGRect frame = CGRectMake(centerX, centerY, cardWidth, cardHeight);
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
-            currentCardView.backgroundColor = [UIColor redColor];
             [cardDeckView addSubview:currentCardView];
             UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped)];
             [currentCardView addGestureRecognizer:cardTapRecognizer];
