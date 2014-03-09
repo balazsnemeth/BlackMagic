@@ -27,6 +27,8 @@
     SKSpriteNode *playerMana;
     SKSpriteNode* whiteBackground;
     
+
+    
     
     NSMutableArray* playerCardSprites;
     NSMutableArray* opponenetCardSprites;
@@ -39,6 +41,7 @@
     CGPoint _touchPoint;
     SKSpriteNode* movedCard;
     
+    int prevFightPos;
     int fightPosition;
     
     BMPlayer* player;
@@ -120,6 +123,27 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                                [NSValue valueWithCGPoint:(CGPoint){ 425, fightPosition }],
                                [NSValue valueWithCGPoint:(CGPoint){ 500, fightPosition }],
                                [NSValue valueWithCGPoint:(CGPoint){ 575, fightPosition }]];
+    
+    if ([playerCardSprites count] != 6){
+        return;
+    }
+    
+
+    for (int i = 0; i<6; i++) {
+        SKSpriteNode* node = (SKSpriteNode*)[playerCardSprites objectAtIndex:i];
+        NSValue* playerPos = playerCardPositions[i];
+        SKAction *fadeIn = [SKAction moveTo:playerPos.CGPointValue duration:0.5];
+        [node runAction:fadeIn];
+        
+        node = (SKSpriteNode*)[opponenetCardSprites objectAtIndex:i];
+        playerPos = opponenetCardPositions[i];
+        fadeIn = [SKAction moveTo:playerPos.CGPointValue duration:0.5];
+        [node runAction:fadeIn];
+    }
+    
+    SKAction *fadeIn = [SKAction moveTo:CGPointMake(whiteBackground.position.x, fightPosition + 285) duration:0.5];
+    [whiteBackground runAction:fadeIn];
+    //whiteBackground.position = CGPointMake(whiteBackground.position.x, fightPosition + 285);
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -285,6 +309,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
                  }];
                 [self addCardsToDeck];
                 cardDeckIsPresent = YES;
+                
+                prevFightPos = fightPosition;
+                fightPosition = 900;
+                [self positionFight];
             }
             else
             {
@@ -358,6 +386,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
          cardDeckView.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), self.view.bounds.size.width, CGRectGetMaxY(self.frame) - CGRectGetMinY(self.frame));
      }];
     cardDeckIsPresent = NO;
+    
+    fightPosition = prevFightPos;
+    [self positionFight];
+    
 }
 
 #pragma mark -
@@ -439,21 +471,21 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             fightPosition += x;
             [self positionFight];
             
-            int num = 0;
-            for (SKSpriteNode* value in playerCardSprites) {
-                
-                NSValue* val = playerCardPositions[num];
-                value.position = val.CGPointValue;
-                num++;
-            }
-            
-            num = 0;
-            for (SKSpriteNode* value in opponenetCardSprites) {
-                
-                NSValue* val = opponenetCardPositions[num];
-                value.position = val.CGPointValue;
-                num++;
-            }
+//            int num = 0;
+//            for (SKSpriteNode* value in playerCardSprites) {
+//                
+//                NSValue* val = playerCardPositions[num];
+//                value.position = val.CGPointValue;
+//                num++;
+//            }
+//            
+//            num = 0;
+//            for (SKSpriteNode* value in opponenetCardSprites) {
+//                
+//                NSValue* val = opponenetCardPositions[num];
+//                value.position = val.CGPointValue;
+//                num++;
+//            }
             
 //            whiteBackground.position =
 
