@@ -406,7 +406,11 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
             
             SKSpriteNode* node = playerCardSprites[miRes.slotIndex];
-            NSString* imageName = [NSString stringWithFormat:@"%@%dW", miRes.card.cost[@"type"], miRes.card.identifier];
+            NSString* cardType = @"";
+            int cardIndex = NSNotFound;
+            
+            [self extracted_method:miRes.card cardIndex_p:&cardIndex cardType_p:&cardType];
+            NSString* imageName = [NSString stringWithFormat:@"%@%dW", cardType, cardIndex];
             NSLog(@"imageName: %@", imageName);
             node.texture = [SKTexture textureWithImageNamed:imageName];
             
@@ -473,6 +477,37 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 #pragma mark -
 #pragma mark Helper
 
+- (void)extracted_method:(BMCard *)card cardIndex_p:(int *)cardIndex_p cardType_p:(NSString **)cardType_p {
+    *cardIndex_p = [player.fireCards indexOfObject:card];
+    if (*cardIndex_p != NSNotFound) {
+        *cardType_p = CARD_TYPE_FIRE;
+    }
+    if (*cardIndex_p == NSNotFound) {
+        *cardIndex_p = [player.earthCards indexOfObject:card];
+        if (*cardIndex_p != NSNotFound) {
+            *cardType_p = CARD_TYPE_EARTH;
+        }
+    }
+    if (*cardIndex_p == NSNotFound) {
+        *cardIndex_p = [player.illusionCards indexOfObject:card];
+        if (*cardIndex_p != NSNotFound) {
+            *cardType_p = CARD_TYPE_ILLUSION;
+        }
+    }
+    if (*cardIndex_p == NSNotFound) {
+        *cardIndex_p = [player.airCards indexOfObject:card];
+        if (*cardIndex_p != NSNotFound) {
+            *cardType_p = CARD_TYPE_AIR;
+        }
+    }
+    if (*cardIndex_p == NSNotFound) {
+        *cardIndex_p = [player.waterCards indexOfObject:card];
+        if (*cardIndex_p != NSNotFound) {
+            *cardType_p = CARD_TYPE_WATER;
+        }
+    }
+}
+
 - (NSDictionary*) stepInputTypeOfMIResult:(BMMIResult*)miResult{
     NSMutableDictionary *myNewDictionary = [NSMutableDictionary new];
     
@@ -484,34 +519,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         BMCard* card = miResult.card;
         NSString* cardType = @"";
         int cardIndex = NSNotFound;
-        cardIndex = [player.fireCards indexOfObject:card];
-        if (cardIndex != NSNotFound) {
-            cardType = CARD_TYPE_FIRE;
-        }
-        if (cardIndex == NSNotFound) {
-            cardIndex = [player.earthCards indexOfObject:card];
-            if (cardIndex != NSNotFound) {
-                cardType = CARD_TYPE_EARTH;
-            }
-        }
-        if (cardIndex == NSNotFound) {
-            cardIndex = [player.illusionCards indexOfObject:card];
-            if (cardIndex != NSNotFound) {
-                cardType = CARD_TYPE_ILLUSION;
-            }
-        }
-        if (cardIndex == NSNotFound) {
-            cardIndex = [player.airCards indexOfObject:card];
-            if (cardIndex != NSNotFound) {
-                cardType = CARD_TYPE_AIR;
-            }
-        }
-        if (cardIndex == NSNotFound) {
-            cardIndex = [player.waterCards indexOfObject:card];
-            if (cardIndex != NSNotFound) {
-                cardType = CARD_TYPE_WATER;
-            }
-        }
+        [self extracted_method:card cardIndex_p:&cardIndex cardType_p:&cardType];
+        
+        card.index = cardIndex;
         
         [myNewDictionary setObject:cardType forKey:@"resourceType"];
         [myNewDictionary setObject:@(cardIndex) forKey:@"cardIndex"];
