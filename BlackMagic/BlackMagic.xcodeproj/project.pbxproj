@@ -42,6 +42,7 @@
 		1E3625B118CB3E1C00E08E4A /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36259D18CB3E1C00E08E4A /* UIProgressView+AFNetworking.m */; };
 		1E3625B218CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E36259F18CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m */; };
 		1E3625B318CB3E1C00E08E4A /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */; };
+		1EB4726E18CC3BF800F41B9D /* backgroung.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EB4726D18CC3BF800F41B9D /* backgroung.mp3 */; };
 		1EBE82D818CB808A00E8A9AF /* BMMIResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EBE82D718CB808A00E8A9AF /* BMMIResult.m */; };
 		1EBE82DA18CBBFA800E8A9AF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1EBE82D918CBBFA800E8A9AF /* Settings.bundle */; };
 		1EBE82DD18CBE05D00E8A9AF /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EBE82DC18CBE05D00E8A9AF /* UIAlertView+Blocks.m */; };
@@ -258,6 +259,7 @@
 		1E36259F18CB3E1C00E08E4A /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		1E3625A018CB3E1C00E08E4A /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		1E3625A118CB3E1C00E08E4A /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		1EB4726D18CC3BF800F41B9D /* backgroung.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroung.mp3; sourceTree = "<group>"; };
 		1EBE82D618CB808A00E8A9AF /* BMMIResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMMIResult.h; sourceTree = "<group>"; };
 		1EBE82D718CB808A00E8A9AF /* BMMIResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMMIResult.m; sourceTree = "<group>"; };
 		1EBE82D918CBBFA800E8A9AF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 		805E53D118CB4407004E7A1B /* Art */ = {
 			isa = PBXGroup;
 			children = (
+				1EB4726D18CC3BF800F41B9D /* backgroung.mp3 */,
 				8E98D88618CC34B000B42F26 /* AstralGuard-01.png */,
 				8E98D88718CC34B000B42F26 /* AstralGuard-02.png */,
 				8E98D88818CC34B000B42F26 /* AstralGuard-03.png */,
@@ -940,6 +943,7 @@
 				8E98D87A18CC34A400B42F26 /* MerfolkApostate-07.png in Resources */,
 				8E98D86F18CC349600B42F26 /* SeaSprite-06.png in Resources */,
 				8E98D8CD18CC357F00B42F26 /* Faerie Sage-04.png in Resources */,
+				1EB4726E18CC3BF800F41B9D /* backgroung.mp3 in Resources */,
 				8E98D85A18CC348500B42F26 /* BurgulB1.png in Resources */,
 				8E98D82D18CC346600B42F26 /* FirePriestW_01.png in Resources */,
 				8E98D7F918CC342700B42F26 /* ElevenHealer-02.png in Resources */,
