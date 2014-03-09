@@ -395,8 +395,41 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
+- (void) refreshCardOnDeck{
+    NSArray* buyAbleCard = [[BMMIManager sharedManager] bayableCardsOfPlayer:player];
+    
+    for (int column = 0; column < 5; column++)
+    {
+        for (int row = 0; row < 4; row++)
+        {
+            UIView* currentCardView = [cardDeckView viewWithTag:(row*5+column)];
+            
+            BMCard* aktCard = [self cardAtCol:column atRow:row];
+            if([buyAbleCard indexOfObject:aktCard] != NSNotFound){
+                UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped:)];
+                [currentCardView addGestureRecognizer:cardTapRecognizer];
+                
+                UILongPressGestureRecognizer* longRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longDeckCard:)];
+                longRecognizer.minimumPressDuration = 0.2;
+                [currentCardView addGestureRecognizer:longRecognizer];
+            }
+            else{
+                for (UIGestureRecognizer *recognizer in currentCardView.gestureRecognizers) {
+                    [currentCardView removeGestureRecognizer:recognizer];
+                }
+                currentCardView.alpha = 0.2;
+            }
+            
+        }
+    }
+
+
+}
+
 - (void)addCardsToDeck
 {
+   NSArray* buyAbleCard = [[BMMIManager sharedManager] bayableCardsOfPlayer:player];
+
     for (int column = 0; column < 5; column++)
     {
         for (int row = 0; row < 4; row++)
@@ -411,16 +444,26 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             currentCardView.backgroundColor = [UIColor whiteColor];
             UIImageView *cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cardWidth, cardHeight)];
             UIImage* img = [self cardImageForIndex:currentCardView.tag];
-            UIImage* smalImg = [self imageWithImage:img scaledToSize:CGSizeMake(img.size.width/2.0,img.size.height/2.0)];
-            cardImageView.image = smalImg;
+//            UIImage* smalImg = [self imageWithImage:img scaledToSize:CGSizeMake(img.size.width/2.0,img.size.height/2.0)];
+            cardImageView.image = img;
             [currentCardView addSubview:cardImageView];
             [cardDeckView addSubview:currentCardView];
-            UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped:)];
-            [currentCardView addGestureRecognizer:cardTapRecognizer];
             
-            UILongPressGestureRecognizer* longRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longDeckCard:)];
-            longRecognizer.minimumPressDuration = 0.2;
-            [currentCardView addGestureRecognizer:longRecognizer];
+            BMCard* aktCard = [self cardAtCol:column atRow:row];
+            if([buyAbleCard indexOfObject:aktCard] != NSNotFound){
+                UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped:)];
+                [currentCardView addGestureRecognizer:cardTapRecognizer];
+                
+                UILongPressGestureRecognizer* longRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longDeckCard:)];
+                longRecognizer.minimumPressDuration = 0.2;
+                [currentCardView addGestureRecognizer:longRecognizer];
+            }
+            else{
+                for (UIGestureRecognizer *recognizer in currentCardView.gestureRecognizers) {
+                    [currentCardView removeGestureRecognizer:recognizer];
+                }
+                currentCardView.alpha = 0.2;
+            }
             
         }
     }
@@ -614,7 +657,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
-- (void)longDeckCard:(UITapGestureRecognizer*)gestureRec
+- (void)longDeckCard:(UILongPressGestureRecognizer*)gestureRec
 {
     if(gestureRec.state == UIGestureRecognizerStateBegan){
         if (!dragAndDropImgView) {
@@ -846,14 +889,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [[BMNetworkManager sharedManager] startRequestNextMove:player.name onCompletion:^(NSDictionary *result) {
             //NSLog(@"res: %@", result);
             
-            if (![SettingsHandler sharedSettings].autoPlayByAI) {
-                
-                [HUD hide:YES];
-            }
             
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
             [self statusUpdate:result];
             
+            if (![SettingsHandler sharedSettings].autoPlayByAI) {
+                [self refreshCardOnDeck];
+                [HUD hide:YES];
+            }
+
             
 //            int num = 0;
 //            for (SKSpriteNode* value in playerCardSprites) {

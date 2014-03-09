@@ -17,4 +17,6 @@
 
 - (BMMIResult*) suggestedCardForPlayer:(BMPlayer*)player withEnemy:(BMPlayer*)enemy inTurn:(NSInteger)turnCount;
 
+- (NSArray*) bayableCardsOfPlayer:(BMPlayer*)player;
+
 @end
