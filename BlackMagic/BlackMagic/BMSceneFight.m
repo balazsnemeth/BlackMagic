@@ -27,9 +27,10 @@
     SKLabelNode *opponentHealth;
     SKSpriteNode *playerMana;
     SKSpriteNode* whiteBackground;
+    SKSpriteNode* closestNode;
     
+    int cardHighlighted;
 
-    
     
     NSMutableArray* playerCardSprites;
     NSMutableArray* opponenetCardSprites;
@@ -153,6 +154,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
+        cardHighlighted = -1;
         isMyTurn = NO;
         gameOver = NO;
         //reset the server
@@ -418,9 +420,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     if (dragAndDropImgView) {
         CGFloat minDist = 10000;
         SKSpriteNode* closestSlot = playerCardSprites[0];
-        
+        int minIndex = -1;
+        int i = 0;
         for (SKSpriteNode* slotNode in playerCardSprites) {
-            CGPoint p1 = dragAndDropImgView.center;
+            CGPoint p1 = dragAndDropImgView.frame.origin;
             CGPoint p2 = slotNode.position;
             CGFloat xDist = (p2.x - p1.x);
             CGFloat yDist = (p2.y - p1.y);
@@ -428,11 +431,24 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             if (minDist > distance) {
                 closestSlot = slotNode;
                 minDist = distance;
+                minIndex = i;
                 //legközelebbi (rátenni az effectet)
             }
             //összes többi (eltüntetni az effectet)
-
+            i++;
         }
+        NSLog(@"minIndex:%d",minIndex);
+        if (closestSlot == closestNode){
+            return;
+        }
+        else{
+            closestNode.position = CGPointMake(closestNode.position.x, closestNode.position.y + 10);
+            closestSlot.position = CGPointMake(closestSlot.position.x, closestSlot.position.y - 10);
+            closestNode = closestSlot;
+        }
+        
+        
+        
         
     }
 }
