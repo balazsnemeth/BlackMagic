@@ -9,7 +9,8 @@
 #import "BMStartScene.h"
 #import "BMSceneFight.h"
 
-@implementation StartScene
+@implementation StartScene{
+}
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {

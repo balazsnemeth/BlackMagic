@@ -14,6 +14,7 @@
 #import "BMGameState.h"
 #import "UIAlertView+Blocks.h"
 #import "BMStartScene.h"
+#import "SettingsHandler.h"
 
 #define widthGap 20
 #define heightGap 20
@@ -170,7 +171,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         playerCardSprites = [NSMutableArray array];
         opponenetCardSprites = [NSMutableArray array];
         
-        NSString* name = [self genRandStringLength:6];
+        NSString* name = @"BlackBone"; //[self genRandStringLength:6];
         [self registerUserWithName:name];
         //reg test A
         
@@ -311,6 +312,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [self addChild:opponentHealth];
         
         [self setupViews];
+        
+        
+        
     }
     return self;
 }
@@ -405,9 +409,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
             currentCardView.tag = row*5+column;
-            
-            
-            currentCardView.backgroundColor = [UIColor redColor];
+            //currentCardView.backgroundColor = [UIColor redColor];
             [cardDeckView addSubview:currentCardView];
             UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped:)];
             [currentCardView addGestureRecognizer:cardTapRecognizer];
@@ -573,11 +575,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         int minIndex = -1;
         int i = 0;
         for (SKSpriteNode* slotNode in playerCardSprites) {
-            CGPoint p1 = dragAndDropImgView.frame.origin;
+            CGPoint p1 = dragAndDropImgView.center;
             CGPoint p2 = slotNode.position;
+            if (p2.y == 840) {
+                p2.y = 850;
+            }
             CGFloat xDist = (p2.x - p1.x);
             CGFloat yDist = (p2.y - p1.y);
             CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
+            NSLog(@"dist:(%f,%f)",p2.x,p2.y);
             if (minDist > distance) {
                 closestSlot = slotNode;
                 minDist = distance;
@@ -731,6 +737,44 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
+
+- (void)performNextStep:(BMMIResult *)miRes
+{
+    SKSpriteNode* node = playerCardSprites[miRes.slotIndex];
+    NSString* cardType = @"";
+    int cardIndex = NSNotFound;
+    
+    [self cardIndexAndCardTypeOfCard:miRes.card cardIndex_p:&cardIndex cardType_p:&cardType];
+    NSString* imageName = [NSString stringWithFormat:@"%@%dW", cardType, cardIndex];
+    NSLog(@"imageName: %@", imageName);
+    node.texture = [SKTexture textureWithImageNamed:imageName];
+    
+    float x = player.health - enemy.health;
+    
+    x = x*10;
+    
+    NSLog(@"player: %d enemy: %d x : %f", player.health, enemy.health, x);
+    
+    fightPosition += x;
+    [self positionFight];
+    
+    NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
+    [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
+        
+        [self statusUpdate:result];
+        isMyTurn = YES;
+        
+    } failure:^(NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                        message:error.domain
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        NSLog(@"error %@", error);
+    }];
+}
+
 -(void)update:(CFTimeInterval)currentTime
 {
     if (gameOver) {
@@ -767,8 +811,27 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             BMGameState* gameState = [[BMGameState alloc] initWithDictionary:result];
             [self statusUpdate:result];
             
-            BMCard* enemyCard = [player cardForID:gameState.enemyCardID];
             
+//            int num = 0;
+//            for (SKSpriteNode* value in playerCardSprites) {
+//                
+//                NSValue* val = playerCardPositions[num];
+//                value.position = val.CGPointValue;
+//                num++;
+//            }
+//            
+//            num = 0;
+//            for (SKSpriteNode* value in opponenetCardSprites) {
+//                
+//                NSValue* val = opponenetCardPositions[num];
+//                value.position = val.CGPointValue;
+//                num++;
+//            }
+            
+//            whiteBackground.position =
+            
+            
+            BMCard* enemyCard = [player cardForID:gameState.enemyCardID];
             NSString* cardType = @"";
             int cardIndex = NSNotFound;
             
@@ -784,46 +847,18 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             [self extracted_method:enemyCard cardIndex_p:&cardIndex cardType_p:&cardType];
             NSString* imageName = [NSString stringWithFormat:@"%@%dB", cardType, cardIndex];
             NSLog(@"imageName: %@", imageName);
+            SKSpriteNode* node = nil;
+            NSLog(@"enemm slot index: %d", gameState.enemySlotIndex);
+            if (gameState.enemySlotIndex < 7){
+                node = opponenetCardSprites[gameState.enemySlotIndex];
+            }
+            
             node.texture = [SKTexture textureWithImageNamed:imageName];
             
-//            NSLog(@"számolok");
-            BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
-            
-            node = playerCardSprites[miRes.slotIndex];
-            cardType = @"";
-            cardIndex = NSNotFound;
-            
-            [self extracted_method:miRes.card cardIndex_p:&cardIndex cardType_p:&cardType];
-            imageName = [NSString stringWithFormat:@"%@%dW", cardType, cardIndex];
-            NSLog(@"imageName: %@", imageName);
-            node.color = [UIColor whiteColor];
-            node.texture = [SKTexture textureWithImageNamed:imageName];
-            
-            float x = enemy.health - player.health;
-            
-            x = x*10;
-            
-            NSLog(@"player: %d enemy: %d x : %f", player.health, enemy.health, x);
-            
-            fightPosition += x;
-            [self positionFight];
-
-            NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
-        
-            [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
-                
-                [self statusUpdate:result];
-                isMyTurn = YES;
-                
-            } failure:^(NSError *error) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
-                                                                message:error.domain
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-                NSLog(@"error %@", error);
-            }];
+            if ([SettingsHandler sharedSettings].autoPlayByAI) {
+                BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
+                [self performNextStep:miRes];
+            }
             
         } failure:^(NSError *error) {
             NSLog(@"error %@", error);
@@ -844,7 +879,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 #pragma mark -
 #pragma mark Helper
 
-- (void)extracted_method:(BMCard *)card cardIndex_p:(int *)cardIndex_p cardType_p:(NSString **)cardType_p {
+- (void)cardIndexAndCardTypeOfCard:(BMCard *)card cardIndex_p:(int *)cardIndex_p cardType_p:(NSString **)cardType_p {
     *cardIndex_p = [player.fireCards indexOfObject:card];
     if (*cardIndex_p != NSNotFound) {
         *cardType_p = CARD_TYPE_FIRE;
@@ -886,7 +921,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         BMCard* card = miResult.card;
         NSString* cardType = @"";
         int cardIndex = NSNotFound;
-        [self extracted_method:card cardIndex_p:&cardIndex cardType_p:&cardType];
+        [self cardIndexAndCardTypeOfCard:card cardIndex_p:&cardIndex cardType_p:&cardType];
         
         card.index = cardIndex;
         

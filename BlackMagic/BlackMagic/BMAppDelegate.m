@@ -10,9 +10,12 @@
 #import "BMNetworkManager.h"
 #import "SettingsHandler.h"
 #import "BMPlayer.h"
+@import AVFoundation;
 
 
-@implementation BMAppDelegate
+@implementation BMAppDelegate{
+    AVAudioPlayer * backgroundMusicPlayer;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -42,12 +45,26 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [SettingsHandler sharedSettings].autoPlayByAI = TRUE;
 //    [SettingsHandler sharedSettings].serverIPAddress = [[NSUserDefaults standardUserDefaults] objectForKey:@"ipAddress"];
         [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.102:8123";
 //    NSString* port = [[NSUserDefaults standardUserDefaults] objectForKey:@"port"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSLog(@"Connection:%@",[SettingsHandler sharedSettings].serverIPAddress);
     
+    NSError *error;
+    
+    NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"backgroung" withExtension:@"mp3"];
+    backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
+    backgroundMusicPlayer.numberOfLoops = -1;
+    [backgroundMusicPlayer prepareToPlay];
+    
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [backgroundMusicPlayer play];
+    });
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
