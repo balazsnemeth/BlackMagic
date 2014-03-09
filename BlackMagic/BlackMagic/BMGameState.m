@@ -23,7 +23,7 @@
         _players = gameState[@"players"];
         _turnCount = [gameState[@"turnCount"] integerValue];
         
-        NSLog(@"players: %@", _players);
+       // NSLog(@"players: %@", _players);
     }
     
     return self;

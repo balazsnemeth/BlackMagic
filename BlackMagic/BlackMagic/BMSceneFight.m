@@ -106,7 +106,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [self registerUserWithName:name];
         //reg test A
         
-        fightPosition = self.frame.size.height / 2;
+        fightPosition = self.frame.size.width / 2;
         
         playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition - 50}],
                                 [NSValue valueWithCGPoint:(CGPoint){ 250, fightPosition - 50}],

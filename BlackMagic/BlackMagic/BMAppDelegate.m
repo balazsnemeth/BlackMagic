@@ -18,8 +18,6 @@
 {
     // Override point for customization after application launch.
     // Override point for customization after application launch.
-    [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.102:8123";
-    [SettingsHandler sharedSettings].serverPort=8123;
     
     return YES;
 }

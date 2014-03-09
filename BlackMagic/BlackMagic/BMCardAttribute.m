@@ -7,6 +7,7 @@
 //
 
 #import "BMCardAttribute.h"
+#import "BMCardEffect.h"
 
 @implementation BMCardAttribute
 
@@ -24,18 +25,18 @@
         {
             if (!effects)
             {
-                effects = aDictionary[@"onSummonOvt"];
+                effects = aDictionary[@"onSummonOVT"];
             }
         }
         else if([aCardType isEqualToString:@"spell"])
         {
-            effects = aDictionary[@"modifier"];
+            effects = aDictionary[@"modifiers"];
         }
         //parse effect to object
         NSMutableArray* effs = [NSMutableArray new];
         for (NSDictionary* effect in effects)
         {
-            [effs addObject:effect];
+            [effs addObject: [[BMCardEffect alloc] initWithDictionary: effect]];
         }
         _effects = effs;
     }
