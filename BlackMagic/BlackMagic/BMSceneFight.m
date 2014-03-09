@@ -21,6 +21,7 @@
 #define cardDeckWidth 400
 #define cardDeckHeight 400
 
+
 @implementation BMSceneFight{
     SKLabelNode *playerHealth;
     SKLabelNode *opponentHealth;
@@ -50,6 +51,7 @@
     BOOL cardDeckIsPresent;
     UIView *cardDeckView;
     UIView *newView;
+    UITextView* cardDescriptionTextView;
     BOOL gameOver;
 }
 
@@ -239,11 +241,25 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             CGRect frame = CGRectMake(centerX, centerY, cardWidth, cardHeight);
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
+            currentCardView.tag = row*5+column;
             [cardDeckView addSubview:currentCardView];
-            UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped)];
+            UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped:)];
             [currentCardView addGestureRecognizer:cardTapRecognizer];
+            
+            UILongPressGestureRecognizer* longRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longDeckCard:)];
+            longRecognizer.minimumPressDuration = 0.4;
+            [currentCardView addGestureRecognizer:longRecognizer];
+            
         }
     }
+    
+    cardDescriptionTextView = [[UITextView alloc]initWithFrame:CGRectMake(cardWidth/2,4*(cardHeight + heightGap) + heightGap, 5*cardWidth+4*widthGap,60)];
+    cardDescriptionTextView.editable = FALSE;
+    cardDescriptionTextView.font = [UIFont fontWithName:@"Arial" size:24];
+    [cardDescriptionTextView setTextColor:[UIColor whiteColor]];
+    cardDescriptionTextView.backgroundColor = [UIColor clearColor];
+//    txtview.backgroundColor = [UIColor redColor];
+    [cardDeckView addSubview:cardDescriptionTextView];
 }
 
 -(void)addSpritesWithName:(NSString*)name FromArray:(NSArray*)array withSize:(CGSize)size{
@@ -268,7 +284,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     {
         CGPoint location = [touch locationInNode:self];
         SKNode* node = [self nodeAtPoint:location];
-        if ([node.name isEqualToString:@"buttonStart"])
+        if ([node.name isEqualToString:@"buttonStart"] && player)
         {
             if (!cardDeckIsPresent)
             {
@@ -344,9 +360,45 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
-- (void)cardDeckCardTapped
+- (void)longDeckCard:(UITapGestureRecognizer*)gestureRec
 {
-    NSLog(@"POW");
+
+}
+
+- (BMCard*) cardAtCol:(int) col atRow:(int)row{
+    switch (col) {
+        case 0:
+            return [player.fireCards objectAtIndex:row];
+            break;
+        case 1:
+            return [player.waterCards objectAtIndex:row];
+            break;
+        case 2:
+            return [player.airCards objectAtIndex:row];
+            break;
+        case 3:
+            return [player.earthCards objectAtIndex:row];
+            break;
+        case 4:
+            return [player.illusionCards objectAtIndex:row];
+            break;
+            
+        default:
+            return nil;
+            break;
+    }
+    return nil;
+}
+
+- (void)cardDeckCardTapped:(UITapGestureRecognizer*)gestureRec
+{
+    
+//    CGPoint p = [gestureRec locationInView:cardDeckView];
+    int row = (int)gestureRec.view.tag/5;
+    int col = gestureRec.view.tag - row*5;
+    BMCard* card = [self cardAtCol:col atRow:row];
+    cardDescriptionTextView.text = card.description;
+    NSLog(@"POW - (%d,%d)",row,col);
     UILabel *detailsLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.frame), CGRectGetHeight(self.frame) - 30, self.view.bounds.size.width, 21)];
     detailsLabel.text = @"dwawdafwfwafwafwa";
     detailsLabel.textColor = [UIColor redColor];
