@@ -171,7 +171,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         playerCardSprites = [NSMutableArray array];
         opponenetCardSprites = [NSMutableArray array];
         
-        NSString* name = @"BlackBone"; //[self genRandStringLength:6];
+        NSString* name = [self genRandStringLength:6];
         [self registerUserWithName:name];
         //reg test A
         
@@ -753,10 +753,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     
     x = x*10;
     
-    NSLog(@"player: %d enemy: %d x : %f", player.health, enemy.health, x);
-    
     fightPosition += x;
-    [self positionFight];
+    NSLog(@"player: %d enemy: %d x : %d", player.health, enemy.health, fightPosition);
+    
+    if (fightPosition > -1200 && fightPosition < 900){
+        [self positionFight];
+    }
     
     NSDictionary* nextStep = [self stepInputTypeOfMIResult:miRes];
     [[BMNetworkManager sharedManager] proceedPlayer:player.name withInput:nextStep onCompletion:^(NSDictionary *result) {
@@ -834,17 +836,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             BMCard* enemyCard = [player cardForID:gameState.enemyCardID];
             NSString* cardType = @"";
             int cardIndex = NSNotFound;
-            
-            SKSpriteNode* node = nil;
-            
-#warning BUG IN THE SERVER!
-            
-            NSLog(@"enemm slot index: %d", gameState.enemySlotIndex);
-            if (gameState.enemySlotIndex < 7){
-                node = opponenetCardSprites[gameState.enemySlotIndex];
-            }
-            
-            [self extracted_method:enemyCard cardIndex_p:&cardIndex cardType_p:&cardType];
+            [self cardIndexAndCardTypeOfCard:enemyCard cardIndex_p:&cardIndex cardType_p:&cardType];
             NSString* imageName = [NSString stringWithFormat:@"%@%dB", cardType, cardIndex];
             NSLog(@"imageName: %@", imageName);
             SKSpriteNode* node = nil;
