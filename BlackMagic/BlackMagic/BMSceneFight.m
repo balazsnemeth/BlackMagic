@@ -372,6 +372,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     // [view.layer renderInContext:UIGraphicsGetCurrentContext()]; // <- same result...
     [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    
     UIGraphicsEndImageContext();
     
     return img;
