@@ -121,19 +121,19 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 }
 
 - (void)positionFight {
-    playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition - 50}],
-                            [NSValue valueWithCGPoint:(CGPoint){ 275, fightPosition - 50}],
-                            [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition - 50}],
-                            [NSValue valueWithCGPoint:(CGPoint){ 425, fightPosition - 50}],
-                            [NSValue valueWithCGPoint:(CGPoint){ 500, fightPosition - 50}],
-                            [NSValue valueWithCGPoint:(CGPoint){ 575, fightPosition - 50}]];
+    playerCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 175, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 250, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 325, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 400, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 475, fightPosition - 50}],
+                            [NSValue valueWithCGPoint:(CGPoint){ 550, fightPosition - 50}]];
     
-    opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 200, fightPosition }],
-                               [NSValue valueWithCGPoint:(CGPoint){ 275, fightPosition }],
-                               [NSValue valueWithCGPoint:(CGPoint){ 350, fightPosition }],
-                               [NSValue valueWithCGPoint:(CGPoint){ 425, fightPosition }],
-                               [NSValue valueWithCGPoint:(CGPoint){ 500, fightPosition }],
-                               [NSValue valueWithCGPoint:(CGPoint){ 575, fightPosition }]];
+    opponenetCardPositions = @[[NSValue valueWithCGPoint:(CGPoint){ 175, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 250, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 325, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 400, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 475, fightPosition }],
+                               [NSValue valueWithCGPoint:(CGPoint){ 550, fightPosition }]];
     
     if ([playerCardSprites count] != 6){
         return;
