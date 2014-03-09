@@ -97,6 +97,7 @@
 		8027625318CBFC200018AD71 /* water3W.png in Resources */ = {isa = PBXBuildFile; fileRef = 8027624B18CBFC200018AD71 /* water3W.png */; };
 		8027625418CBFC200018AD71 /* water4B.png in Resources */ = {isa = PBXBuildFile; fileRef = 8027624C18CBFC200018AD71 /* water4B.png */; };
 		8027625518CBFC200018AD71 /* water4W.png in Resources */ = {isa = PBXBuildFile; fileRef = 8027624D18CBFC200018AD71 /* water4W.png */; };
+		8027625718CC1B150018AD71 /* CardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8027625618CC1B150018AD71 /* CardButton.png */; };
 		803D014B18CB84B4004EB0DF /* BMGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D014A18CB84B4004EB0DF /* BMGameState.m */; };
 		803D014E18CB8E07004EB0DF /* BMCreauterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D014D18CB8E07004EB0DF /* BMCreauterSlot.m */; };
 		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
@@ -246,6 +247,7 @@
 		8027624B18CBFC200018AD71 /* water3W.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water3W.png; sourceTree = "<group>"; };
 		8027624C18CBFC200018AD71 /* water4B.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water4B.png; sourceTree = "<group>"; };
 		8027624D18CBFC200018AD71 /* water4W.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water4W.png; sourceTree = "<group>"; };
+		8027625618CC1B150018AD71 /* CardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CardButton.png; sourceTree = "<group>"; };
 		803D014918CB84B4004EB0DF /* BMGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMGameState.h; sourceTree = "<group>"; };
 		803D014A18CB84B4004EB0DF /* BMGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMGameState.m; sourceTree = "<group>"; };
 		803D014C18CB8E07004EB0DF /* BMCreauterSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCreauterSlot.h; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				8027620A18CBE1810018AD71 /* LefeB.png */,
 				8027620B18CBE1810018AD71 /* LifeW.png */,
 				8027620C18CBE1810018AD71 /* MenuButton.png */,
+				8027625618CC1B150018AD71 /* CardButton.png */,
 				8027620D18CBE1810018AD71 /* WallB.png */,
 				8027620E18CBE1810018AD71 /* WallW.png */,
 				805E53D218CB441E004E7A1B /* Healthbar.png */,
@@ -682,6 +685,7 @@
 				8027625118CBFC200018AD71 /* water2W.png in Resources */,
 				1E36250618CB280A00E08E4A /* Main.storyboard in Resources */,
 				8027625018CBFC200018AD71 /* water2B.png in Resources */,
+				8027625718CC1B150018AD71 /* CardButton.png in Resources */,
 				8027625518CBFC200018AD71 /* water4W.png in Resources */,
 				8027621518CBE1810018AD71 /* fire1W.png in Resources */,
 				8027621218CBE1810018AD71 /* fire2B.png in Resources */,

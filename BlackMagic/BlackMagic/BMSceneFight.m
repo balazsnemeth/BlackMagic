@@ -29,9 +29,10 @@
     SKLabelNode *opponentHealth;
     SKSpriteNode *playerMana;
     SKSpriteNode* whiteBackground;
+    SKSpriteNode* closestNode;
     
+    int cardHighlighted;
 
-    
     
     NSMutableArray* playerCardSprites;
     NSMutableArray* opponenetCardSprites;
@@ -79,9 +80,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 -(void)addBackground{
     
     whiteBackground = [SKSpriteNode spriteNodeWithImageNamed:@"FieldW"];
-    whiteBackground.size = CGSizeMake(self.frame.size.width, self.frame.size.height / 2 +60);
+    whiteBackground.size = CGSizeMake(self.frame.size.width, self.frame.size.height);
     //card00.anchorPoint = CGPointZero;
-    whiteBackground.position = CGPointMake(380, 800);
+    whiteBackground.position = CGPointMake(380, 1025);
     //card00.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:card00.size];
     [self addChild:whiteBackground];
     
@@ -147,15 +148,16 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [node runAction:fadeIn];
     }
     
-    SKAction *fadeIn = [SKAction moveTo:CGPointMake(whiteBackground.position.x, fightPosition + 285) duration:0.5];
+    SKAction *fadeIn = [SKAction moveTo:CGPointMake(whiteBackground.position.x, fightPosition + 512) duration:0.5];
     [whiteBackground runAction:fadeIn];
-    //whiteBackground.position = CGPointMake(whiteBackground.position.x, fightPosition + 285);
+    //whiteBackground.position = CGPointMake(whiteBackground.position.x, fightPosition + 510);
 }
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
+        cardHighlighted = -1;
         isMyTurn = NO;
         gameOver = NO;
         //reset the server
@@ -221,14 +223,17 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         manaBar.position = CGPointMake(110, 10);
         [self addChild:manaBar];
         
-        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"images"];
-        myLabel.size = CGSizeMake(50, 50);
-        myLabel.name = @"buttonStart";
-//        myLabel.text = @"pick";
-//        myLabel.fontSize = 30;
-        myLabel.position = CGPointMake(CGRectGetMaxX(self.frame),
-                                       CGRectGetMinY(self.frame));
-        [self addChild:myLabel];
+        SKSpriteNode *cardButton = [SKSpriteNode spriteNodeWithImageNamed:@"CardButton"];
+        cardButton.size = CGSizeMake(50, 50);
+        cardButton.name = @"buttonStart";
+        cardButton.position = CGPointMake(730,30);
+        [self addChild:cardButton];
+        
+        SKSpriteNode *hamburgerButton = [SKSpriteNode spriteNodeWithImageNamed:@"MenuButton"];
+        hamburgerButton.size = CGSizeMake(54.78515625, 50);
+        hamburgerButton.name = @"hamburger";
+        hamburgerButton.position = CGPointMake(CGRectGetMinX(self.frame) + hamburgerButton.size.width, 30);
+        [self addChild:hamburgerButton];
         
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
@@ -266,8 +271,78 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 - (void)setupViews
 {
     cardDeckView = [[[NSBundle mainBundle] loadNibNamed:@"CardDeckView" owner:self options:nil] lastObject];
-    
-    
+}
+
+- (UIImage*) cardImageForIndex:(NSInteger)index{
+    switch (index)
+    {
+        case 0:
+            return [UIImage imageNamed:@""];
+            break;
+        case 1:
+            return [UIImage imageNamed:@""];
+            break;
+        case 2:
+            return [UIImage imageNamed:@""];
+            break;
+        case 3:
+            return [UIImage imageNamed:@""];
+            break;
+        case 4:
+            return [UIImage imageNamed:@""];
+            break;
+        case 5:
+            return [UIImage imageNamed:@"fire1W"];
+            break;
+        case 6:
+            return [UIImage imageNamed:@""];
+            break;
+        case 7:
+            return [UIImage imageNamed:@""];
+            break;
+        case 8:
+            return [UIImage imageNamed:@""];
+            break;
+        case 9:
+            return [UIImage imageNamed:@""];
+            break;
+        case 10:
+            return [UIImage imageNamed:@""];
+            break;
+        case 11:
+            return [UIImage imageNamed:@""];
+            break;
+        case 12:
+            return [UIImage imageNamed:@""];
+            break;
+        case 13:
+            return [UIImage imageNamed:@""];
+            break;
+        case 14:
+            return [UIImage imageNamed:@""];
+            break;
+        case 15:
+            return [UIImage imageNamed:@""];
+            break;
+        case 16:
+            return [UIImage imageNamed:@""];
+            break;
+        case 17:
+            return [UIImage imageNamed:@""];
+            break;
+        case 18:
+            return [UIImage imageNamed:@"earth1W"];
+            break;
+        case 19:
+            return [UIImage imageNamed:@""];
+            break;
+        case 20:
+            return [UIImage imageNamed:@""];
+            break;
+        default:
+            return nil;
+            break;
+    }
 }
 
 - (void)addCardsToDeck
@@ -358,6 +433,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             }
         }
         
+        if ([node.name isEqualToString:@"hamburger"])
+        {
+            NSLog(@"BAM");
+            StartScene *startScene = [[StartScene alloc] initWithSize:self.size];
+            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
+            [self.view presentScene:startScene transition:sceneTransition];
+            
+        }
+        
         SKNode* card = [self childNodeWithName:@"playerAvailableCard0"];
         
         if([card containsPoint:location])
@@ -437,9 +521,10 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     if (dragAndDropImgView) {
         CGFloat minDist = 10000;
         SKSpriteNode* closestSlot = playerCardSprites[0];
-        
+        int minIndex = -1;
+        int i = 0;
         for (SKSpriteNode* slotNode in playerCardSprites) {
-            CGPoint p1 = dragAndDropImgView.center;
+            CGPoint p1 = dragAndDropImgView.frame.origin;
             CGPoint p2 = slotNode.position;
             CGFloat xDist = (p2.x - p1.x);
             CGFloat yDist = (p2.y - p1.y);
@@ -447,11 +532,24 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             if (minDist > distance) {
                 closestSlot = slotNode;
                 minDist = distance;
+                minIndex = i;
                 //legközelebbi (rátenni az effectet)
             }
             //összes többi (eltüntetni az effectet)
-
+            i++;
         }
+        NSLog(@"minIndex:%d",minIndex);
+        if (closestSlot == closestNode){
+            return;
+        }
+        else{
+            closestNode.position = CGPointMake(closestNode.position.x, closestNode.position.y + 10);
+            closestSlot.position = CGPointMake(closestSlot.position.x, closestSlot.position.y - 10);
+            closestNode = closestSlot;
+        }
+        
+        
+        
         
     }
 }
@@ -535,6 +633,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 //    CGPoint p = [gestureRec locationInView:cardDeckView];
     int row = (int)gestureRec.view.tag/5;
     int col = gestureRec.view.tag - row*5;
+    NSLog(@"%ld",(long)gestureRec.view.tag);
     BMCard* card = [self cardAtCol:col atRow:row];
     cardDescriptionTextView.text = card.description;
     NSLog(@"POW - (%d,%d)",row,col);
