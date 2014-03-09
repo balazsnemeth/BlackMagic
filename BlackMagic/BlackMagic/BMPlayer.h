@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BMCard.h"
 
 @interface BMPlayer : NSObject
 
@@ -31,5 +32,7 @@
 -(instancetype)initWithDictionary:(NSDictionary*)dictionary;
 
 -(void)updatePlayerFromDictionary:(NSDictionary*)dictionary;
+
+-(BMCard*)cardForID:(NSInteger)identifier;
 
 @end

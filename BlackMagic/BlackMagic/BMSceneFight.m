@@ -174,6 +174,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         [self positionFight];
         
+        
+        
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1.0];
         
         
@@ -190,6 +192,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             //card00.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:card00.size];
             [self addChild:card00];
             [playerCardSprites addObject:card00];
+            
+            
+            
             num++;
         }
         
@@ -293,7 +298,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             return [UIImage imageNamed:@"Rejuvenation+StoneRain-01"];
             break;
         case 9:
-            return [UIImage imageNamed:@"IllB_01"];
+            return [UIImage imageNamed:@""];
             break;
         case 10:
             return [UIImage imageNamed:@"BurgulB1"];
@@ -308,7 +313,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             return [UIImage imageNamed:@""];
             break;
         case 14:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"IllB_01"];
             break;
         case 15:
             return [UIImage imageNamed:@""];
@@ -540,9 +545,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             closestSlot.position = CGPointMake(closestSlot.position.x, closestSlot.position.y - 10);
             closestNode = closestSlot;
         }
-        
-        
-        
         
     }
 }

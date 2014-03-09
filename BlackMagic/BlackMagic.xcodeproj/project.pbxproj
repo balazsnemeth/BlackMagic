@@ -186,6 +186,11 @@
 		8E98D8D118CC357F00B42F26 /* Faerie Sage-08.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8C918CC357F00B42F26 /* Faerie Sage-08.png */; };
 		8E98D8D418CC37B800B42F26 /* Chain Lighting+Tornado-01.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8D218CC37B700B42F26 /* Chain Lighting+Tornado-01.png */; };
 		8E98D8D518CC37B800B42F26 /* Chain Lighting+Tornado-05.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8D318CC37B700B42F26 /* Chain Lighting+Tornado-05.png */; };
+		8E98D8DB18CC38D300B42F26 /* air.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8D618CC38D300B42F26 /* air.png */; };
+		8E98D8DC18CC38D300B42F26 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8D718CC38D300B42F26 /* earth.png */; };
+		8E98D8DD18CC38D300B42F26 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8D818CC38D300B42F26 /* fire.png */; };
+		8E98D8DE18CC38D300B42F26 /* illusion.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8D918CC38D300B42F26 /* illusion.png */; };
+		8E98D8DF18CC38D300B42F26 /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E98D8DA18CC38D300B42F26 /* water.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -420,6 +425,11 @@
 		8E98D8C918CC357F00B42F26 /* Faerie Sage-08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Faerie Sage-08.png"; sourceTree = "<group>"; };
 		8E98D8D218CC37B700B42F26 /* Chain Lighting+Tornado-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chain Lighting+Tornado-01.png"; sourceTree = "<group>"; };
 		8E98D8D318CC37B700B42F26 /* Chain Lighting+Tornado-05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Chain Lighting+Tornado-05.png"; sourceTree = "<group>"; };
+		8E98D8D618CC38D300B42F26 /* air.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = air.png; sourceTree = "<group>"; };
+		8E98D8D718CC38D300B42F26 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
+		8E98D8D818CC38D300B42F26 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		8E98D8D918CC38D300B42F26 /* illusion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = illusion.png; sourceTree = "<group>"; };
+		8E98D8DA18CC38D300B42F26 /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -880,10 +890,12 @@
 				8E98D84A18CC347D00B42F26 /* WalloffireB1.png in Resources */,
 				8027622218CBE1810018AD71 /* LifeW.png in Resources */,
 				8E98D8BA18CC34D400B42F26 /* Hydra_4.png in Resources */,
+				8E98D8DE18CC38D300B42F26 /* illusion.png in Resources */,
 				8E98D86E18CC349600B42F26 /* SeaSprite-05.png in Resources */,
 				8E98D89E18CC34BC00B42F26 /* Phoenix2.png in Resources */,
 				8E98D82E18CC346600B42F26 /* FirePriestW_02.png in Resources */,
 				8E98D80618CC344500B42F26 /* DreamofPlenty-01.png in Resources */,
+				8E98D8DF18CC38D300B42F26 /* water.png in Resources */,
 				8E98D81718CC345100B42F26 /* InfiniteWall-08.png in Resources */,
 				8E98D85C18CC348500B42F26 /* BurgulB3.png in Resources */,
 				8E98D8A118CC34BC00B42F26 /* PhoenixB_1.png in Resources */,
@@ -900,6 +912,7 @@
 				8E98D8D018CC357F00B42F26 /* Faerie Sage-07.png in Resources */,
 				8E98D80218CC343A00B42F26 /* Rejuvenation+StoneRain-01.png in Resources */,
 				8E98D8CF18CC357F00B42F26 /* Faerie Sage-06.png in Resources */,
+				8E98D8DC18CC38D300B42F26 /* earth.png in Resources */,
 				8E98D8CC18CC357F00B42F26 /* Faerie Sage-03.png in Resources */,
 				8E98D8AA18CC34C800B42F26 /* MindMaster_3.png in Resources */,
 				8E98D8C018CC34D400B42F26 /* HydraB_3.png in Resources */,
@@ -930,6 +943,7 @@
 				8E98D8AC18CC34C800B42F26 /* MindMaster_1.png in Resources */,
 				8E98D81618CC345100B42F26 /* InfiniteWall-07.png in Resources */,
 				8E98D85D18CC348500B42F26 /* BurgulB4.png in Resources */,
+				8E98D8DB18CC38D300B42F26 /* air.png in Resources */,
 				8E98D85918CC348500B42F26 /* Burgul-08.png in Resources */,
 				805E53D318CB441E004E7A1B /* Healthbar.png in Resources */,
 				8E98D82A18CC346600B42F26 /* FirePriestB_01.png in Resources */,
@@ -981,6 +995,7 @@
 				8E98D81418CC345100B42F26 /* InfiniteWall-05.png in Resources */,
 				8E98D8AB18CC34C800B42F26 /* MindMaster_4.png in Resources */,
 				8E98D86018CC348D00B42F26 /* Inferno.png in Resources */,
+				8E98D8DD18CC38D300B42F26 /* fire.png in Resources */,
 				8E98D8CE18CC357F00B42F26 /* Faerie Sage-05.png in Resources */,
 				8E98D84D18CC347D00B42F26 /* WalloffireB4.png in Resources */,
 				8E98D8B118CC34C800B42F26 /* MindMasterB_3.png in Resources */,
