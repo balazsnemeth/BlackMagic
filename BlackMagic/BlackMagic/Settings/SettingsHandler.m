@@ -55,6 +55,7 @@ static SettingsHandler *sharedSettings = nil;
 }
 
 - (void) initDefaultSettings{
+    self.autoPlayByAI = TRUE;
     self.defaultSelectionTrueOrFalse = TRUE;
     self.letTheAppSleep = NO;
     self.serverIPAddress = @"localhost";
@@ -143,6 +144,21 @@ static SettingsHandler *sharedSettings = nil;
     [[NSUserDefaults standardUserDefaults] setObject:@(serverPort) forKey:@"serverPort"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+
+- (void) setAutoPlayByAI:(BOOL)useExternalScreen{
+    if (useExternalScreen == self.autoPlayByAI) {
+        return;
+    }
+    [[NSUserDefaults standardUserDefaults] setBool:useExternalScreen forKey:@"autoPlayByAI"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
+- (BOOL) autoPlayByAI{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"autoPlayByAI"];
+}
+
 
 
 

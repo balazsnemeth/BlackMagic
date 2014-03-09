@@ -42,6 +42,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [SettingsHandler sharedSettings].autoPlayByAI = TRUE;
 //    [SettingsHandler sharedSettings].serverIPAddress = [[NSUserDefaults standardUserDefaults] objectForKey:@"ipAddress"];
         [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.104:8123";
 //    NSString* port = [[NSUserDefaults standardUserDefaults] objectForKey:@"port"];

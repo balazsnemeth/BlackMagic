@@ -23,6 +23,12 @@
  **/
 @property (nonatomic) BOOL useExternalScreen;
 
+/*
+ Specify whether the AI plays or the user.
+ **/
+@property (nonatomic) BOOL autoPlayByAI;
+
+
 /**
  Set (or get) the name of the device
  */

@@ -287,12 +287,17 @@ static BMMIManager *sharedMIManager = nil;
         BMCard* illusion = nil;
         if (player.health < enemy.health) {
             //meg kell próbálnom gyógyító varázslatot
+            NSLog(@"TRY: gyógyító varázslatot");
             illusion = [self getHealthIncreaseIllusion:buyableCards];
+            if (illusion) {
+                NSLog(@"gyógyító varázslat!");
+            }
         }
         else{
             //meg kell néznem, tudom-e őt rombolni
                 //megnézem, hogy mennyivel vezetek, és ettől függően várhatok erősebb rombolásra!
-           
+                NSLog(@"TRY: damage magic");
+
                 int lifeDiff = (player.health - enemy.health);
                 int unit = 1;
                 if (lifeDiff < 10) {
@@ -312,6 +317,9 @@ static BMMIManager *sharedMIManager = nil;
                     unit = maxDamageCard;
                 }
                 illusion = [self strongestDamageOfCards:buyableCards minimumRankCount:unit];
+            if (illusion) {
+                NSLog(@"damage magic!");
+            }
                 //ha tudok, akkor varázsolhatok is
         }
         if (illusion) {
@@ -321,6 +329,7 @@ static BMMIManager *sharedMIManager = nil;
         }
         else{
             //Ha nem tudok varázsolni, akkor skippelek, hogy növeljem a pontjaimat!
+            NSLog(@"skip turn!");
             res.skipTurn = TRUE;
             res.card = nil;
         }

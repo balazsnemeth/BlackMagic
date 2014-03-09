@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E1FF42218CC2117008DB960 /* backgroung.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1E1FF42118CC2117008DB960 /* backgroung.mp3 */; };
+		1E1FF42418CC2259008DB960 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E1FF42318CC2259008DB960 /* AudioToolbox.framework */; };
 		1E3624F118CB280A00E08E4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3624F018CB280A00E08E4A /* Foundation.framework */; };
 		1E3624F318CB280A00E08E4A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3624F218CB280A00E08E4A /* CoreGraphics.framework */; };
 		1E3624F518CB280A00E08E4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3624F418CB280A00E08E4A /* UIKit.framework */; };
@@ -123,6 +125,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E1FF42118CC2117008DB960 /* backgroung.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroung.mp3; sourceTree = "<group>"; };
+		1E1FF42318CC2259008DB960 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1E3624ED18CB280A00E08E4A /* BlackMagic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackMagic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E3624F018CB280A00E08E4A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1E3624F218CB280A00E08E4A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -275,6 +279,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E1FF42418CC2259008DB960 /* AudioToolbox.framework in Frameworks */,
 				1E3624F318CB280A00E08E4A /* CoreGraphics.framework in Frameworks */,
 				1E3624F518CB280A00E08E4A /* UIKit.framework in Frameworks */,
 				1E3624F718CB280A00E08E4A /* SpriteKit.framework in Frameworks */,
@@ -317,6 +322,7 @@
 		1E3624EF18CB280A00E08E4A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1E1FF42318CC2259008DB960 /* AudioToolbox.framework */,
 				1E3624F018CB280A00E08E4A /* Foundation.framework */,
 				1E3624F218CB280A00E08E4A /* CoreGraphics.framework */,
 				1E3624F418CB280A00E08E4A /* UIKit.framework */,
@@ -459,6 +465,7 @@
 		805E53D118CB4407004E7A1B /* Art */ = {
 			isa = PBXGroup;
 			children = (
+				1E1FF42118CC2117008DB960 /* backgroung.mp3 */,
 				802761F818CBE1810018AD71 /* FieldB.png */,
 				802761F918CBE1810018AD71 /* FieldW.png */,
 				8027622618CBF41E0018AD71 /* earth1B.png */,
@@ -682,6 +689,7 @@
 				8027623018CBF41E0018AD71 /* earth2B.png in Resources */,
 				8027621D18CBE1810018AD71 /* illusion1W.png in Resources */,
 				8027623F18CBFBDE0018AD71 /* air1W.png in Resources */,
+				1E1FF42218CC2117008DB960 /* backgroung.mp3 in Resources */,
 				8027621418CBE1810018AD71 /* fire4B.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
