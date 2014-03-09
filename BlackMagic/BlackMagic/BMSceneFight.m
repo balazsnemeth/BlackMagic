@@ -355,7 +355,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             return [UIImage imageNamed:@"Rejuvenation+StoneRain-01"];
             break;
         case 9:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"Rejuvenation+StoneRain-01"];
             break;
         case 10:
             return [UIImage imageNamed:@"BurgulB1"];
@@ -367,28 +367,25 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             return [UIImage imageNamed:@"Chain Lighting+Tornado-01"];
             break;
         case 13:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"Rejuvenation+StoneRain-01"];
             break;
         case 14:
             return [UIImage imageNamed:@"IllB_01"];
             break;
         case 15:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"InfernoB"];
             break;
         case 16:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"MindMasterB_1"];
             break;
         case 17:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"Rejuvenation+StoneRain-01"];
             break;
         case 18:
-            return [UIImage imageNamed:@"earth1W"];
+            return [UIImage imageNamed:@"HydraB_1"];
             break;
         case 19:
-            return [UIImage imageNamed:@""];
-            break;
-        case 20:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"InfiniteWall-01"];
             break;
         default:
             return nil;
@@ -409,7 +406,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             UIView* currentCardView = [[[NSBundle mainBundle] loadNibNamed:@"CardView" owner:self options:nil] lastObject];
             currentCardView.frame = frame;
             currentCardView.tag = row*5+column;
-            //currentCardView.backgroundColor = [UIColor redColor];
+            currentCardView.backgroundColor = [UIColor whiteColor];
+            UIImageView *cardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cardWidth, cardHeight)];
+            UIImage* img = [self cardImageForIndex:currentCardView.tag];
+            UIImage* smalImg = [self imageWithImage:img scaledToSize:CGSizeMake(img.size.width/2.0,img.size.height/2.0)];
+            cardImageView.image = smalImg;
+            [currentCardView addSubview:cardImageView];
             [cardDeckView addSubview:currentCardView];
             UITapGestureRecognizer* cardTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardDeckCardTapped:)];
             [currentCardView addGestureRecognizer:cardTapRecognizer];
