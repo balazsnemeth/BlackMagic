@@ -65,6 +65,8 @@
 		8027626318CC50360018AD71 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8027626118CC50360018AD71 /* Icon-40@2x.png */; };
 		8027626418CC50360018AD71 /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8027626218CC50360018AD71 /* Icon-76@2x.png */; };
 		8027626818CC50EC0018AD71 /* launchimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8027626718CC50EC0018AD71 /* launchimage.png */; };
+		8027626B18CC59BB0018AD71 /* 184422__qubodup__sword-slash-attack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8027626918CC59BB0018AD71 /* 184422__qubodup__sword-slash-attack.mp3 */; };
+		8027626C18CC59BB0018AD71 /* 221683__timbre__another-magic-wand-spell-tinkle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8027626A18CC59BB0018AD71 /* 221683__timbre__another-magic-wand-spell-tinkle.mp3 */; };
 		803D014B18CB84B4004EB0DF /* BMGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D014A18CB84B4004EB0DF /* BMGameState.m */; };
 		803D014E18CB8E07004EB0DF /* BMCreauterSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 803D014D18CB8E07004EB0DF /* BMCreauterSlot.m */; };
 		805E53CB18CB3789004E7A1B /* BMSceneFight.m in Sources */ = {isa = PBXBuildFile; fileRef = 805E53CA18CB3789004E7A1B /* BMSceneFight.m */; };
@@ -307,6 +309,8 @@
 		8027626118CC50360018AD71 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
 		8027626218CC50360018AD71 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
 		8027626718CC50EC0018AD71 /* launchimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchimage.png; sourceTree = "<group>"; };
+		8027626918CC59BB0018AD71 /* 184422__qubodup__sword-slash-attack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "184422__qubodup__sword-slash-attack.mp3"; sourceTree = "<group>"; };
+		8027626A18CC59BB0018AD71 /* 221683__timbre__another-magic-wand-spell-tinkle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "221683__timbre__another-magic-wand-spell-tinkle.mp3"; sourceTree = "<group>"; };
 		803D014918CB84B4004EB0DF /* BMGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMGameState.h; sourceTree = "<group>"; };
 		803D014A18CB84B4004EB0DF /* BMGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMGameState.m; sourceTree = "<group>"; };
 		803D014C18CB8E07004EB0DF /* BMCreauterSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCreauterSlot.h; sourceTree = "<group>"; };
@@ -826,6 +830,8 @@
 		8E98D8E418CC571500B42F26 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				8027626918CC59BB0018AD71 /* 184422__qubodup__sword-slash-attack.mp3 */,
+				8027626A18CC59BB0018AD71 /* 221683__timbre__another-magic-wand-spell-tinkle.mp3 */,
 				8E98D8E718CC573C00B42F26 /* 221683__timbre__another-magic-wand-spell-tinkle.flac */,
 				8E98D8E518CC572600B42F26 /* 184422__qubodup__sword-slash-attack.flac */,
 			);
@@ -977,6 +983,7 @@
 				8E98D7FC18CC342700B42F26 /* ElevenHealer-05.png in Resources */,
 				8E98D8D018CC357F00B42F26 /* Faerie Sage-07.png in Resources */,
 				8E98D80218CC343A00B42F26 /* Rejuvenation+StoneRain-01.png in Resources */,
+				8027626B18CC59BB0018AD71 /* 184422__qubodup__sword-slash-attack.mp3 in Resources */,
 				8027626418CC50360018AD71 /* Icon-76@2x.png in Resources */,
 				8E98D8CF18CC357F00B42F26 /* Faerie Sage-06.png in Resources */,
 				8E98D8DC18CC38D300B42F26 /* earth.png in Resources */,
@@ -1046,6 +1053,7 @@
 				8E98D7FF18CC342700B42F26 /* ElevenHealer-08.png in Resources */,
 				8E98D87018CC349600B42F26 /* SeaSprite-07.png in Resources */,
 				8E98D88D18CC34B000B42F26 /* AstralGuard-08.png in Resources */,
+				8027626C18CC59BB0018AD71 /* 221683__timbre__another-magic-wand-spell-tinkle.mp3 in Resources */,
 				8E98D84918CC347D00B42F26 /* Walloffire4.png in Resources */,
 				8E98D82F18CC346600B42F26 /* FirePriestW_03.png in Resources */,
 				8E98D87D18CC34A400B42F26 /* MerfolkApostate-05.png in Resources */,

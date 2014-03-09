@@ -694,6 +694,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     else if(gestureRec.state == UIGestureRecognizerStateEnded || gestureRec.state == UIGestureRecognizerStateCancelled){
         if (dragAndDropImgView) {
             
+            
+            [self runAction:[SKAction playSoundFileNamed:@"221683__timbre__another-magic-wand-spell-tinkle.mp3" waitForCompletion:NO]];
             CGPoint location = [gestureRec locationInView:cardDeckView];
             dragAndDropImgView.center = location;
             //ide letesszük
@@ -902,6 +904,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             if (![SettingsHandler sharedSettings].autoPlayByAI) {
                 [self refreshCardOnDeck];
                 self.view.userInteractionEnabled = YES;
+                [self runAction:[SKAction playSoundFileNamed:@"184422__qubodup__sword-slash-attack.mp3" waitForCompletion:NO]];
                 [HUD hide:YES];
             }
 
