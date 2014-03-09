@@ -26,6 +26,11 @@
 @implementation BMSceneFight{
     SKLabelNode *playerHealth;
     SKLabelNode *opponentHealth;
+    SKLabelNode *air;
+    SKLabelNode *water;
+    SKLabelNode *illusion;
+    SKLabelNode *earth;
+    SKLabelNode *fire;
     SKSpriteNode *playerMana;
     SKSpriteNode* whiteBackground;
     SKSpriteNode* closestNode;
@@ -213,19 +218,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             num++;
         }
         
-        
-        SKSpriteNode* healthBar = [SKSpriteNode spriteNodeWithImageNamed:@"Healthbar"];
-        healthBar.size = CGSizeMake(100, 100);
-        healthBar.anchorPoint = CGPointZero;
-        healthBar.position = CGPointMake(10, 10);
-        [self addChild:healthBar];
-        
-        SKSpriteNode* manaBar = [SKSpriteNode spriteNodeWithImageNamed:@"Healthbar"];
-        manaBar.size = CGSizeMake(100, 100);
-        manaBar.anchorPoint = CGPointZero;
-        manaBar.position = CGPointMake(110, 10);
-        [self addChild:manaBar];
-        
         SKSpriteNode *cardButton = [SKSpriteNode spriteNodeWithImageNamed:@"CardButton"];
         cardButton.size = CGSizeMake(50, 50);
         cardButton.name = @"buttonStart";
@@ -237,6 +229,71 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         hamburgerButton.name = @"hamburger";
         hamburgerButton.position = CGPointMake(CGRectGetMinX(self.frame) + hamburgerButton.size.width, 30);
         [self addChild:hamburgerButton];
+        
+        SKSpriteNode *airButton = [SKSpriteNode spriteNodeWithImageNamed:@"air"];
+        airButton.size = CGSizeMake(70, 70);
+        airButton.position = CGPointMake(200, 80);
+        [self addChild:airButton];
+        
+        air = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        air.text = [NSString stringWithFormat:@"%i", 0];
+        air.fontSize = 20;
+        air.position = CGPointMake(200, 60);
+        air.fontColor = [UIColor whiteColor];
+        //playerHealth.zRotation = -M_PI/2;
+        [self addChild:air];
+        
+        SKSpriteNode *waterButton = [SKSpriteNode spriteNodeWithImageNamed:@"water"];
+        waterButton.size = CGSizeMake(70, 70);
+        waterButton.position = CGPointMake(300, 80);
+        [self addChild:waterButton];
+        
+        water = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        water.text = [NSString stringWithFormat:@"%i", 0];
+        water.fontSize = 20;
+        water.position = CGPointMake(300, 60);
+        water.fontColor = [UIColor whiteColor];
+        //playerHealth.zRotation = -M_PI/2;
+        [self addChild:water];
+        
+        SKSpriteNode *fireButton = [SKSpriteNode spriteNodeWithImageNamed:@"fire"];
+        fireButton.size = CGSizeMake(70, 70);
+        fireButton.position = CGPointMake(400, 80);
+        [self addChild:fireButton];
+        
+        fire = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        fire.text = [NSString stringWithFormat:@"%i", 0];
+        fire.fontSize = 20;
+        fire.position = CGPointMake(403, 60);
+        fire.fontColor = [UIColor whiteColor];
+        //playerHealth.zRotation = -M_PI/2;
+        [self addChild:fire];
+        
+        SKSpriteNode *earthButton = [SKSpriteNode spriteNodeWithImageNamed:@"earth"];
+        earthButton.size = CGSizeMake(70, 70);
+        earthButton.position = CGPointMake(500, 80);
+        [self addChild:earthButton];
+        
+        earth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        earth.text = [NSString stringWithFormat:@"%i", 0];
+        earth.fontSize = 20;
+        earth.position = CGPointMake(500, 60);
+        earth.fontColor = [UIColor whiteColor];
+        //playerHealth.zRotation = -M_PI/2;
+        [self addChild:earth];
+        
+        SKSpriteNode *illusionButton = [SKSpriteNode spriteNodeWithImageNamed:@"illusion"];
+        illusionButton.size = CGSizeMake(70, 70);
+        illusionButton.position = CGPointMake(600, 80);
+        [self addChild:illusionButton];
+        
+        illusion = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        illusion.text = [NSString stringWithFormat:@"%i", 0];
+        illusion.fontSize = 20;
+        illusion.position = CGPointMake(600, 60);
+        illusion.fontColor = [UIColor whiteColor];
+        //playerHealth.zRotation = -M_PI/2;
+        [self addChild:illusion];
         
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
@@ -663,6 +720,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
     playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
     opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
+    air.text = [NSString stringWithFormat:@"%i", player.airMana];
+    water.text = [NSString stringWithFormat:@"%i", player.waterMana];
+    earth.text = [NSString stringWithFormat:@"%i", player.earthMana];
+    illusion.text = [NSString stringWithFormat:@"%i", player.illusionMana];
+    fire.text = [NSString stringWithFormat:@"%i", player.fireMana];
+    
     if (gameState.isGameOver) {
         gameOver = TRUE;
     }
@@ -708,7 +771,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
             NSString* cardType = @"";
             int cardIndex = NSNotFound;
-            SKSpriteNode* node = opponenetCardSprites[gameState.enemySlotIndex];
+            
+            SKSpriteNode* node = nil;
+            
+#warning BUG IN THE SERVER!
+            
+            NSLog(@"enemm slot index: %d", gameState.enemySlotIndex);
+            if (gameState.enemySlotIndex < 7){
+                node = opponenetCardSprites[gameState.enemySlotIndex];
+            }
             
             [self extracted_method:enemyCard cardIndex_p:&cardIndex cardType_p:&cardType];
             NSString* imageName = [NSString stringWithFormat:@"%@%dB", cardType, cardIndex];
