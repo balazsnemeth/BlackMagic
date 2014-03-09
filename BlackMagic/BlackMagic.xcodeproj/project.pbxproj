@@ -624,6 +624,11 @@
 			isa = PBXGroup;
 			children = (
 				1EB4726D18CC3BF800F41B9D /* backgroung.mp3 */,
+				8E98D8D618CC38D300B42F26 /* air.png */,
+				8E98D8D718CC38D300B42F26 /* earth.png */,
+				8E98D8D818CC38D300B42F26 /* fire.png */,
+				8E98D8D918CC38D300B42F26 /* illusion.png */,
+				8E98D8DA18CC38D300B42F26 /* water.png */,
 				8E98D88618CC34B000B42F26 /* AstralGuard-01.png */,
 				8E98D88718CC34B000B42F26 /* AstralGuard-02.png */,
 				8E98D88818CC34B000B42F26 /* AstralGuard-03.png */,

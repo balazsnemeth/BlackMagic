@@ -766,7 +766,22 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 //            }
             
 //            whiteBackground.position =
-
+            
+            
+            BMCard* enemyCard = [player cardForID:gameState.enemyCardID];
+            NSString* cardType = @"";
+            int cardIndex = NSNotFound;
+            [self cardIndexAndCardTypeOfCard:enemyCard cardIndex_p:&cardIndex cardType_p:&cardType];
+            NSString* imageName = [NSString stringWithFormat:@"%@%dB", cardType, cardIndex];
+            NSLog(@"imageName: %@", imageName);
+            SKSpriteNode* node = nil;
+            NSLog(@"enemm slot index: %d", gameState.enemySlotIndex);
+            if (gameState.enemySlotIndex < 7){
+                node = opponenetCardSprites[gameState.enemySlotIndex];
+            }
+            
+            node.texture = [SKTexture textureWithImageNamed:imageName];
+            
             if ([SettingsHandler sharedSettings].autoPlayByAI) {
                 BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
                 [self performNextStep:miRes];
