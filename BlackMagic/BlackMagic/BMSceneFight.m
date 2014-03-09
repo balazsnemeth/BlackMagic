@@ -76,9 +76,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 -(void)addBackground{
     
     whiteBackground = [SKSpriteNode spriteNodeWithImageNamed:@"FieldW"];
-    whiteBackground.size = CGSizeMake(self.frame.size.width, self.frame.size.height / 2 +60);
+    whiteBackground.size = CGSizeMake(self.frame.size.width, self.frame.size.height);
     //card00.anchorPoint = CGPointZero;
-    whiteBackground.position = CGPointMake(380, 800);
+    whiteBackground.position = CGPointMake(380, 1025);
     //card00.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:card00.size];
     [self addChild:whiteBackground];
     
@@ -144,9 +144,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         [node runAction:fadeIn];
     }
     
-    SKAction *fadeIn = [SKAction moveTo:CGPointMake(whiteBackground.position.x, fightPosition + 285) duration:0.5];
+    SKAction *fadeIn = [SKAction moveTo:CGPointMake(whiteBackground.position.x, fightPosition + 512) duration:0.5];
     [whiteBackground runAction:fadeIn];
-    //whiteBackground.position = CGPointMake(whiteBackground.position.x, fightPosition + 285);
+    //whiteBackground.position = CGPointMake(whiteBackground.position.x, fightPosition + 510);
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -218,14 +218,11 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         manaBar.position = CGPointMake(110, 10);
         [self addChild:manaBar];
         
-        SKSpriteNode *myLabel = [SKSpriteNode spriteNodeWithImageNamed:@"images"];
-        myLabel.size = CGSizeMake(50, 50);
-        myLabel.name = @"buttonStart";
-//        myLabel.text = @"pick";
-//        myLabel.fontSize = 30;
-        myLabel.position = CGPointMake(CGRectGetMaxX(self.frame),
-                                       CGRectGetMinY(self.frame));
-        [self addChild:myLabel];
+        SKSpriteNode *cardButton = [SKSpriteNode spriteNodeWithImageNamed:@"CardButton"];
+        cardButton.size = CGSizeMake(50, 50);
+        cardButton.name = @"buttonStart";
+        cardButton.position = CGPointMake(730,30);
+        [self addChild:cardButton];
         
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
@@ -472,9 +469,44 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     // [view.layer renderInContext:UIGraphicsGetCurrentContext()]; // <- same result...
     [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    
     UIGraphicsEndImageContext();
     
     return img;
+}
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+- (void) updateMySlots{
+    if (dragAndDropImgView) {
+        CGFloat minDist = 10000;
+        SKSpriteNode* closestSlot = playerCardSprites[0];
+        
+        for (SKSpriteNode* slotNode in playerCardSprites) {
+            CGPoint p1 = dragAndDropImgView.center;
+            CGPoint p2 = slotNode.position;
+            CGFloat xDist = (p2.x - p1.x);
+            CGFloat yDist = (p2.y - p1.y);
+            CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
+            if (minDist > distance) {
+                closestSlot = slotNode;
+                minDist = distance;
+                //legközelebbi (rátenni az effectet)
+            }
+            //összes többi (eltüntetni az effectet)
+
+        }
+        
+    }
 }
 
 - (void)longDeckCard:(UITapGestureRecognizer*)gestureRec
@@ -483,8 +515,13 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         if (!dragAndDropImgView) {
             NSLog(@"long and create");
             UIImage* img = [self imageFromView:gestureRec.view];
-            dragAndDropImgView = [[UIImageView alloc] initWithFrame:gestureRec.view.frame];
-            dragAndDropImgView.image = img;
+            UIImage* smalImg = [self imageWithImage:img scaledToSize:CGSizeMake(gestureRec.view.frame.size.width/2.0,gestureRec.view.frame.size.height/2.0)];
+            CGRect f = gestureRec.view.frame;
+            f.size = smalImg.size;
+            f.origin.x = f.origin.x+ smalImg.size.width/2.0;
+            f.origin.y = f.origin.y+ smalImg.size.height/2.0;
+            dragAndDropImgView = [[UIImageView alloc] initWithFrame:f];
+            dragAndDropImgView.image = smalImg;
             [cardDeckView addSubview:dragAndDropImgView];
             CGPoint location = [gestureRec locationInView:cardDeckView];
             [UIView animateWithDuration:0.2 animations:^{
@@ -499,6 +536,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         if (dragAndDropImgView) {
             CGPoint location = [gestureRec locationInView:cardDeckView];
             dragAndDropImgView.center = location;
+            [self updateMySlots];
         }
     }
     else if(gestureRec.state == UIGestureRecognizerStateEnded || gestureRec.state == UIGestureRecognizerStateCancelled){
@@ -508,6 +546,11 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             //ide letesszük
             [dragAndDropImgView removeFromSuperview];
             dragAndDropImgView = nil;
+            int row = (int)gestureRec.view.tag/5;
+            int col = gestureRec.view.tag - row*5;
+            BMCard* card = [self cardAtCol:col atRow:row];
+            //Az ehhez tartozó sprite-ot aktiválni!
+            
             return;
         }
     }
@@ -639,7 +682,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             NSLog(@"imageName: %@", imageName);
             node.texture = [SKTexture textureWithImageNamed:imageName];
             
-            float x = player.health - enemy.health;
+            float x = enemy.health - player.health;
             
             x = x*10;
             
