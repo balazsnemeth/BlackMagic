@@ -173,7 +173,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         playerCardSprites = [NSMutableArray array];
         opponenetCardSprites = [NSMutableArray array];
         
-        NSString* name = [self genRandStringLength:6];
+        NSString* name =@"Blackbone"; //[self genRandStringLength:6];
         [self registerUserWithName:name];
         //reg test A
         
@@ -620,7 +620,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 }
 
 - (SKSpriteNode *)getClosestSlot {
-    CGFloat minDist;
+    CGFloat minDist = 1000;
     SKSpriteNode* closestSlot = playerCardSprites[0];
     int minIndex = -1;
     int i = 0;
@@ -647,7 +647,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 
 - (void) updateMySlots{
     if (dragAndDropImgView) {
-        CGFloat minDist = 10000;
         SKSpriteNode *closestSlot;
         closestSlot = [self getClosestSlot];
         if (closestSlot == closestNode){
@@ -699,8 +698,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             CGPoint location = [gestureRec locationInView:cardDeckView];
             dragAndDropImgView.center = location;
             //ide letesszük
-            [dragAndDropImgView removeFromSuperview];
-            dragAndDropImgView = nil;
+
             int index = gestureRec.view.tag;
             int row = (int)gestureRec.view.tag/5;
             int col = gestureRec.view.tag - row*5;
@@ -719,6 +717,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             UIImage* cardImg = [self cardImageForIndex:index];
             closestSlot.texture = [SKTexture textureWithImage:cardImg];
             
+            [dragAndDropImgView removeFromSuperview];
+            dragAndDropImgView = nil;
             [self performNextStep:miRes];
             
             
@@ -886,6 +886,15 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         isMyTurn = NO;
         
         if (![SettingsHandler sharedSettings].autoPlayByAI) {
+
+//            [self hideSelectionView];
+//            
+//            prevFightPos = fightPosition;
+//            
+//            //fightPosition = 900;
+//            [self positionFight];
+            
+            
             HUD = [[MBProgressHUD alloc] initWithView:self.view];
             [self.view addSubview:HUD];
             HUD.labelText = @"Waiting for a player";

@@ -46,8 +46,8 @@
 {
     [[NSUserDefaults standardUserDefaults] synchronize];
     [SettingsHandler sharedSettings].autoPlayByAI = FALSE;
-//    [SettingsHandler sharedSettings].serverIPAddress = [[NSUserDefaults standardUserDefaults] objectForKey:@"ipAddress"];
-        [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.102:8123";
+    [SettingsHandler sharedSettings].serverIPAddress = [[NSUserDefaults standardUserDefaults] objectForKey:@"ipAddress"];
+//        [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.104:8123";
 //    NSString* port = [[NSUserDefaults standardUserDefaults] objectForKey:@"port"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSLog(@"Connection:%@",[SettingsHandler sharedSettings].serverIPAddress);
