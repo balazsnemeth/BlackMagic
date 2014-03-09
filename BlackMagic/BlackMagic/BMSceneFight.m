@@ -289,7 +289,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             return [UIImage imageNamed:@"Rejuvenation+StoneRain-01"];
             break;
         case 9:
-            return [UIImage imageNamed:@"IllB_01"];
+            return [UIImage imageNamed:@""];
             break;
         case 10:
             return [UIImage imageNamed:@"BurgulB1"];
@@ -304,7 +304,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             return [UIImage imageNamed:@""];
             break;
         case 14:
-            return [UIImage imageNamed:@""];
+            return [UIImage imageNamed:@"IllB_01"];
             break;
         case 15:
             return [UIImage imageNamed:@""];
