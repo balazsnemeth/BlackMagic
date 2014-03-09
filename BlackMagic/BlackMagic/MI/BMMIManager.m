@@ -62,12 +62,12 @@ static BMMIManager *sharedMIManager = nil;
             [buyableCards addObject:card];
         }
     }
-    for (BMCard* card in player.airCards) {
-        NSNumber* n = card.cost[@"amount"];
-        if (n.integerValue <= player.airMana) {
-            [buyableCards addObject:card];
-        }
-    }
+//    for (BMCard* card in player.airCards) {
+//        NSNumber* n = card.cost[@"amount"];
+//        if (n.integerValue <= player.airMana) {
+//            [buyableCards addObject:card];
+//        }
+//    }
     for (BMCard* card in player.illusionCards) {
         NSNumber* n = card.cost[@"amount"];
         if (n.integerValue <= player.illusionMana) {
