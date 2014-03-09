@@ -18,8 +18,6 @@
 {
     // Override point for customization after application launch.
     // Override point for customization after application launch.
-    [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.102:8123";
-    [SettingsHandler sharedSettings].serverPort=8123;
     
     return YES;
 }
@@ -44,7 +42,8 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [SettingsHandler sharedSettings].serverIPAddress = [[NSUserDefaults standardUserDefaults] objectForKey:@"ipAddress"];
+//    [SettingsHandler sharedSettings].serverIPAddress = [[NSUserDefaults standardUserDefaults] objectForKey:@"ipAddress"];
+        [SettingsHandler sharedSettings].serverIPAddress = @"192.168.1.106:8123";
 //    NSString* port = [[NSUserDefaults standardUserDefaults] objectForKey:@"port"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSLog(@"Connection:%@",[SettingsHandler sharedSettings].serverIPAddress);
