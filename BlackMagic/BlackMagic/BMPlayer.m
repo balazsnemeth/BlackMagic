@@ -58,7 +58,7 @@
         _earthCards = cards;
         
         _health = 60;
-        
+       
         _waterMana = _airMana = _earthMana = _fireMana = _illusionMana = 15;
 //        
 //        NSLog(@"water cards %@", _waterCards);
@@ -134,7 +134,7 @@
     
     self.health =  [dictionary[@"health"] integerValue];
     
-    
+    self.name = dictionary[@"name"];
 }
 
 @end

@@ -26,8 +26,11 @@
 
 
 @implementation BMSceneFight{
+    SKLabelNode *playerName;
+
     SKLabelNode *playerHealth;
     SKLabelNode *opponentHealth;
+    SKLabelNode *opponentName;
     SKLabelNode *air;
     SKLabelNode *water;
     SKLabelNode *illusion;
@@ -159,6 +162,29 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     //whiteBackground.position = CGPointMake(whiteBackground.position.x, fightPosition + 510);
 }
 
+    - (UIImage *)invertImage:(UIImage *)originalImage
+    {
+        UIGraphicsBeginImageContext(originalImage.size);
+        CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeCopy);
+        CGRect imageRect = CGRectMake(0, 0, originalImage.size.width, originalImage.size.height);
+        [originalImage drawInRect:imageRect];
+        
+        
+        CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeDifference);
+        // translate/flip the graphics context (for transforming from CG* coords to UI* coords
+        CGContextTranslateCTM(UIGraphicsGetCurrentContext(), 0, originalImage.size.height);
+        CGContextScaleCTM(UIGraphicsGetCurrentContext(), 1.0, -1.0);
+        //mask the image
+        CGContextClipToMask(UIGraphicsGetCurrentContext(), imageRect,  originalImage.CGImage);
+        CGContextSetFillColorWithColor(UIGraphicsGetCurrentContext(),[UIColor whiteColor].CGColor);
+        CGContextFillRect(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, originalImage.size.width, originalImage.size.height));
+        UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return returnImage;
+    }
+
+
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
@@ -173,7 +199,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         playerCardSprites = [NSMutableArray array];
         opponenetCardSprites = [NSMutableArray array];
         
-        NSString* name =@"Blackbone"; //[self genRandStringLength:6];
+        NSString* name =[[NSUserDefaults standardUserDefaults] objectForKey:@"player"]; //[self genRandStringLength:6];
         [self registerUserWithName:name];
         //reg test A
         
@@ -243,7 +269,6 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         air.fontSize = 20;
         air.position = CGPointMake(200, 60);
         air.fontColor = [UIColor whiteColor];
-        //playerHealth.zRotation = -M_PI/2;
         [self addChild:air];
         
         SKSpriteNode *waterButton = [SKSpriteNode spriteNodeWithImageNamed:@"water"];
@@ -298,12 +323,30 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         //playerHealth.zRotation = -M_PI/2;
         [self addChild:illusion];
         
+        
+        playerName = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        
+        playerName.text = @"";
+        playerName.fontSize = 30;
+        playerName.position = CGPointMake(200, 10);
+        [self addChild:playerName];
+        
+        
         playerHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         playerHealth.text = [NSString stringWithFormat:@"%i", 60];
         playerHealth.fontSize = 30;
         playerHealth.position = CGPointMake(self.frame.size.width / 2 - 10, 10);
         //playerHealth.zRotation = -M_PI/2;
         [self addChild:playerHealth];
+        
+        opponentName = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
+        
+        opponentName.text = @"";
+        opponentName.fontSize = 30;
+        opponentName.position = CGPointMake(200, 995);
+        opponentName.fontColor = [UIColor blackColor];
+        [self addChild:opponentName];
+        
         
         opponentHealth = [SKLabelNode labelNodeWithFontNamed:@"TimesNewRoman"];
         opponentHealth.text = [NSString stringWithFormat:@"%i", 60];
@@ -502,6 +545,12 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     cardDeckIsPresent = NO;
 }
 
+- (void)goToMenu {
+    StartScene *startScene = [[StartScene alloc] initWithSize:self.size];
+    SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
+    [self.view presentScene:startScene transition:sceneTransition];
+}
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     for (UITouch *touch in touches)
     {
@@ -537,10 +586,7 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         
         if ([node.name isEqualToString:@"hamburger"])
         {
-            NSLog(@"BAM");
-            StartScene *startScene = [[StartScene alloc] initWithSize:self.size];
-            SKTransition *sceneTransition = [SKTransition fadeWithColor:[UIColor darkGrayColor] duration:0.5];
-            [self.view presentScene:startScene transition:sceneTransition];
+            [self goToMenu];
             
         }
         
@@ -715,7 +761,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             //Az ehhez tartozó sprite-ot aktiválni!
             
             UIImage* cardImg = [self cardImageForIndex:index];
-            closestSlot.texture = [SKTexture textureWithImage:cardImg];
+            UIImage* invImg = [self invertImage:cardImg];
+            closestSlot.texture = [SKTexture textureWithImage:invImg];
             
             [dragAndDropImgView removeFromSuperview];
             dragAndDropImgView = nil;
@@ -801,6 +848,9 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
     playerHealth.text = [NSString stringWithFormat:@"%i", player.health];
     opponentHealth.text = [NSString stringWithFormat:@"%i", enemy.health];
+    playerName.text = player.name;
+    opponentName.text = enemy.name;
+
     air.text = [NSString stringWithFormat:@"%i", player.airMana];
     water.text = [NSString stringWithFormat:@"%i", player.waterMana];
     earth.text = [NSString stringWithFormat:@"%i", player.earthMana];
@@ -812,17 +862,20 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     }
 }
 
-
 - (void)performNextStep:(BMMIResult *)miRes
 {
     SKSpriteNode* node = playerCardSprites[miRes.slotIndex];
-    NSString* cardType = @"";
-    int cardIndex = NSNotFound;
-    
-    [self cardIndexAndCardTypeOfCard:miRes.card cardIndex_p:&cardIndex cardType_p:&cardType];
-    NSString* imageName = [NSString stringWithFormat:@"%@%dW", cardType, cardIndex];
-    NSLog(@"imageName: %@", imageName);
-    node.texture = [SKTexture textureWithImageNamed:imageName];
+    if (miRes.card) {
+        NSString* cardType = @"";
+        int cardIndex = 0;
+        
+        [self cardIndexAndCardTypeOfCard:miRes.card cardIndex_p:&cardIndex cardType_p:&cardType];
+        int cardColumnIndex = [self cardRowIndexByType:cardType];
+        
+        UIImage* image = [self cardImageForIndex:(cardColumnIndex+cardIndex*5)];
+        UIImage* invImg = [self invertImage:image];
+        node.texture = [SKTexture textureWithImage:invImg];
+    }
     
     float x = player.health - enemy.health;
     
@@ -862,13 +915,17 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             NSLog(@"Game over");
-            NSString* message = [NSString stringWithFormat:@"Winner: %@", enemy.health < player.health ? @"You" : @"Enemy"];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over"
+            NSString* enemyName = [NSString stringWithFormat:@"%@ is the winner!",enemy.name];
+            NSString* playerNameStr = [NSString stringWithFormat:@"You are the winner!"];
+            NSString* message = [NSString stringWithFormat:@"%@", enemy.health < player.health ? playerNameStr : enemyName];
+            [UIAlertView showWithTitle:@"Game Over"
                                                             message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
+                                                  cancelButtonTitle:@"Mégse"
+                                          otherButtonTitles:@[@"Menu"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                              if (buttonIndex != alertView.cancelButtonIndex) {
+                                                  [self goToMenu];
+                                              }
+                                          }];
         });
         return;
     }
@@ -938,18 +995,21 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
             
             
             BMCard* enemyCard = [player cardForID:gameState.enemyCardID];
-            NSString* cardType = @"";
-            int cardIndex = NSNotFound;
-            [self cardIndexAndCardTypeOfCard:enemyCard cardIndex_p:&cardIndex cardType_p:&cardType];
-            NSString* imageName = [NSString stringWithFormat:@"%@%dB", cardType, cardIndex];
-            NSLog(@"imageName: %@", imageName);
-            SKSpriteNode* node = nil;
-            NSLog(@"enemm slot index: %d", gameState.enemySlotIndex);
-            if (gameState.enemySlotIndex < 7){
-                node = opponenetCardSprites[gameState.enemySlotIndex];
+            if (enemyCard) {
+                NSString* cardType = @"";
+                int cardIndex = NSNotFound;
+                [self cardIndexAndCardTypeOfCard:enemyCard cardIndex_p:&cardIndex cardType_p:&cardType];
+                
+                int cardColumnIndex = [self cardRowIndexByType:cardType];
+                UIImage* image = [self cardImageForIndex:(cardColumnIndex+cardIndex*5)];
+                
+                SKSpriteNode* node = nil;
+                NSLog(@"enemm slot index: %d", gameState.enemySlotIndex);
+                if (gameState.enemySlotIndex < 7){
+                    node = opponenetCardSprites[gameState.enemySlotIndex];
+                }
+                node.texture = [SKTexture textureWithImage:image];
             }
-            
-            node.texture = [SKTexture textureWithImageNamed:imageName];
             
             if ([SettingsHandler sharedSettings].autoPlayByAI) {
                 BMMIResult* miRes = [[BMMIManager sharedManager] suggestedCardForPlayer:player withEnemy:enemy inTurn:gameState.turnCount];
@@ -974,6 +1034,26 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 
 #pragma mark -
 #pragma mark Helper
+
+- (int) cardRowIndexByType:(NSString*) type{
+    
+    if([type isEqualToString:@"fire"]){
+        return 0;
+    }
+    if([type isEqualToString:@"water"]){
+        return 1;
+    }
+    if([type isEqualToString:@"air"]){
+        return 2;
+    }
+    if([type isEqualToString:@"earth"]){
+        return 3;
+    }
+    if([type isEqualToString:@"illusion"]){
+        return 4;
+    }
+    return 0;
+}
 
 - (void)cardIndexAndCardTypeOfCard:(BMCard *)card cardIndex_p:(int *)cardIndex_p cardType_p:(NSString **)cardType_p {
     *cardIndex_p = [player.fireCards indexOfObject:card];

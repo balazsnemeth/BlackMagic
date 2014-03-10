@@ -31,7 +31,6 @@
             _enemyCardID = [enemyInput[@"cardID"] integerValue];
             _enemySlotIndex = [enemyInput[@"slotIndex"] integerValue];
         }
-        
        // NSLog(@"players: %@", _players);
     }
     

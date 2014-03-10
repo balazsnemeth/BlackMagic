@@ -16,7 +16,7 @@
 			<key>AutocorrectionType</key>
 			<string>No</string>
 			<key>DefaultValue</key>
-			<string>192.168.1.104:8123</string>
+			<string>http://blackmagicserver.herokuapp.com</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>
@@ -25,6 +25,24 @@
 			<string>Alphabet</string>
 			<key>Title</key>
 			<string>IP</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string>Black Magic</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>Key</key>
+			<string>player</string>
+			<key>KeyboardType</key>
+			<string>Alphabet</string>
+			<key>Title</key>
+			<string>Player Name</string>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 		</dict>
